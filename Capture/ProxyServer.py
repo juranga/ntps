@@ -25,14 +25,12 @@ class ProxyServer:
         packet = p.get_payload()
         #self.live_traffic_list.append(packet.copy())
         
-        #print(Capture_Filter.BPF_Filter(packet))
+        print(Capture_Filter.BPF_Filter(packet))
 
         # TODO: Hook Execution before intercept
         if sniff(filter=self.capture_filter) and interceptFlag:
             self.intercept_queue.put(packet.copy())
         print(self.intercept_queue)
-        import time
-        time.sleep(10)
         packet.drop()
 
     def drop_packet(self):
