@@ -1,17 +1,17 @@
-from Flags import *
+interceptFlag = True
 from InterceptQueue import *
-
+import socket
 import nfqueue
 from scapy.all import *
 import os
 
 class ProxyServer:
 
-    __init__():
-        capture_filter = ""
-        live_pcap_name = ""
-        live_traffic_list = []
-        intercept_queue = InterceptQueue()
+    def __init__():
+        self.capture_filter = ""
+        self.live_pcap_name = ""
+        self.live_traffic_list = []
+        self.intercept_queue = InterceptQueue()
 
     def change_filter(cfilter: str):
         capture_filter = cfilter
@@ -21,10 +21,13 @@ class ProxyServer:
 
     def handle_new_packet(packet: nfqueue.Packet):
         live_traffic_list.append(packet.copy())
+        print(packet)
+        print(scapy.sniff(filter=self.capture_filter))
 
-        # TODO: Should we block the thread if intercept Q is full, or should we just drop all new packets if it's full?
-        if scapy.sniff(filter=this.capture_filter, 0) and interceptFlag:
-            intercept_queue.put(packet.copy())
+        # TODO: Hook Execution before intercept
+        if scapy.sniff(filter=self.capture_filter) and interceptFlag:
+            self.intercept_queue.put(packet.copy())
+        print(self.intercept_queue)
 
         packet.set_verdict(nfqueue.NF_DROP)
 
@@ -40,17 +43,15 @@ class ProxyServer:
 
     # TODO: thread function
     def init_server():
-        # TODO: Add code to set iptable rule 
-        nfq = nfqueue.queue()
-        nfq.open()
-        nfq.bind(socket.AF_INET) # Bind to Ipv4 
-        nfq.set_callback(handle_new_packet)
-        nfq.create_queue(0)
+        nfq = NetfilterQueue()
+        nfq.bind(QUEUE_NUM, callback)
+        s = socket.fromfd(nfq.get_fd(), socket.AF_UNIX, socket.SOCK_STREAM)
         try:
-            nfq.run() # main loop
-        except KeyboardInterrupt: 
-            nfq.unbind(socket.AF_INET)
-            nfq.close()
-            # TODO: Add code to return iptables to original state.
+            print('Listening for packets...')
+            nfqueue.run_socket(s)
+        except KeyboardInterrupt:
+            print('Exiting \n')
+        s.close()
+        nfq.unbind()
            
 
