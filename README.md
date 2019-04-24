@@ -1,4 +1,4 @@
-Set Up for Developers
+# Getting Set Up for Developers
 ***
 #### Kali Linux Installation
 1. Install [kali linux image](https://www.offensive-security.com/kali-linux-vm-vmware-virtualbox-image-download/)
@@ -25,4 +25,8 @@ Set Up for Developers
 1. Open terminal
 2. run: 
     `cd ntps/Capture`
-
+    `python3 ProxyServer.py`
+3. Open a new window terminal
+4. run:
+    `ping local`
+    
