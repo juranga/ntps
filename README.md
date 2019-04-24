@@ -15,18 +15,26 @@
 #### Setting up Developer environment after Opening VMWare
 1. Open terminal
 2. Run the following commands in order to set up environment:
-    `python3 -V ` (check that it is a Python version less than 3.7)
-    `git clone <repository>`
-    `pip3 install scapy`
-    `pip3 install libnetfilter-queue-dev`
-    `pip3 install netfilterqueue`
+    a. `python3 -V ` (check that it is a Python version less than 3.7)
+    
+    b. `git clone <repository>`
+    
+    c. `pip3 install scapy`
+    
+    d. `pip3 install libnetfilter-queue-dev`
+    
+    e. `pip3 install netfilterqueue`
 
 #### Run the following commands to start listening for Packets
 1. Open terminal
 2. run: 
-    `cd ntps/Capture`
-    `python3 ProxyServer.py`
+
+    a. `cd ntps/Capture`
+    
+    b. `python3 ProxyServer.py`
+    
 3. Open a new window terminal
 4. run:
+
     `ping local`
     
