@@ -1,6 +1,6 @@
-from ntps.Capture.Filters.Capture_Filter import Capture_Filter
-from ntps.Capture.Intercept_Queue import Intercept_Queue
-from ntps.PacketLibrary.PCAP import PCAP
+from Infrastructure.Capture.Filters.Capture_Filter import Capture_Filter
+from Infrastructure.Capture.Intercept_Queue import Intercept_Queue
+from Infrastructure.PacketLibrary.PCAP import PCAP
 
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
