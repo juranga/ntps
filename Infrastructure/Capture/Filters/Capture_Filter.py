@@ -2,12 +2,6 @@ from scapy.all import sniff
 
 class Capture_Filter: 
 
-    """
-    self.filters = { 
-        "bpf": self.bpf
-    }
-    """
-
     def __init__(self, cfilter="bpf", input_filter=""):
         self.filters = {
             "bpf": self.bpf
