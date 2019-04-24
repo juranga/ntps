@@ -1,4 +1,4 @@
-ng Set Up for Developers
+Set Up for Developers
 ***
 #### Kali Linux Installation
 1. Install [kali linux image](https://www.offensive-security.com/kali-linux-vm-vmware-virtualbox-image-download/)
