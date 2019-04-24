@@ -3,16 +3,18 @@
 #### Kali Linux Installation
 1. Install [kali linux image](https://www.offensive-security.com/kali-linux-vm-vmware-virtualbox-image-download/)
 2. Install [7zip](https://www.7-zip.org/download.html)
-2. unzip kali linux image on machine
+2. unzip kali linux image in whatever directory you choose on your local machine.
  
 #### Creating Kali Linux VM
-1. Intall [vmware workstation](https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html)
+1. Install [vmware workstation](https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html)
 2. In the Vmware Workstation app, open the kali linux image
 3. Edit the VM to have 4 GB of memory.
-4. Power it on, select "I Copied it"
-5. User: root ; pwd: toor
+4. Power it on and select "I Copied it" when the notification pops up.
+5. To log in to VM: 
 
-#### Setting up Developer environment after Opening VMWare
+   User: root ; pwd: toor
+
+#### Setting up Developer environment after Opening Kali VM
 1. Open terminal
 2. Run the following commands in order to set up environment:
 
@@ -27,7 +29,7 @@
     e. `pip3 install netfilterqueue`
 
 #### Run the following commands to start listening for Packets
-1. Open terminal
+1. On the same terminal
 2. run: 
 
     a. `cd ntps/Capture`
