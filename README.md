@@ -15,6 +15,7 @@
 #### Setting up Developer environment after Opening VMWare
 1. Open terminal
 2. Run the following commands in order to set up environment:
+
     a. `python3 -V ` (check that it is a Python version less than 3.7)
     
     b. `git clone <repository>`
