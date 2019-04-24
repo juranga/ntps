@@ -2,7 +2,7 @@
 ***
 #### Kali Linux Installation
 1. Install [kali linux image](https://www.offensive-security.com/kali-linux-vm-vmware-virtualbox-image-download/)
-2. Install [7zi[](https://www.7-zip.org/download.html)
+2. Install [7zip](https://www.7-zip.org/download.html)
 2. unzip kali linux image on machine
  
 #### Creating Kali Linux VM
