@@ -7,7 +7,13 @@
  
 #### Creating Kali Linux VM
 1. Install [vmware workstation](https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html)
-2. In the Vmware Workstation app, open the kali linux image
+2. In the Vmware Workstation app:
+
+   a. File->Open 
+   
+   b. Directory where Kali Linux Image is
+   
+   
 3. Edit the VM to have 4 GB of memory.
 4. Power it on and select "I Copied it" when the notification pops up.
 5. To log in to VM: 
