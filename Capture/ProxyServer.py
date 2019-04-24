@@ -21,17 +21,19 @@ class ProxyServer:
     def change_pcap_name(self, name: str):
         live_pcap_name = name
 
-    def handle_new_packet(self, packet):
-        live_traffic_list.append(packet.copy())
-        print(packet)
-        print(Capture_Filter.BPF_Filter(packet))
+    def handle_new_packet(self, p):
+        packet = p.get_payload()
+        #self.live_traffic_list.append(packet.copy())
+        
+        #print(Capture_Filter.BPF_Filter(packet))
 
         # TODO: Hook Execution before intercept
-        if scapy.sniff(filter=self.capture_filter) and interceptFlag:
+        if sniff(filter=self.capture_filter) and interceptFlag:
             self.intercept_queue.put(packet.copy())
         print(self.intercept_queue)
-
-        packet.set_verdict(nfqueue.NF_DROP)
+        import time
+        time.sleep(10)
+        packet.drop()
 
     def drop_packet(self):
         # TODO: Add code to handle removing dropped packets from Intercept Q
@@ -45,15 +47,20 @@ class ProxyServer:
 
     # TODO: thread function
     def init_server(self):
+        iptablesr = "iptables -I OUTPUT -j NFQUEUE --queue-num 0"
+        os.system(iptablesr)
+
         nfq = NetfilterQueue()
         nfq.bind(0, self.handle_new_packet)
-        s = socket.fromfd(nfq.get_fd(), socket.AF_UNIX, socket.SOCK_STREAM)
         try:
             print('Listening for packets...')
-            nfq.run_socket(s)
+            nfq.run()
         except KeyboardInterrupt:
             print('Exiting \n')
-        s.close()
+        
+        #flush 
+        os.system('iptables -F')
+        os.system('iptables -X')
         nfq.unbind()
 
 ps = ProxyServer()
