@@ -18,7 +18,7 @@
 4. Power it on and select "I Copied it" when the notification pops up.
 5. To log in to VM: 
 
-   User: root ; pwd: toor
+   **User: root ; pwd: toor**
 
 #### Setting up Developer environment after Opening Kali VM
 1. Open terminal
