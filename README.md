@@ -9,7 +9,7 @@
 1. Install [vmware workstation](https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html)
 2. In the Vmware Workstation app:
 
-   **a. File->Open **
+   **a. File->Open**
    
    **b. Directory where Kali Linux Image is**
    
