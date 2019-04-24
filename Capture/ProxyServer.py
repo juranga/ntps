@@ -22,16 +22,18 @@ class ProxyServer:
         live_pcap_name = name
 
     def handle_new_packet(self, p):
-        packet = p.get_payload()
-        #self.live_traffic_list.append(packet.copy())
-        
-        print(Capture_Filter.BPF_Filter(packet))
+        packet = IP(p.get_payload())
+        self.live_traffic_list.append(packet)
+        print(packet)
+        #print(self.live_traffic_list)
+        #print(Capture_Filter.BPF_Filter(p))
 
         # TODO: Hook Execution before intercept
-        if sniff(filter=self.capture_filter) and interceptFlag:
-            self.intercept_queue.put(packet.copy())
-        print(self.intercept_queue)
-        packet.drop()
+        #if sniff(filter=self.capture_filter) and interceptFlag:
+        #    print('hi')
+        #self.intercept_queue.put(packet.copy())
+        #print(self.intercept_queue)
+        p.drop()
 
     def drop_packet(self):
         # TODO: Add code to handle removing dropped packets from Intercept Q

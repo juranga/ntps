@@ -1,4 +1,4 @@
 from scapy.all import * 
 
-def BPF_Filter(packet):
-    return scapy.sniff(self.input_filter, 0)
+def BPF_Filter(packet, input_filter=""):
+    return sniff(input_filter, 0)
