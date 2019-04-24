@@ -37,10 +37,10 @@
 #### Run the following commands to start listening for Packets
 1. On the same terminal
 2. run: 
-
-    a. `cd ntps/Capture`
     
-    b. `python3 ProxyServer.py`
+    a. `cd ntps`
+    
+    b. `python3 main.py`
     
 3. Open a new window terminal
 4. run:
