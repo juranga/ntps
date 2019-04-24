@@ -1,18 +1,19 @@
-from ntps.Capture.Filters.Capture_Filter import Capture_Filter
-from ntps.Capture.Intercept_Queue import Intercept_Queue
-from ntps.PacketLibrary.PCAP import PCAP
+from Infrastructure.Capture.Filters.Capture_Filter import Capture_Filter
+from Infrastructure.Capture.Intercept_Queue import Intercept_Queue
+from Infrastructure.PacketLibrary.PCAP import PCAP
 
+from queue import Queue
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import os
 
 class Proxy_Server:
 
-    def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), intercept_queue=Intercept_Queue()):
+    def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), intercept_queue=Queue(100)):
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
-        self.interceptFlag = False
+        self.interceptFlag = True
 
     def start_intercept(self):
         self.interceptFlag = True
@@ -24,9 +25,11 @@ class Proxy_Server:
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
 
-        if self.capture_filter.filter(raw_packet) and self.interceptFlag:
+        """ TODO: Fix Capture Filter
+        if self.capture_filter.filter(packet) and self.interceptFlag:
             # TODO: Hook Execution before intercept
             self.intercept_queue.put(packet)
+        """
 
         raw_packet.drop()
 
