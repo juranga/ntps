@@ -30,7 +30,7 @@
     
     c. `pip3 install scapy`
     
-    d. `pip3 install libnetfilter-queue-dev`
+    d. `sudo apt-get install libnetfilter-queue-dev`
     
     e. `pip3 install netfilterqueue`
 
