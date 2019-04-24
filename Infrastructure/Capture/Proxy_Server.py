@@ -51,6 +51,3 @@ class Proxy_Server:
         os.system('iptables -F')
         os.system('iptables -X')
         nfq.unbind()
-
-ps = Proxy_Server()
-ps.init_server()
