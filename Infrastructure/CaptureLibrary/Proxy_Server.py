@@ -22,15 +22,13 @@ class Proxy_Server:
         self.interceptFlag = False
 
     def handle_new_packet(self, raw_packet):
-        packet = IP(raw_packet.get_payload()).copy()
+        packet = Ether(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
 
-        d_packet = dissect(packet)
-        print(d_packet)
         """ TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
             # TODO: Hook Execution before intercept
-            self.intercept_queue.put(packet)
+            # TODO: Put this code in to HookCollectionManager: self.intercept_queue.put(packet)
         """
 
         raw_packet.drop()
