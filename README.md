@@ -33,6 +33,8 @@
     d. `sudo apt-get install libnetfilter-queue-dev`
     
     e. `pip3 install netfilterqueue`
+    
+    f. `pip3 install PyQt5`
 
 #### Run the following commands to start listening for Packets
 1. On the same terminal
