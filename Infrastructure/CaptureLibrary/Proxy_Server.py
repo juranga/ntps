@@ -1,5 +1,5 @@
-from Infrastructure.Capture.Filters.Capture_Filter import Capture_Filter
-from Infrastructure.Capture.Intercept_Queue import Intercept_Queue
+from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
+from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
 from Infrastructure.PacketLibrary.PCAP import PCAP
 
 from queue import Queue
@@ -13,7 +13,7 @@ class Proxy_Server:
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
-        self.interceptFlag = True
+        self.interceptFlag = False
 
     def start_intercept(self):
         self.interceptFlag = True
@@ -25,6 +25,8 @@ class Proxy_Server:
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
 
+        d_packet = dissect(packet)
+        print(d_packet)
         """ TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
             # TODO: Hook Execution before intercept
@@ -36,6 +38,7 @@ class Proxy_Server:
     # TODO: Thread function
     def init_server(self):
         iptablesr = "iptables -I OUTPUT -j NFQUEUE --queue-num 0"
+        #iptablesr = "iptables -I INPUT -j NFQUEUE --queue-num 0"
         os.system(iptablesr)
 
         nfq = NetfilterQueue()
@@ -51,6 +54,3 @@ class Proxy_Server:
         os.system('iptables -F')
         os.system('iptables -X')
         nfq.unbind()
-
-ps = Proxy_Server()
-ps.init_server()
