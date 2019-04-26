@@ -25,8 +25,8 @@ class Proxy_Server:
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
 
-        d_packet = dissect(packet)
-        print(d_packet)
+        #d_packet = dissect(packet)
+        #print(d_packet)
         """ TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
             # TODO: Hook Execution before intercept
