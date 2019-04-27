@@ -2,7 +2,7 @@ from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
 from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
 from Infrastructure.PacketLibrary.PCAP import PCAP
 
-from Infrastructure.HookLibrary.Hook import Hook
+from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
 
 from queue import Queue
 from netfilterqueue import NetfilterQueue
@@ -11,11 +11,13 @@ import os
 
 class Proxy_Server:
 
-    def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), intercept_queue=Queue(100)):
+    def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), 
+                       intercept_queue=Queue(100), hook_manager= Hook_Collection_Manager()):
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
         self.interceptFlag = False
+        self.hook_manager = hook_manager
 
     def start_intercept(self):
         self.interceptFlag = True
@@ -27,12 +29,9 @@ class Proxy_Server:
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
         
-        self.hook_test.execute_hook(packet)
-        """ TODO: Fix Capture Filter
+        #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
-            # TODO: Hook Execution before intercept
-            # TODO: Put this code in to HookCollectionManager: self.intercept_queue.put(packet)
-        """
+            self.hook_manager.execute_hooks(packet, self.intercept_queue)
 
         raw_packet.drop()
 

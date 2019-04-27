@@ -1,7 +1,7 @@
 from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
 from Infrastructure.PacketLibrary.Packet_Bus import forward_packet, drop_packet, add_to_intercept
 
-class HookCollectionManager:
+class Hook_Collection_Manager:
 
     def __init__(self):
         self.hook_collection = []
