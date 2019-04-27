@@ -4,18 +4,6 @@ from scapy.all import send
 # source = keyword for "intercept",  "pcap", or "hook"
 # dest = the index of the packet within the queue or list
 
-forward_schedule = {
-    "hook": forward_hook_packet,
-    "intercept": forward_intercept_packet,
-    "pcap": forward_pcap_packet
-}
-
-drop_schedule = {
-    "hook": drop_hook_packet,
-    "intercept": drop_intercept_packet,
-    "pcap": drop_pcap_packet
-}
-
 """ Forward Packet Function """
 def forward_packet(source, bus, dest=0):
     forward_schedule[source](bus, dest)
@@ -55,5 +43,18 @@ def drop_hook_packet(bus, dest):
 """ Miscellaneous Packet Transportation """ 
 def add_to_intercept(bus, packet):
     bus.put(packet)
+   
+""" Packet Scheduling """
+forward_schedule = {
+    "hook": forward_hook_packet,
+    "intercept": forward_intercept_packet,
+    "pcap": forward_pcap_packet
+}
+
+drop_schedule = {
+    "hook": drop_hook_packet,
+    "intercept": drop_intercept_packet,
+    "pcap": drop_pcap_packet
+}
 
 
