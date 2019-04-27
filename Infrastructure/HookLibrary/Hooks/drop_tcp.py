@@ -1,12 +1,10 @@
-def drop_tcp(packet):
-    idx = 1
-    while True:
-        layer = packet.getlayer(idx)
-        if layer is None:
-            break
-        if layer.name == "TCP":
-            return None
-        yield layer
-        idx += 1
+from scapy.all import * 
 
-    return packet, "Drop"
+def run(packet):
+    try:
+        if packet.haslayer(TCP):
+            return "Modification"
+    except:
+        raise
+        
+return "Drop"
