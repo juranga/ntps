@@ -16,7 +16,6 @@ class Hook():
         self.hook = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.hook)
 
-    # TO DO: Figure out execution of hook.
     def execute_hook(self, packet):
         return self.hook.run(packet)
         

@@ -3,8 +3,8 @@ from scapy.all import *
 def run(packet):
     try:
         if packet.haslayer(TCP):
-            return "Modification"
+            return "Drop"
     except:
-        raise
+        raise "Error"
         
-return "Drop"
+    return "Modification"

@@ -17,7 +17,7 @@ drop_schedule = {
 }
 
 """ Forward Packet Function """
-def forward_packet(source, bus, dest):
+def forward_packet(source, bus, dest=0):
     forward_schedule[source](bus, dest)
 
 def forward_intercept_packet(bus, dest):
@@ -33,7 +33,7 @@ def forward_hook_packet(bus, dest):
 
 
 """ Drop Packet Functions """
-def drop_packet(source, bus, dest):
+def drop_packet(source, bus, dest=0):
     drop_schedule[source](bus, dest)
 
 def drop_intercept_packet(bus, dest):

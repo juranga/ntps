@@ -11,12 +11,12 @@ class Hook_Collection_Manager:
         order = "Modification"
         for i in range(0, self.n_hook_collections):
             for j in range(0, self.hook_collection[i].n_hooks):
-                packet, order = self.hook_collection[i].hook[i].execute_hook()
+                order = self.hook_collection[i].hook[i].execute_hook()
                 if order == "Forward":
-                    forward_packet("hook", packet, 0)
+                    forward_packet("hook", packet)
                     return
                 elif order == "Drop":
-                    drop_packet("hook", packet, 0)
+                    drop_packet("hook", packet)
                     return
         if not order == "Modification":
             return
@@ -32,4 +32,7 @@ class Hook_Collection_Manager:
                 self.hook_collection[i+1].sequence_number += 1
 
     def remove_hook_collection(self, hook_collection):
+        sn = self.hook_collection[hook_collection.sequence_number]
         del self.hook_collection[hook_collection.sequence_number]
+        for i in range(sn, self.n_hook_collections):
+            self.hook_collection[i].sequence_number -= 1
