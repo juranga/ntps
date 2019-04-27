@@ -1,14 +1,13 @@
-def change_dns(packet):
-    idx = 1
-    while True:
-        layer = packet.getlayer(idx)
-        if layer is None:
-            break
-        del layer.chksum
-        if layer.name == "DNS":
-            layer["DNS"].src = 44444
-            break
-        yield layer
-        idx += 1
+from scapy.all import * 
 
-    return packet.__class__(str(packet)), "Modification"
+def run(packet):
+    try:
+        if packet.haslayer(DNS):
+            del packet.chksum
+            del packet.getlayer(DNS).chksum
+            packet.getlayer(DNS).src = 44444
+    except:
+        raise
+    
+    packet.show2(dump=True)
+return "Modification"
