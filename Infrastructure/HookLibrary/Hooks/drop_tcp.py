@@ -9,4 +9,4 @@ def drop_tcp(packet)
         yield layer
         idx += 1
 
-    return packet, "drop"
+    return packet, "Drop"

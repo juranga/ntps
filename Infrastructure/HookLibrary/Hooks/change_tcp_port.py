@@ -11,6 +11,6 @@ def change_tcp(packet)
         yield layer
         idx += 1
 
-    return packet.__class__(str(packet)), "modification"
+    return packet.__class__(str(packet)), "Modification"
 
         

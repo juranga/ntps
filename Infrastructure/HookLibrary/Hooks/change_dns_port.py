@@ -11,4 +11,4 @@ def change_dns(packet)
         yield layer
         idx += 1
 
-    return packet.__class__(str(packet)), "modification"
+    return packet.__class__(str(packet)), "Modification"

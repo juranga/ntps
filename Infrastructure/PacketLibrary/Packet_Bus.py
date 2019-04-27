@@ -52,7 +52,6 @@ def drop_hook_packet(packet, dest):
 
 
 """ Miscellaneous Packet Transportation """ 
-
 def add_to_intercept(bus, packet):
     bus.put(packet)
 
