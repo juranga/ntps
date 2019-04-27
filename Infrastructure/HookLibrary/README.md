@@ -2,10 +2,11 @@
 
 ## Hook Function Guideline
 
-0. Hooks must contain a function that receives packet as a parameter and be named as the file's name.
+0. Hooks must contain a function that receives packet as a parameter and be titled 'run' as shown below.
 
     ```python 
-        def hook_name(packet):
+        def run(packet):
+            do x
     ```
 
 1. Hooks can be coded in any language as long as they return the following 2 arguments in order:
