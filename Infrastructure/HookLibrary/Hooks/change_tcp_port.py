@@ -1,4 +1,4 @@
-def change_tcp(packet)
+def change_tcp(packet):
     idx = 1
     while True:
         layer = packet.getlayer(idx)

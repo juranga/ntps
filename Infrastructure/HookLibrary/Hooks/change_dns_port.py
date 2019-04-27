@@ -1,4 +1,4 @@
-def change_dns(packet)
+def change_dns(packet):
     idx = 1
     while True:
         layer = packet.getlayer(idx)

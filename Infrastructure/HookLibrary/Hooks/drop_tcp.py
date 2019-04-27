@@ -1,4 +1,4 @@
-def drop_tcp(packet)
+def drop_tcp(packet):
     idx = 1
     while True:
         layer = packet.getlayer(idx)

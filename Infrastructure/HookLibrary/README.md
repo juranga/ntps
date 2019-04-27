@@ -1,5 +1,4 @@
 # Creating Hooks for the System
-***
 
 ## Hook Function Guideline
 
