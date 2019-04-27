@@ -28,15 +28,8 @@ class Proxy_Server:
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
-<<<<<<< HEAD
-
-        #d_packet = dissect(packet)
-        #print(d_packet)
-        """ TODO: Fix Capture Filter
-=======
         
         #TODO: Fix Capture Filter
->>>>>>> 28d67237296428aacfe3337828397037b660e003
         if self.capture_filter.filter(packet) and self.interceptFlag:
             self.hook_manager.execute_hooks(packet, self.intercept_queue)
 
