@@ -2,10 +2,10 @@ from scapy.all import *
 
 def run(packet):
     try:
-        if packet.haslayer(UDP):
+        if packet.haslayer(TCP):
             del packet.chksum
-            del packet.getlayer(UDP).chksum
-            packet.getlayer(UDP).sport = 35011
+            del packet.getlayer(TCP).chksum
+            packet.getlayer(TCP).src = 55555
     except:
         raise
     
