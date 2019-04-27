@@ -30,6 +30,7 @@ class Hook_Collection_Manager:
             for i in reversed(hook_collection.sequence_number, self.n_hook_collections):
                 self.hook_collection[i+1] = self.hook_collection[i]
                 self.hook_collection[i+1].sequence_number += 1
+            self.hook_collection[hook_collection.sequence_number] = hook_collection
 
     def remove_hook_collection(self, hook_collection):
         sn = self.hook_collection[hook_collection.sequence_number]

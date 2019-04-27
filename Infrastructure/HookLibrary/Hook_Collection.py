@@ -1,4 +1,3 @@
-
 class Hook_Collection():
 
     def __init__(self, path="", sequence_number=0):
