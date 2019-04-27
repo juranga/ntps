@@ -1,16 +1,15 @@
-def change_tcp(packet):
-    idx = 1
-    while True:
-        layer = packet.getlayer(idx)
-        if layer is None:
-            break
-        del layer.chksum
-        if layer.name == "TCP":
-            layer["TCP"].src = 55555
-            break
-        yield layer
-        idx += 1
+from scapy.all import * 
 
-    return packet.__class__(str(packet)), "Modification"
+def run(packet):
+    try:
+        if packet.haslayer(UDP):
+            del packet.chksum
+            del packet.getlayer(UDP).chksum
+            packet.getlayer(UDP).sport = 35011
+    except:
+        raise
+    
+    packet.show2(dump=True)
+    return "Modification"
 
         

@@ -1,16 +1,22 @@
 import sys
+import os
+import importlib.util
 
 class Hook():
 
     def __init__(self, name, path):
-        self.name = name
+        tmp_path = path.split("/")
         self.path = path
+        self.name = tmp_path[-1][:-3]
+        self.install_hook()
         return
 
     def install_hook(self):
-        sys.path.append(self.path)
+        spec = importlib.util.spec_from_file_location(self.name, self.path)
+        self.hook = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.hook)
 
     # TO DO: Figure out execution of hook.
     def execute_hook(self, packet):
-        execute = globals()[self.path]
-        execute(packet)
+        return self.hook.run(packet)
+        

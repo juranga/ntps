@@ -16,7 +16,6 @@ class Proxy_Server:
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
         self.interceptFlag = False
-        self.hook_test = Hook('hi', 'pathhere')
 
     def start_intercept(self):
         self.interceptFlag = True
@@ -25,12 +24,10 @@ class Proxy_Server:
         self.interceptFlag = False
 
     def handle_new_packet(self, raw_packet):
-        packet = Ether(raw_packet.get_payload()).copy()
+        packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
-
+        
         self.hook_test.execute_hook(packet)
-        print(TCP(IP(packet)))
-
         """ TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
             # TODO: Hook Execution before intercept
