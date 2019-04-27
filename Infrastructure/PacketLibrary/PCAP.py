@@ -1,3 +1,4 @@
+from scapy.all import *
 
 class PCAP:
 
@@ -9,9 +10,11 @@ class PCAP:
         self.name = name
 
     def save(self, addr):
-        # TODO: Save PCAP to addr specified
+        wrpcap(addr)
         return
 
     def load(self, addr):
-        # TODO: Load PCAP from addr specified
+        pcap = rdpcap(addr)
+        for packet in pcap:
+            self.traffic.append(packet)
         return
