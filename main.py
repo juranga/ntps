@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         self.stacked_window.setObjectName("stacked_window")
 
         # Live Packet View
-        self.live_packet_controller = Live_Packet_View()
+        self.live_packet_controller = Live_Packet_Controller()
         self.stacked_window.addWidget(self.live_packet_controller.view)
 
         # Hook View
