@@ -58,3 +58,16 @@ drop_schedule = {
 }
 
 
+""" Scheduling """
+forward_schedule = {
+    "hook": forward_hook_packet,
+    "intercept": forward_intercept_packet,
+    "pcap": forward_pcap_packet
+}
+
+drop_schedule = {
+    "hook": drop_hook_packet,
+    "intercept": drop_intercept_packet,
+    "pcap": drop_pcap_packet
+}
+

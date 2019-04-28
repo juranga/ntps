@@ -23,7 +23,8 @@ class Hook_Collection_Manager:
         add_to_intercept(intercept_queue, packet)
 
     def add_hook_collection(self, hook_collection):
-        if hook_collection.sequence_number == self.n_hook_collections:
+        if hook_collection.sequence_number >= self.n_hook_collections or hook_collection.sequence_number < 0:
+            hook_collection.sequence_number = self.n_hook_collections
             self.hook_collection.append(hook_collection)
         else:
             self.hook_collection.append(Hook_Collection())
@@ -31,9 +32,13 @@ class Hook_Collection_Manager:
                 self.hook_collection[i+1] = self.hook_collection[i]
                 self.hook_collection[i+1].sequence_number += 1
             self.hook_collection[hook_collection.sequence_number] = hook_collection
+        self.n_hook_collections += 1
 
     def remove_hook_collection(self, hook_collection):
+        if hook_collection.sequence_number > self.n_hook_collections or hook_collection.sequence_number < 0:
+            return
         sn = self.hook_collection[hook_collection.sequence_number]
         del self.hook_collection[hook_collection.sequence_number]
         for i in range(sn, self.n_hook_collections):
             self.hook_collection[i].sequence_number -= 1
+        self.n_hook_collections -= 1
