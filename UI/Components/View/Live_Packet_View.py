@@ -28,11 +28,13 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout_7.addWidget(self.proxy_toggle_label)
         self.font = QtGui.QFont()
         self.font.setPointSize(10)
-        self.sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        self.sizePolicy.setHorizontalStretch(0)
-        self.sizePolicy.setVerticalStretch(0)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
 
         proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, self.sizePolicy, self.font)
+        self.sizePolicy.setHeightForWidth(proxy_toggle.sizePolicy().hasHeightForWidth())
+
         """
         self.sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle = QtWidgets.QComboBox(self.horizontalFrame_6)

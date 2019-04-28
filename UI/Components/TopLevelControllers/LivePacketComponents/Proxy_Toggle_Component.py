@@ -7,7 +7,8 @@ from threading import Thread
 class Proxy_Toggle_Component(QWidget):
 
     def __init__(self, parent, sizePolicy, font, proxy_server= Proxy_Server()):
-        self.combo_box = QComboBox(parent)
+        QWidget.__init__(self, parent=parent)
+        self.combo_box = QtWidgets.QComboBox(parent)
         self.combo_box.setSizePolicy(sizePolicy)
         self.combo_box.addItems(["Enabled/Disabled", "Enabled", "Disabled"])
         self.combo_box.setCurrentText("Enabled/Disabled")
