@@ -1,6 +1,8 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 
 from UI.Components.TopLevelControllers.Live_Packet_Controller import Live_Packet_Controller
+
+from UI.Components.Live_Packet_View import Live_Packet_View
 from UI.Components.Hook_Collection_View import Hook_Collection_View
 from UI.Components.Hook_View import Hook_View
 from UI.Components.PCAP_View import PCAP_View
@@ -25,7 +27,7 @@ class Ui_MainWindow(object):
         self.stacked_window.setObjectName("stacked_window")
 
         # Live Packet View
-        self.live_packet_controller = Live_Packet_Controller()
+        self.live_packet_controller = Live_Packet_View()
         self.stacked_window.addWidget(self.live_packet_controller.view)
 
         # Hook View
