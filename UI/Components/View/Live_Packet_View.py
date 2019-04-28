@@ -26,14 +26,14 @@ class Live_Packet_View(QWidget):
         self.proxy_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.proxy_toggle_label.setObjectName("proxy_toggle_label")
         self.horizontalLayout_7.addWidget(self.proxy_toggle_label)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
+        self.font = QtGui.QFont()
+        self.font.setPointSize(10)
+        self.sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        self.sizePolicy.setHorizontalStretch(0)
+        self.sizePolicy.setVerticalStretch(0)
 
         """
+        self.sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle = QtWidgets.QComboBox(self.horizontalFrame_6)
         self.proxy_toggle.setSizePolicy(sizePolicy)
         self.proxy_toggle.setFont(font)
@@ -120,7 +120,6 @@ class Live_Packet_View(QWidget):
         self.packet_area.setObjectName("packet_area")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.packet_area)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.verticalLayout_4.
         self.packet_area_label = QtWidgets.QLabel(self.packet_area)
         font = QtGui.QFont()
         font.setUnderline(True)

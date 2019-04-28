@@ -1,5 +1,5 @@
-from Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
-from Components.View import Proxy_Toggle_Component
+from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
+from UI.Components.View.Live_Packet_View import Live_Packet_View
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 
 class Live_Packet_Controller():
