@@ -4,7 +4,7 @@ from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Compone
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, parent=None, proxy_toggle_component):
+    def __init__(self, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
