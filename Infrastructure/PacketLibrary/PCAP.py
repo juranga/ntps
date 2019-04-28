@@ -10,7 +10,7 @@ class PCAP:
         self.name = name
 
     def save(self, addr):
-        wrpcap(addr)
+        wrpcap(addr, self.traffic)
         return
 
     def load(self, addr):
