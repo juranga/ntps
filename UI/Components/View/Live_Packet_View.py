@@ -4,7 +4,7 @@ from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Compone
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, parent=None):
+    def __init__(self, proxy_toggle, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -32,6 +32,7 @@ class Live_Packet_View(QWidget):
         self.sizePolicy.setHorizontalStretch(0)
         self.sizePolicy.setVerticalStretch(0)
 
+        proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, self.sizePolicy, self.font)
         """
         self.sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle = QtWidgets.QComboBox(self.horizontalFrame_6)
@@ -43,9 +44,7 @@ class Live_Packet_View(QWidget):
         self.proxy_toggle.addItem("")
         self.proxy_toggle.addItem("")
         """
-
-        self.proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, self.sizePolicy, self.font)
-        self.horizontalLayout_7.addWidget(self.proxy_toggle) 
+        self.horizontalLayout_7.addWidget(proxy_toggle) 
 
 
         self.intercet_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
