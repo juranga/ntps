@@ -57,19 +57,24 @@ class Live_Packet_View(QWidget):
         self.intercept_toggle.addItem("")
         self.intercept_toggle.addItem("")
         self.horizontalLayout_7.addWidget(self.intercept_toggle)
+
         self.queue_size_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.queue_size_label.setObjectName("queue_size_label")
         self.horizontalLayout_7.addWidget(self.queue_size_label)
+
         self.queue_size_input = QtWidgets.QLineEdit(self.horizontalFrame_6)
         self.queue_size_input.setObjectName("queue_size_input")
         self.horizontalLayout_7.addWidget(self.queue_size_input)
         self.gridLayout_6.addWidget(self.horizontalFrame_6, 0, 0, 1, 3)
+
+        """ Capture filter area """
         self.capture_filter_area = QtWidgets.QFrame(self.layoutWidget)
         self.capture_filter_area.setFrameShape(QtWidgets.QFrame.Box)
         self.capture_filter_area.setObjectName("capture_filter_area")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.capture_filter_area)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
         self.label_27 = QtWidgets.QLabel(self.capture_filter_area)
+
         font = QtGui.QFont()
         font.setUnderline(True)
         self.label_27.setFont(font)
@@ -77,9 +82,11 @@ class Live_Packet_View(QWidget):
         self.verticalLayout_12.addWidget(self.label_27)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+
         self.capture_filter_label = QtWidgets.QLabel(self.capture_filter_area)
         self.capture_filter_label.setObjectName("capture_filter_label")
         self.horizontalLayout_6.addWidget(self.capture_filter_label)
+
         self.capture_filter_expression = QtWidgets.QLineEdit(self.capture_filter_area)
         self.capture_filter_expression.setObjectName("capture_filter_expression")
         self.horizontalLayout_6.addWidget(self.capture_filter_expression)
@@ -91,6 +98,7 @@ class Live_Packet_View(QWidget):
         self.capture_filter_apply.setSizePolicy(sizePolicy)
         self.capture_filter_apply.setObjectName("capture_filter_apply")
         self.horizontalLayout_6.addWidget(self.capture_filter_apply)
+
         self.capture_filter_clear = QtWidgets.QPushButton(self.capture_filter_area)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -101,16 +109,20 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout_6.addWidget(self.capture_filter_clear)
         self.verticalLayout_12.addLayout(self.horizontalLayout_6)
         self.gridLayout_6.addWidget(self.capture_filter_area, 1, 0, 1, 3)
+
         self.horizontalFrame_2 = QtWidgets.QFrame(self.layoutWidget)
         self.horizontalFrame_2.setFrameShape(QtWidgets.QFrame.Box)
         self.horizontalFrame_2.setObjectName("horizontalFrame_2")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalFrame_2)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+
+        """ Packet area components """
         self.packet_area = QtWidgets.QFrame(self.horizontalFrame_2)
         self.packet_area.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.packet_area.setObjectName("packet_area")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.packet_area)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
+
         self.packet_area_label = QtWidgets.QLabel(self.packet_area)
         font = QtGui.QFont()
         font.setUnderline(True)
@@ -122,29 +134,30 @@ class Live_Packet_View(QWidget):
 
         self.packet_area_dissected = QtWidgets.QWidget()
         self.packet_area_dissected.setObjectName("packet_area_dissected")
-        
-        
         self.verticalScrollBar = QtWidgets.QScrollBar(self.packet_area_dissected)
-        self.verticalScrollBar.setGeometry(QtCore.QRect(470, 0, 16, 71))
+        self.verticalScrollBar.setGeometry(QtCore.QRect(730, 0, 16, 190))
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar.setObjectName("verticalScrollBar")
         self.packet_area_tab.addTab(self.packet_area_dissected, "")
+
         self.packet_area_binary = QtWidgets.QWidget()
         self.packet_area_binary.setObjectName("packet_area_binary")
         self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.packet_area_binary)
-        self.verticalScrollBar_2.setGeometry(QtCore.QRect(470, 0, 16, 71))
+        self.verticalScrollBar_2.setGeometry(QtCore.QRect(730, 0, 16, 190))
         self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
         self.packet_area_tab.addTab(self.packet_area_binary, "")
+
         self.packet_area_hex = QtWidgets.QWidget()
         self.packet_area_hex.setObjectName("packet_area_hex")
         self.verticalScrollBar_3 = QtWidgets.QScrollBar(self.packet_area_hex)
-        self.verticalScrollBar_3.setGeometry(QtCore.QRect(470, 0, 16, 71))
+        self.verticalScrollBar_3.setGeometry(QtCore.QRect(730, 0, 16, 190))
         self.verticalScrollBar_3.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_3.setObjectName("verticalScrollBar_3")
         self.packet_area_tab.addTab(self.packet_area_hex, "")
         self.verticalLayout_4.addWidget(self.packet_area_tab)
         self.horizontalLayout_3.addWidget(self.packet_area)
+
         self.packet_area_clear = QtWidgets.QPushButton(self.horizontalFrame_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -154,6 +167,8 @@ class Live_Packet_View(QWidget):
         self.packet_area_clear.setObjectName("packet_area_clear")
         self.horizontalLayout_3.addWidget(self.packet_area_clear, 0, QtCore.Qt.AlignRight|QtCore.Qt.AlignBottom)
         self.gridLayout_6.addWidget(self.horizontalFrame_2, 2, 0, 1, 3)
+
+        """ Field area """
         self.field_area = QtWidgets.QFrame(self.layoutWidget)
         self.field_area.setFrameShape(QtWidgets.QFrame.Box)
         self.field_area.setObjectName("field_area")
@@ -217,12 +232,14 @@ class Live_Packet_View(QWidget):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.field_name_label.sizePolicy().hasHeightForWidth())
+
         self.field_name_label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.field_name_label.setFont(font)
         self.field_name_label.setObjectName("field_name_label")
         self.gridLayout_5.addWidget(self.field_name_label, 0, 0, 1, 1)
+
         self.value_label = QtWidgets.QLabel(self.field_area)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -367,6 +384,8 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout.addWidget(self.drop_button, 0, QtCore.Qt.AlignBottom)
         self.verticalLayout_6.addLayout(self.horizontalLayout)
         self.gridLayout_6.addWidget(self.field_area, 3, 0, 2, 1)
+
+        """Fuzzing area """
         self.add_to_fuzzer = QtWidgets.QPushButton(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
