@@ -22,9 +22,11 @@ class Proxy_Server:
 
     def start_intercept(self):
         self.interceptFlag = True
+        print("Interception enabled.")
 
     def stop_intercept(self):
         self.interceptFlag = False
+        print("Interception disabled.")
 
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
