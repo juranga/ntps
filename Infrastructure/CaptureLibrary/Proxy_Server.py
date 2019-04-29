@@ -48,6 +48,7 @@ class Proxy_Server:
         except KeyboardInterrupt:
             print('Shutting down the NFQUEUE')
         
+        print('Stopping intercept')
         # Flush IpTables 
         # TODO: Find a way to NOT flush IPTables, and restore instead
         os.system('iptables -F')

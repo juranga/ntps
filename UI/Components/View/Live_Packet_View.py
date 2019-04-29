@@ -26,13 +26,16 @@ class Live_Packet_View(QWidget):
         self.proxy_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.proxy_toggle_label.setObjectName("proxy_toggle_label")
         self.horizontalLayout_7.addWidget(self.proxy_toggle_label)
-        self.font = QtGui.QFont()
-        self.font.setPointSize(10)
-        self.sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        self.sizePolicy.setHorizontalStretch(0)
-        self.sizePolicy.setVerticalStretch(0)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
 
-        proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, self.sizePolicy, self.font)
+        self.proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, sizePolicy, font).combo_box
+        sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
+        self.proxy_toggle.setSizePolicy(sizePolicy)
+
         """
         self.sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle = QtWidgets.QComboBox(self.horizontalFrame_6)
@@ -44,7 +47,7 @@ class Live_Packet_View(QWidget):
         self.proxy_toggle.addItem("")
         self.proxy_toggle.addItem("")
         """
-        self.horizontalLayout_7.addWidget(proxy_toggle) 
+        self.horizontalLayout_7.addWidget(self.proxy_toggle)
 
 
         self.intercet_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
@@ -456,12 +459,10 @@ class Live_Packet_View(QWidget):
         _translate = QtCore.QCoreApplication.translate
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
 
-        """
-        self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
-        self.proxy_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
-        """
+        self.proxy_toggle.combo_box.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
+        self.proxy_toggle.combo_box.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
+        self.proxy_toggle.combo_box.setItemText(1, _translate("MainWindow", "Enabled"))
+        self.proxy_toggle.combo_box.setItemText(2, _translate("MainWindow", "Disabled"))
 
         self.intercet_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
         self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
