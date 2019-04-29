@@ -32,7 +32,8 @@ class Live_Packet_View(QWidget):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
 
-        self.proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, sizePolicy, font).combo_box
+        proxy_toggle.install_widgets(self.horizontalFrame_6, sizePolicy, font)
+        self.proxy_toggle = proxy_toggle.combo_box
         sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle.setSizePolicy(sizePolicy)
 
@@ -459,10 +460,10 @@ class Live_Packet_View(QWidget):
         _translate = QtCore.QCoreApplication.translate
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
 
-        self.proxy_toggle.combo_box.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.combo_box.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.combo_box.setItemText(1, _translate("MainWindow", "Enabled"))
-        self.proxy_toggle.combo_box.setItemText(2, _translate("MainWindow", "Disabled"))
+        self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
+        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
+        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
+        self.proxy_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
 
         self.intercet_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
         self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
