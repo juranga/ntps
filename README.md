@@ -36,7 +36,7 @@
     
     f. `pip3 install PyQt5`
 
-#### Run the following commands to start listening for Packets
+#### Run the following commands to start the program
 1. On the same terminal
 2. run: 
     
@@ -44,8 +44,25 @@
     
     b. `python3 main.py`
     
-3. Open a new window terminal
-4. run:
+    
+#### For creating an alias to run program wherever do the following:
+1. Open a terminal
+2. do:
 
-    `ping local`
+   a. run `vim ~/.bashrc`
+   
+    * Inside this file, find a free open line and write:
+      
+    * alias runsw='python3 /root/ntps/main.py'
+     
+   b. Save the changes in the file.
+   
+   c. run `source ~/.bashrc`
+   
+3. Now, whenever you'd like to run your program regardless of directory, just run `runsw` on command line.
+   
+   
+    
+
+
     
