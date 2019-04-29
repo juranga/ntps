@@ -27,35 +27,31 @@ class Proxy_Server:
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
-        
+        print(packet.summary())
+
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
             self.hook_manager.execute_hooks(packet, self.intercept_queue)
 
         raw_packet.drop()
 
+    def stop_server(self):
+        os.system('iptables -F')
+        os.system('iptables -X')
+        self.nfq.unbind()
+        print("Unbinded")
+
     # TODO: Thread function
     def init_server(self):
         iptablesr = "iptables -I OUTPUT -j NFQUEUE --queue-num 0"
         #iptablesr = "iptables -I INPUT -j NFQUEUE --queue-num 0"
+        
         os.system(iptablesr)
-
-        nfq = NetfilterQueue()
-        nfq.bind(0, self.handle_new_packet)
+        self.nfq = NetfilterQueue()
+        self.nfq.bind(0, self.handle_new_packet)
+        
         try:
             print('Listening for packets...')
-            nfq.run()
-        except (KeyboardInterrupt, SystemExit):
-            print('Shutting down the NFQUEUE')
-            os.system('iptables -F')
-            os.system('iptables -X')
-            nfq.unbind()
-        
-        """
-        print('Stopping intercept')
-        # Flush IpTables 
-        # TODO: Find a way to NOT flush IPTables, and restore instead
-        os.system('iptables -F')
-        os.system('iptables -X')
-        nfq.unbind()
-        """
+            self.nfq.run(block=False)
+        except KeyboardInterrupt:
+            self.stop_server()
