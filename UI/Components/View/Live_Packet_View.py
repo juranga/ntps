@@ -1,9 +1,10 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget
+from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, parent=None):
+    def __init__(self, proxy_toggle, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -25,21 +26,19 @@ class Live_Packet_View(QWidget):
         self.proxy_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.proxy_toggle_label.setObjectName("proxy_toggle_label")
         self.horizontalLayout_7.addWidget(self.proxy_toggle_label)
-        self.proxy_toggle = QtWidgets.QComboBox(self.horizontalFrame_6)
+        font = QtGui.QFont()
+        font.setPointSize(10)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
+
+        """ Adding the Proxy Toggle """
+        proxy_toggle.install_widgets(self.horizontalFrame_6, sizePolicy, font)
+        self.proxy_toggle = proxy_toggle.combo_box
         sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.proxy_toggle.setFont(font)
-        self.proxy_toggle.setMaxVisibleItems(2)
-        self.proxy_toggle.setObjectName("proxy_toggle")
-        self.proxy_toggle.addItem("")
-        self.proxy_toggle.addItem("")
-        self.proxy_toggle.addItem("")
         self.horizontalLayout_7.addWidget(self.proxy_toggle)
+
         self.intercet_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.intercet_toggle_label.setObjectName("intercet_toggle_label")
         self.horizontalLayout_7.addWidget(self.intercet_toggle_label)
@@ -120,8 +119,11 @@ class Live_Packet_View(QWidget):
         self.verticalLayout_4.addWidget(self.packet_area_label, 0, QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.packet_area_tab = QtWidgets.QTabWidget(self.packet_area)
         self.packet_area_tab.setObjectName("packet_area_tab")
+
         self.packet_area_dissected = QtWidgets.QWidget()
         self.packet_area_dissected.setObjectName("packet_area_dissected")
+        
+        
         self.verticalScrollBar = QtWidgets.QScrollBar(self.packet_area_dissected)
         self.verticalScrollBar.setGeometry(QtCore.QRect(470, 0, 16, 71))
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
@@ -445,10 +447,13 @@ class Live_Packet_View(QWidget):
     def retranslateUI(self):
         _translate = QtCore.QCoreApplication.translate
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
+
+        """
         self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
-        self.proxy_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
+        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled"))
+        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Disabled"))
+        """
+
         self.intercet_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
         self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
         self.intercept_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
