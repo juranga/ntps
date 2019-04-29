@@ -32,7 +32,7 @@ class Live_Packet_View(QWidget):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
 
-        self.proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, sizePolicy, font)
+        self.proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, sizePolicy, font).combo_box
         sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle.setSizePolicy(sizePolicy)
 
@@ -47,7 +47,7 @@ class Live_Packet_View(QWidget):
         self.proxy_toggle.addItem("")
         self.proxy_toggle.addItem("")
         """
-        self.horizontalLayout_7.addWidget(proxy_toggle) 
+        self.horizontalLayout_7.addWidget(self.proxy_toggle)
 
 
         self.intercet_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)

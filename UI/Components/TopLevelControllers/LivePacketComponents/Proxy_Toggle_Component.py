@@ -1,13 +1,11 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 
 from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtWidgets import QWidget
 from threading import Thread
 
-class Proxy_Toggle_Component(QWidget):
+class Proxy_Toggle_Component():
 
     def __init__(self, parent, sizePolicy, font, proxy_server= Proxy_Server()):
-        QWidget.__init__(self, parent=None)
         self.combo_box = QtWidgets.QComboBox(parent)
         self.combo_box.addItems(["Enabled/Disabled", "Enabled", "Disabled"])
         self.combo_box.setCurrentText("Enabled/Disabled")
