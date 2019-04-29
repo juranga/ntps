@@ -5,6 +5,5 @@ from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 class Live_Packet_Controller():
 
     def __init__(self, proxy_server = Proxy_Server()):
-        self.proxy_toggle = None
+        self.proxy_toggle = Proxy_Toggle_Component(proxy_server)
         self.view =  Live_Packet_View(self.proxy_toggle)
-        self.proxy_server = proxy_server
