@@ -32,9 +32,9 @@ class Live_Packet_View(QWidget):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
 
-        proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, sizePolicy, font)
-        sizePolicy.setHeightForWidth(proxy_toggle.sizePolicy().hasHeightForWidth())
-        proxy_toggle.setSizePolicy(sizePolicy)
+        self.proxy_toggle = Proxy_Toggle_Component(self.horizontalFrame_6, sizePolicy, font)
+        sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
+        self.proxy_toggle.setSizePolicy(sizePolicy)
 
         """
         self.sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
