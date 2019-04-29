@@ -45,12 +45,17 @@ class Proxy_Server:
         try:
             print('Listening for packets...')
             nfq.run()
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, SystemExit):
             print('Shutting down the NFQUEUE')
+            os.system('iptables -F')
+            os.system('iptables -X')
+            nfq.unbind()
         
+        """
         print('Stopping intercept')
         # Flush IpTables 
         # TODO: Find a way to NOT flush IPTables, and restore instead
         os.system('iptables -F')
         os.system('iptables -X')
         nfq.unbind()
+        """
