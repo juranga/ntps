@@ -9,11 +9,10 @@ class Proxy_Toggle_Component(QWidget):
     def __init__(self, parent, sizePolicy, font, proxy_server= Proxy_Server()):
         QWidget.__init__(self, parent=parent)
         self.combo_box = QtWidgets.QComboBox(parent)
-        self.combo_box.setSizePolicy(sizePolicy)
         self.combo_box.addItems(["Enabled/Disabled", "Enabled", "Disabled"])
         self.combo_box.setCurrentText("Enabled/Disabled")
         self.combo_box.currentIndexChanged.connect(self.selection_change)
-        self.combo_box.setMaxVisibleItems(3)
+        self.combo_box.setMaxVisibleItems(2)
         self.proxy_server = proxy_server
         self.proxy_thread = None
 
