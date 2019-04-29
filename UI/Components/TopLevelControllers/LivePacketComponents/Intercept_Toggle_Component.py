@@ -10,12 +10,11 @@ class Intercept_Toggle_Component():
 
     def install_widgets(self, parent, sizePolicy, font):
         self.combo_box = QtWidgets.QComboBox(parent)
-        self.combo_box.addItems(["Disabled", "Enabled", "Enabled/Disabled"])
+        self.combo_box.addItems(["Disabled", "Enabled"])
         self.combo_box.setCurrentText("Enabled/Disabled")
         self.combo_box.currentIndexChanged.connect(self.selection_change)
-        self.combo_box.setMaxVisibleItems(2)
+        self.combo_box.setMaxVisibleItems(1)
 
-    # TODO: Needs more testing.
     def selection_change(self, idx):
         if not self.combo_box.currentText() == "Enabled":
             self.proxy_server.stop_intercept()

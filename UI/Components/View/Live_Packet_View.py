@@ -466,15 +466,14 @@ class Live_Packet_View(QWidget):
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
 
         self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
-        self.proxy_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
+        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled"))
+        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Disabled"))
 
         self.intercet_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
         self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
         self.intercept_toggle.setItemText(0, _translate("MainWindow", "Disabled"))
         self.intercept_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
-        self.intercept_toggle.setItemText(2, _translate("MainWindow", "Enabled/Disabled"))
+
         self.queue_size_label.setText(_translate("MainWindow", "Queue Size"))
         self.queue_size_input.setPlaceholderText(_translate("MainWindow", "Queue Size"))
         self.label_27.setText(_translate("MainWindow", "Capture Filter"))
