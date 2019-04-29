@@ -11,12 +11,14 @@ import os
 class Proxy_Server:
 
     def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), 
-                       intercept_queue=Queue(100), hook_manager= Hook_Collection_Manager()):
+                       intercept_queue=Queue(100), hook_manager=Hook_Collection_Manager(),
+                       nfq=NetfilterQueue()):
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
         self.interceptFlag = False
         self.hook_manager = hook_manager
+        self.nfq = nfq
 
     def start_intercept(self):
         self.interceptFlag = True
@@ -47,7 +49,6 @@ class Proxy_Server:
         #iptablesr = "iptables -I INPUT -j NFQUEUE --queue-num 0"
         
         os.system(iptablesr)
-        self.nfq = NetfilterQueue()
         self.nfq.bind(0, self.handle_new_packet)
         
         try:
