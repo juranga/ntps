@@ -2,14 +2,21 @@ from Infrastructure.HookLibrary.Hook import Hook
 
 class Hook_Collection():
 
-    def __init__(self, path="", sequence_number=0):
+    def __init__(self, path="", enabled=True, sequence_number=0):
         self.hook_list = []
         self.path = path
         self.sequence_number = sequence_number
         self.n_hooks = 0
+        self.enabled = enabled
 
     def get_path(self):
         return self.path
+
+    def enable_hook_collection(self):
+        self.enabled = True
+
+    def disable_hook_collection(self):
+        self.enabled = False
 
     def get_sequence_number(self):
         return self.sequence_number

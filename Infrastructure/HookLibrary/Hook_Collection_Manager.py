@@ -8,8 +8,10 @@ class Hook_Collection_Manager:
         self.n_hook_collections = 0
 
     def execute_hooks(self, packet):
-        order = "Modification"
+        order = ""
         for i in range(0, self.n_hook_collections):
+            if not self.hook_collection[i].enabled:
+                continue
             for j in range(0, self.hook_collection[i].n_hooks):
                 order = self.hook_collection[i].hook[j].execute_hook(packet)
                 if order == "Forward":
