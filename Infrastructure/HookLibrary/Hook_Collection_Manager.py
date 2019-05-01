@@ -11,7 +11,7 @@ class Hook_Collection_Manager:
         order = "Modification"
         for i in range(0, self.n_hook_collections):
             for j in range(0, self.hook_collection[i].n_hooks):
-                order = self.hook_collection[i].hook[j].execute_hook()
+                order = self.hook_collection[i].hook[j].execute_hook(packet)
                 if order == "Forward":
                     forward_packet("hook", packet)
                     return
