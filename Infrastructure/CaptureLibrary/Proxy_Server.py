@@ -28,12 +28,14 @@ class Proxy_Server:
 
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
-        self.live_pcap.traffic.append(packet)
         print(packet.summary())
 
         #TODO: Fix Capture Filter
-        if self.capture_filter.filter(packet) and self.interceptFlag:
-            self.hook_manager.execute_hooks(packet, self.intercept_queue)
+        if self.capture_filter.filter(packet):
+            self.hook_manager.execute_hooks(packet)
+            self.live_pcap.traffic.append(packet)
+            if self.interceptFlag:
+                self.intercept_queue.put(packet)
 
         raw_packet.drop()
 
