@@ -36,8 +36,8 @@ class Hook_Collection_Manager:
     def remove_hook_collection(self, hook_collection):
         if hook_collection.sequence_number > self.n_hook_collections or hook_collection.sequence_number < 0:
             return
-        sn = self.hook_collection[hook_collection.sequence_number]
-        del self.hook_collection[hook_collection.sequence_number]
+        sn = hook_collection.sequence_number
+        del self.hook_collection[sn]
         for i in range(sn, self.n_hook_collections):
             self.hook_collection[i].sequence_number -= 1
         self.n_hook_collections -= 1

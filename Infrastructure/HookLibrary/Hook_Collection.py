@@ -24,8 +24,9 @@ class Hook_Collection():
     def delete_hook(self, hook):
         if hook.sequence_number > self.n_hooks or hook.sequence_number < 0:
             return
-        del self.hook_list[hook.sequence_number]
-        for i in range(hook.sequence_number, self.n_hooks):
+        sn = hook.sequence_number
+        del self.hook_list[sn]
+        for i in range(sn, self.n_hooks):
             self.hook_list[i].sequence_number = i
         self.n_hooks -= 1
 
