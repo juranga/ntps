@@ -28,7 +28,6 @@ class Proxy_Server:
 
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
-        print(packet.summary())
 
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet):
@@ -36,7 +35,7 @@ class Proxy_Server:
             self.live_pcap.traffic.append(packet)
             if self.interceptFlag:
                 self.intercept_queue.put(packet)
-
+        
         raw_packet.drop()
 
     def stop_server(self):

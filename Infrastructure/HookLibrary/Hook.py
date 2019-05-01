@@ -4,10 +4,11 @@ import importlib.util
 
 class Hook():
 
-    def __init__(self, name, path, enabled=True, sequence_number=0):
+    def __init__(self, display_name, path, enabled=True, sequence_number=0):
         tmp_path = path.split("/")
         self.path = path
-        self.name = tmp_path[-1][:-3]
+        self.display_name = display_name
+        self.file_name = tmp_path[-1][:-3]
         self.sequence_number = sequence_number
         self.enabled = enabled
         self.install_hook()
@@ -26,7 +27,7 @@ class Hook():
         return self.sequence_number
 
     def install_hook(self):
-        spec = importlib.util.spec_from_file_location(self.name, self.path)
+        spec = importlib.util.spec_from_file_location(self.file_name, self.path)
         self.hook = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.hook)
 
