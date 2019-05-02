@@ -7,6 +7,7 @@ class Proxy_Toggle_Component():
 
     def __init__(self, proxy_server= Proxy_Server()):
         self.proxy_server = proxy_server
+        self.thread = Thread(target=self.proxy_server.init_server())
 
     def install_widgets(self, parent, sizePolicy, font):
         self.combo_box = QtWidgets.QComboBox(parent)
@@ -18,6 +19,7 @@ class Proxy_Toggle_Component():
     # TODO: Needs more testing.
     def selection_change(self, idx):
         if self.combo_box.currentText() == "Enabled":
-            self.proxy_server.init_server()
+            self.thread.start()
         else:
             self.proxy_server.stop_server()
+            self.thread.join()

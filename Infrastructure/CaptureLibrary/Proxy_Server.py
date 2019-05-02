@@ -39,9 +39,9 @@ class Proxy_Server:
         raw_packet.drop()
 
     def stop_server(self):
+        self.nfq.unbind()
         os.system('iptables -F')
         os.system('iptables -X')
-        self.nfq.unbind()
         print("Unbinded")
 
     # TODO: Thread function
