@@ -1,10 +1,12 @@
+from Infrastructure.Common.Generators import id_generator
+
 import sys
 import os
 import importlib.util
 
 class Hook():
 
-    def __init__(self, display_name, path, enabled=True, sequence_number=0):
+    def __init__(self, path, display_name= id_generator(), enabled=True, sequence_number=0):
         tmp_path = path.split("/")
         self.path = path
         self.display_name = display_name
