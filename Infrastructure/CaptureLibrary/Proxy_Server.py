@@ -31,7 +31,13 @@ class Proxy_Server:
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
-        print(packet.summary())
+        print(packet.summary(),flush=True)
+
+        if(self.interceptFlag):
+            print("Packet intercepted", flush=True)
+            self.intercept_queue.put(packet)
+            #print(packet.show(), flush=True)
+            print(packet.summary(), flush=True)
 
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:

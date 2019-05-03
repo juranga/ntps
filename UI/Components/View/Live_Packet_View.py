@@ -520,4 +520,4 @@ class Live_Packet_View(QWidget):
         self.fuzz_button.setText(_translate("MainWindow", "Fuzz"))
         self.stop_fuzz_button.setText(_translate("MainWindow", "Stop"))
         self.remove_from_fuzzer.setText(_translate("MainWindow", "-"))
-        self.packet_area_tab.setCurrentIndex(2)
+        self.packet_area_tab.setCurrentIndex(0)
