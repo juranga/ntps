@@ -1,13 +1,14 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 
-from PyQt5 import QtGui, QtCore, QtWidgets, QListView
+from PyQt5.QtWidgets import QListView
+from PyQt5.QtGui import QStandardItemModel
 
-class Proxy_Toggle_Component():
+class Packet_Area_Component():
 
     def __init__(self, proxy_server= Proxy_Server()):
         self.proxy_server = proxy_server
 
-    def install_widgets(self, parent):
+    def install_widgets(self, parent=None):
         self.list = QListView(parent)
         self.model = QStandardItemModel(self.proxy_server.live_pcap.traffic)
         self.list.setModel(model)

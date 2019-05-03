@@ -8,4 +8,4 @@ class Live_Packet_Controller():
     def __init__(self, proxy_server = Proxy_Server()):
         self.proxy_toggle = Proxy_Toggle_Component(proxy_server)
         self.packet_area = Packet_Area_Component(proxy_server)
-        self.view =  Live_Packet_View(self.proxy_toggle)
+        self.view =  Live_Packet_View(self.proxy_toggle, self.packet_area)
