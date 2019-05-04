@@ -35,7 +35,7 @@ class Proxy_Server:
         if self.capture_filter.filter(packet):
             self.hook_manager.execute_hooks(packet)
             self.live_pcap.traffic.append(packet)
-            if self.interceptFlag and self.intercept_queue.size <= len(self.intercept_queue.packet_list):
+            if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
                 self.intercept_queue.put(PacketDict(packet))
         raw_packet.drop()
 

@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-class Packet:
+class Dissected_Packet:
 
     def __init__(self, raw_packet):
         self.raw_form = raw_packet

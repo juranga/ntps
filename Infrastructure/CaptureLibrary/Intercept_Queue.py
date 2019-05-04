@@ -1,7 +1,6 @@
 from Infrastructure.Common.Generators import id_generator
-from Infrastructure.PacketLibrary.Packet import Packet
+from Infrastructure.PacketLibrary.Packet import Dissected_Packet
 
-from scapy.all import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
 
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
@@ -16,7 +15,7 @@ class Intercept_Queue:
 
     def populate(self):
         parent = QStandardItem(QIcon(arrow), 
-                "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers))
+                "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
             ))
         parent.setData(True, StandardItemModel.ExpandableRole)
         self.model.appendRow(parent)
@@ -26,13 +25,13 @@ class Intercept_Queue:
                 ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
             ))
         
-
     def install_packet(self, raw_packet):
-        self.packet_list.append(Packet(raw_packet))
+        self.packet_list.append(Dissected_Packet(raw_packet))
 
     def put(self, packet, idx = -1, icon=arrow):
         for key, value in packet.items():
             if type(value) is dict:
+                print(self.packet_list[-1].layers)
                 self.packet_list[-1].layers.append(key)
                 self.put(value, idx+1, circle)
                 break
