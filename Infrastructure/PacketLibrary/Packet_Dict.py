@@ -44,6 +44,7 @@ class PacketDict(dict):
             current_dict = self
         for line in packet_in_list:
             if line.strip() != "":
+                    continue
                 line = line.replace("|","")
                 if line.find('###[') > -1:
                     key = self.__extract_key(line)
