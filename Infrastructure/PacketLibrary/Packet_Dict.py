@@ -44,14 +44,13 @@ class PacketDict(dict):
             current_dict = self
         for line in packet_in_list:
             if line.strip() != "":
-                    continue
                 line = line.replace("|","")
                 if line.find('###[') > -1:
                     key = self.__extract_key(line)
                     current_dict[key] = {}
                     current_dict = current_dict[key]
                     continue
-                    current_dict.update(self.__extract_value_to_dict(line))
+                current_dict.update(self.__extract_value_to_dict(line))
 
     def haslayer(self, pkt_cls):
         return self.packet.haslayer(pkt_cls)
