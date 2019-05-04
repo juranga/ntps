@@ -22,6 +22,7 @@ class Proxy_Server:
         self.interceptFlag = True
         self.hook_manager = hook_manager
         self.nfq = nfq
+        self.thread_list = []
 
     def start_intercept(self):
         self.interceptFlag = True
@@ -29,7 +30,7 @@ class Proxy_Server:
     def stop_intercept(self):
         self.interceptFlag = False
 
-    def threaded_packet_handler(self, raw_packet):
+    def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         self.intercept_queue.install_packet(packet)
 
@@ -40,18 +41,21 @@ class Proxy_Server:
             with self.intercept_queue.lock:
                 if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
                     self.intercept_queue.put(PacketDict(packet))
-                    self.intercept_queue.populate() 
+                    self.populate_GUI()
         raw_packet.drop()
 
-    def handle_new_packet(self, raw_packet):
-        w = worker.Worker(self.raw_packet, self.intercept_queue, self.capture_filter, self.hook_manager, self.live_pcap, self.interceptFlag)
+    def populate_GUI(self):
+        w = Worker(self.intercept_queue)
         t = QThread()
         w.moveToThread(t)
-        w.finished.connect(t.quit())
-        t.started.connect(w.threaded_packet_handler)
+        w.finished.connect(t.quit)
+        t.started.connect(w.populate)
+        self.thread_list.append(t)
         t.start()
 
     def stop_server(self):
+        for t in self.thread_list:
+            t.wait()
         self.nfq.unbind()
         os.system("iptables -D OUTPUT -j NFQUEUE --queue-num 0")
         print("Unbinded")
