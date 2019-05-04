@@ -122,13 +122,11 @@ class Live_Packet_View(QWidget):
         self.packet_area_tab = QtWidgets.QTabWidget(self.packet_area)
         self.packet_area_tab.setObjectName("packet_area_tab")
 
+        # Adding Packet Area
         packet_area.install_widgets()
         self.packet_area_dissected = packet_area.list
         self.packet_area_dissected.setObjectName("packet_area_dissected")
-        """ Testing Adding Packet Area Dissected """
 
-        
-        
         self.verticalScrollBar = QtWidgets.QScrollBar(self.packet_area_dissected)
         self.verticalScrollBar.setGeometry(QtCore.QRect(470, 0, 16, 71))
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)

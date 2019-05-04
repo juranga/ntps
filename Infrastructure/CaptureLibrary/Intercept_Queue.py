@@ -20,7 +20,7 @@ class Intercept_Queue:
             ))
 
         for layer in self.packet_list[-1].layers:
-            self.model.appendRow(QStandardItem(QIcon(circle),
+            self.model.itemFromIndex(layer).appendRow(QStandardItem(QIcon(circle),
                 ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
             ))
 
