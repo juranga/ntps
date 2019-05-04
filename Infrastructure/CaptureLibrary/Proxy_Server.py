@@ -30,7 +30,8 @@ class Proxy_Server:
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         self.intercept_queue.install_packet(packet)
-
+        
+        print('In handle new packet', flush=True)
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet):
             self.hook_manager.execute_hooks(packet)
@@ -38,6 +39,7 @@ class Proxy_Server:
             with self.intercept_queue.lock:
                 if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
                     self.intercept_queue.put(PacketDict(packet))
+                    print('Populating to GUI...', flush=True)
                     self.intercept_queue.populate()
         raw_packet.drop()
 
@@ -55,6 +57,6 @@ class Proxy_Server:
         
         try:
             print('Listening for packets...')
-            self.nfq.run(block=False)
+            self.nfq.run(block=True)
         except KeyboardInterrupt:
             self.stop_server()

@@ -4,6 +4,7 @@ from Infrastructure.PacketLibrary.Packet import Dissected_Packet
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
 from PyQt5.QtCore import QThread
 from threading import Lock
+from multiprocessing import Value
 
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
 circle = "/root/ntps/UI/Resources/CircularButton.png"
