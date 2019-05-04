@@ -19,7 +19,7 @@ class Intercept_Queue:
             ))
         self.model.appendRow(parent)
 
-        for layer in range(0, self.packet_list[-1].layers):
+        for layer in self.packet_list[-1].layers:
             self.model.itemFromIndex(self.model.indexFromItem(parent)).appendRow(QStandardItem(QIcon(circle),
                 ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
             ))
@@ -30,7 +30,6 @@ class Intercept_Queue:
     def put(self, packet, idx = -1, icon=arrow):
         for key, value in packet.items():
             if type(value) is dict:
-                print(self.packet_list[-1].layers)
                 self.packet_list[-1].layers.append(key)
                 self.put(value, idx+1, circle)
                 break
