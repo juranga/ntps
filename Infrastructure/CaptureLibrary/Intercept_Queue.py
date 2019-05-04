@@ -2,16 +2,17 @@ from Infrastructure.Common.Generators import id_generator
 from Infrastructure.PacketLibrary.Packet import Dissected_Packet
 
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
+from threading import Lock
 
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
 circle = "/root/ntps/UI/Resources/CircularButton.png"
-
 class Intercept_Queue:
 
     def __init__(self, size=100):
         self.size = size
         self.model = QStandardItemModel()
         self.packet_list = []
+        self.lock = Lock()
 
     def populate(self):
         parent = QStandardItem(QIcon(arrow), 

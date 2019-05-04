@@ -8,6 +8,7 @@ from queue import Queue
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import os
+from threading import Thread
 
 class Proxy_Server:
 
@@ -27,7 +28,7 @@ class Proxy_Server:
     def stop_intercept(self):
         self.interceptFlag = False
 
-    def handle_new_packet(self, raw_packet):
+    def threaded_packet_handler(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         self.intercept_queue.install_packet(packet)
 
@@ -35,9 +36,15 @@ class Proxy_Server:
         if self.capture_filter.filter(packet):
             self.hook_manager.execute_hooks(packet)
             self.live_pcap.traffic.append(packet)
-            if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
-                self.intercept_queue.put(PacketDict(packet))
+            with self.intercept_queue.lock:
+                if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
+                    self.intercept_queue.put(PacketDict(packet))
         raw_packet.drop()
+
+    def handle_new_packet(self, raw_packet):
+        t = Thread(target=threaded_packet_handler, kwargs={'self': self, 'raw_packet': raw_packet})
+        t.start()
+        t.join()
 
     def stop_server(self):
         self.nfq.unbind()
