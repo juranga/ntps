@@ -40,18 +40,47 @@ class Proxy_Server:
             print("Packet intercepted", flush=True)    
             self.intercept_queue.put(packet)
 
-            if IP in packet:
-                field_names = [field.name for field in IP.fields_desc]
-            
-            
-            #print(packet.src, flush=True)
+            """TRYING TO EXTRACT DATA FROM PACKETS"""
+            packet_layers = {}
+            field_list = {}
+            ip_fields = None
+            tcp_fields  = None
+            icmp_fields = None
+            udp_fields = None
+            arp_fields = None
 
+            if IP in packet:
+                ip_fnames = [field.name for field in IP.fields_desc]
+                ip_fields = {fname: getattr(packet[IP], fname) for fname in ip_fnames}
+                #print(ip_fields) #Print statements like this will print all fields in the layer
+                """ FIX TO BUILD OBJECTS"""
+                #for f in ip_fields:
+                    #new_field = Field(f, ip_fields[f], "Dissected", 0)
+                    #field_list[f] = new_field
+
+                #new_layer = Layer("IP","IP", 0, 0, True, 0, field_list)
+                #packet_layers[IP] = new_layer
+                    
+                    
+            if TCP in packet:
+                tcp_fnames =[field.name for field in TCP.fields_desc]
+                tcp_fields = {fname: getattr(packet[TCP], fname) for fname in tcp_fnames}
+            if UDP in packet:
+                udp_fnames =  [field.name for field in UDP.fields_desc]
+                udp_fields = {fname: getattr(packet[UDP], fname) for fname in udp_fnames}
+            if ICMP in packet:
+                icmp_fnames = [field.name for field in ICMP.fields_desc]
+                icmp_fields = {fname: getattr(packet[ICMP], fname) for fname in icmp_fnames}
+            if ARP in packet:
+                arp_fnames  =  [field.name for field in ARP.fields_desc]
+                arp_fields = {fname: getattr(packet[ARP], fname) for fname in arp_fnames}
+            
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
             self.hook_manager.execute_hooks(packet, self.intercept_queue)
 
         raw_packet.drop()
-
+        
     def stop_server(self):
         os.system('iptables -F')
         os.system('iptables -X')
