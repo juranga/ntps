@@ -37,3 +37,8 @@ class Intercept_Queue:
                 break
             else:
                 self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = value
+
+    def get(self):
+        packet = self.packet_list[0]
+        del self.packet_list[0]
+        return packet
