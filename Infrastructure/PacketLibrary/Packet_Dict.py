@@ -5,7 +5,7 @@ Author: Zhi Yuan
 """
 
 from scapy.all import *
-from cStringIO import StringIO
+from io import StringIO
 import sys
 
 class Capturing(list):
@@ -35,13 +35,13 @@ class PacketDict(dict):
             b = line.replace(" ","")
             a = b.split("=")
             return {a[0]: a[1]}
-            return {line.replace(" ",""): None}
+        return {line.replace(" ",""): None}
 
 
-    def __packet_to_dict(self, packet):
+    def __packet_to_dict(self):
         with Capturing() as packet_in_list:
             self.packet.show2()
-            current_dict = self
+        current_dict = self
         for line in packet_in_list:
             if line.strip() != "":
                 line = line.replace("|","")
