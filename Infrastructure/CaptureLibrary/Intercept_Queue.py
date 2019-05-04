@@ -17,7 +17,6 @@ class Intercept_Queue:
         parent = QStandardItem(QIcon(arrow), 
                 "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
             ))
-        parent.setData(True, StandardItemModel.ExpandableRole)
         self.model.appendRow(parent)
 
         for layer in range(0, self.packet_list[-1].layers):
