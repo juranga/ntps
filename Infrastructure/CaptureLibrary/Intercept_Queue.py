@@ -15,15 +15,17 @@ class Intercept_Queue:
         self.packet_list = []
 
     def populate(self):
-        self.model.appendRow(QStandardItem(QIcon(arrow), 
+        parent = QStandardItem(QIcon(arrow), 
                 "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers))
             ))
+        parent.setData(True, StandardItemModel.ExpandableRole)
+        self.model.appendRow(parent)
 
         for layer in range(0, self.packet_list[-1].layers):
-            print(layer)
-            self.model.itemFromIndex(layer).appendRow(QStandardItem(QIcon(circle),
+            self.model.itemFromIndex(self.model.indexFromItem(parent)).appendRow(QStandardItem(QIcon(circle),
                 ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
             ))
+        
 
     def install_packet(self, raw_packet):
         self.packet_list.append(Packet(raw_packet))
