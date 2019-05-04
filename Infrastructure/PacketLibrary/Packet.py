@@ -1,8 +1,9 @@
 # An object representing a packet in the system.
+import datetime
 
-class Packet:
+class NTPS_Packet:
 
-    def __init__(self, packet_name = "", timestamp = "", layer_list = {}):
+    def __init__(self, layer_list = {}, packet_name = "", timestamp = datetime.datetime.now().time()):
         self.layers = layer_list
         self.packet_name = packet_name
         self.timestamp = timestamp

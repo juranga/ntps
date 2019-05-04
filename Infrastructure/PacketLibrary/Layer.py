@@ -1,6 +1,6 @@
 # An object representing a layer in the system.
 
-class Layer:
+class NTPS_Layer:
     
     def __init__(self, layer_field_name, layer_showname,layer_size,layer_position, layer_show, layer_value, field_list):
         self.layer_field_name  = layer_field_name
