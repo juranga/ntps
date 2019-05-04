@@ -21,12 +21,7 @@ class Capturing(list):
         sys.stdout = self._stdout
 
 class PacketDict(dict):
-        """
-        This class will convert packet into a dict by using the result of packet.show2(). Furthermore the original
-        packet will be also saved as attribute '.packet'.
-        More class functions could be added, currently only support 'haslayer()'.
-        Scapy version: scapy-2.3.3
-        """
+    
     def __init__(self, pkt):
         self.packet = pkt
         self.__packet_to_dict()
@@ -40,12 +35,13 @@ class PacketDict(dict):
             b = line.replace(" ","")
             a = b.split("=")
             return {a[0]: a[1]}
-        return {line.replace(" ",""): None}
+            return {line.replace(" ",""): None}
+
 
     def __packet_to_dict(self, packet):
         with Capturing() as packet_in_list:
             self.packet.show2()
-        current_dict = self
+            current_dict = self
         for line in packet_in_list:
             if line.strip() != "":
                 line = line.replace("|","")
@@ -54,7 +50,7 @@ class PacketDict(dict):
                     current_dict[key] = {}
                     current_dict = current_dict[key]
                     continue
-                current_dict.update(self.__extract_value_to_dict(line))
+                    current_dict.update(self.__extract_value_to_dict(line))
 
     def haslayer(self, pkt_cls):
         return self.packet.haslayer(pkt_cls)
