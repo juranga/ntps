@@ -1,6 +1,9 @@
 from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
 from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
 from Infrastructure.PacketLibrary.PCAP import PCAP
+from Infrastructure.PacketLibrary.Packet import Packet
+from Infrastructure.PacketLibrary.Field import Field
+from Infrastructure.PacketLibrary import Layer
 from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
 
 from queue import Queue
@@ -34,10 +37,14 @@ class Proxy_Server:
         print(packet.summary(),flush=True)
 
         if(self.interceptFlag):
-            print("Packet intercepted", flush=True)
+            print("Packet intercepted", flush=True)    
             self.intercept_queue.put(packet)
-            #print(packet.show(), flush=True)
-            print(packet.summary(), flush=True)
+
+            if IP in packet:
+                field_names = [field.name for field in IP.fields_desc]
+            
+            
+            #print(packet.src, flush=True)
 
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet) and self.interceptFlag:
