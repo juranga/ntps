@@ -10,13 +10,13 @@ import os
 
 class Proxy_Server:
 
-    def __init__(self, capture_filter=Capture_Filter(), live_pcap_list=PCAP(), 
-                       intercept_queue=Intercept_Queue(100), hook_manager=Hook_Collection_Manager(),
+    def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), 
+                       intercept_queue=Intercept_Queue(), hook_manager=Hook_Collection_Manager(),
                        nfq=NetfilterQueue()):
         self.capture_filter = capture_filter
-        self.live_pcap_list = live_pcap_list
+        self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
-        self.interceptFlag = False
+        self.interceptFlag = True
         self.hook_manager = hook_manager
         self.nfq = nfq
 
@@ -34,7 +34,7 @@ class Proxy_Server:
             self.hook_manager.execute_hooks(packet)
             self.live_pcap.traffic.append(packet)
             if self.interceptFlag:
-                self.intercept_queue.put(packet)
+                self.intercept_queue.put(raw_packet)
         
         raw_packet.drop()
 
