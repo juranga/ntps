@@ -1,6 +1,7 @@
 from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
 from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
 from Infrastructure.PacketLibrary.PCAP import PCAP
+from Infrastructure.PacketLibrary.Packet_Dict import PacketDict
 from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
 
 from queue import Queue
@@ -27,7 +28,8 @@ class Proxy_Server:
         self.interceptFlag = False
 
     def handle_new_packet(self, raw_packet):
-        packet = IP(raw_packet.get_payload()).copy()
+        #packet = IP(raw_packet.get_payload()).copy()
+        packet = PacketDict(raw_packet)
 
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet):

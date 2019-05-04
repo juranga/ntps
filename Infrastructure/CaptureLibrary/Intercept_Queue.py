@@ -7,10 +7,9 @@ class Intercept_Queue:
         self.intercept_queue = QStandardItemModel()
 
     def put(self, elements, icon="root/ntps/UI/Resources/BlueArrow.png"):
-        print(elements)
-        for text, children in elements:
-            print(text)
-            item = QStandardItem(QIcon(icon), text)
-            self.intercept_queue.appendRow(item)
-            if children:
-                self.put(self, children, icon="root/ntps/UI/Resources/CircularButton.png")
+        for key, value in elements:
+            if type(value) is dict:
+                yield from self.put(self, value, icon="root/ntps/UI/Resources/CircularButton.png")
+            else:
+                item = QStandardItem(QIcon(icon), key)
+                self.intercept_queue.appendRow(item)
