@@ -19,7 +19,8 @@ class Intercept_Queue:
                 "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers))
             ))
 
-        for layer in self.packet_list[-1].layers:
+        for layer in range(0, self.packet_list[-1].layers):
+            print(layer)
             self.model.itemFromIndex(layer).appendRow(QStandardItem(QIcon(circle),
                 ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
             ))
