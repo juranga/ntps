@@ -9,7 +9,7 @@ from queue import Queue
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import os
-from PyQt5.QtCore import QThread,
+from PyQt5.QtCore import QThread
 
 class Proxy_Server:
 
@@ -44,12 +44,12 @@ class Proxy_Server:
         raw_packet.drop()
 
     def handle_new_packet(self, raw_packet):
-        w = worker.Worker()
+        w = worker.Worker(self.raw_packet, self.intercept_queue, self.capture_filter, self.hook_manager, self.live_pcap, self.interceptFlag)
         t = QThread()
         w.moveToThread(t)
         w.finished.connect(t.quit())
         t.started.connect(w.threaded_packet_handler)
-        t.start(raw_packet, self)
+        t.start()
 
     def stop_server(self):
         self.nfq.unbind()
