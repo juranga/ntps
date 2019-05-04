@@ -1,5 +1,6 @@
 from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
 from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
+from Infrastructure.Common.Worker import Worker
 from Infrastructure.PacketLibrary.PCAP import PCAP
 from Infrastructure.PacketLibrary.Packet_Dict import PacketDict
 from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
@@ -8,7 +9,7 @@ from queue import Queue
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import os
-from threading import Thread
+from PyQt5.QtCore import QThread,
 
 class Proxy_Server:
 
@@ -39,12 +40,16 @@ class Proxy_Server:
             with self.intercept_queue.lock:
                 if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
                     self.intercept_queue.put(PacketDict(packet))
+                    self.intercept_queue.populate() 
         raw_packet.drop()
 
     def handle_new_packet(self, raw_packet):
-        t = Thread(target=threaded_packet_handler, kwargs={'self': self, 'raw_packet': raw_packet})
-        t.start()
-        t.join()
+        w = worker.Worker()
+        t = QThread()
+        w.moveToThread(t)
+        w.finished.connect(t.quit())
+        t.started.connect(w.threaded_packet_handler)
+        t.start(raw_packet, self)
 
     def stop_server(self):
         self.nfq.unbind()

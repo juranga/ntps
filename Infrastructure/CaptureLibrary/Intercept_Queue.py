@@ -2,6 +2,7 @@ from Infrastructure.Common.Generators import id_generator
 from Infrastructure.PacketLibrary.Packet import Dissected_Packet
 
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
+from PyQt5.QtCore import QThread
 from threading import Lock
 
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
@@ -36,5 +37,3 @@ class Intercept_Queue:
                 break
             else:
                 self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = value
-        self.populate()
-
