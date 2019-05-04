@@ -7,12 +7,11 @@ from queue import Queue
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import os
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 class Proxy_Server:
 
-    def __init__(self, capture_filter=Capture_Filter(), live_pcap_list=QStandardItemModel(), 
-                       intercept_queue=Queue(100), hook_manager=Hook_Collection_Manager(),
+    def __init__(self, capture_filter=Capture_Filter(), live_pcap_list=PCAP(), 
+                       intercept_queue=Intercept_Queue(100), hook_manager=Hook_Collection_Manager(),
                        nfq=NetfilterQueue()):
         self.capture_filter = capture_filter
         self.live_pcap_list = live_pcap_list
@@ -33,8 +32,7 @@ class Proxy_Server:
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet):
             self.hook_manager.execute_hooks(packet)
-            live_pcap_list.appendRow(QStandardItem(packet))
-            #self.live_pcap.traffic.append(packet)
+            self.live_pcap.traffic.append(packet)
             if self.interceptFlag:
                 self.intercept_queue.put(packet)
         
