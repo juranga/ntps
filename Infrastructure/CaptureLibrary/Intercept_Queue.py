@@ -1,38 +1,39 @@
 from Infrastructure.Common.Generators import id_generator
+from Infrastructure.PacketLibrary.Packet import Packet
 
 from scapy.all import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
-from collections import defaultdict
 
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
 circle = "/root/ntps/UI/Resources/CircularButton.png"
 
 class Intercept_Queue:
 
-    def __init__(self):
+    def __init__(self, size=100):
+        self.size = size
         self.model = QStandardItemModel()
-        self.layers = []
-        self.fields = defaultdict(dict)
+        self.packet_list = []
 
     def populate(self):
         self.model.appendRow(QStandardItem(QIcon(arrow), 
-                "Frame {}, {}".format(id_generator(size=3), ', '.join(self.layers))
-                ))
-        for layer in self.layers:
+                "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers))
+            ))
+
+        for layer in self.packet_list[-1].layers:
             self.model.appendRow(QStandardItem(QIcon(circle),
-                ", ".join("{}:{}".format(k,v) for k,v in self.fields[layer].items())
-                ))
+                ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
+            ))
 
-    def install_packet(self, packet):
-        self.packet = packet
+    def install_packet(self, raw_packet):
+        self.packet_list.append(Packet(raw_packet))
 
-    def put(self, elements, idx = -1, icon=arrow):
-        for key, value in elements.items():
+    def put(self, packet, idx = -1, icon=arrow):
+        for key, value in packet.items():
             if type(value) is dict:
-                self.layers.append(key)
+                self.packet_list[-1].layers.append(key)
                 self.put(value, idx+1, circle)
                 break
             else:
-                self.fields[self.layers[idx]][key] = value
+                self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = value
         self.populate()
 
