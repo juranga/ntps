@@ -1,6 +1,5 @@
 from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
 from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
-from Infrastructure.Common.Worker import Worker
 from Infrastructure.PacketLibrary.PCAP import PCAP
 from Infrastructure.PacketLibrary.Packet_Dict import PacketDict
 from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
@@ -9,7 +8,6 @@ from queue import Queue
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import os
-from PyQt5.QtCore import QThread
 
 class Proxy_Server:
 
@@ -22,7 +20,6 @@ class Proxy_Server:
         self.interceptFlag = True
         self.hook_manager = hook_manager
         self.nfq = nfq
-        self.thread_list = []
 
     def start_intercept(self):
         self.interceptFlag = True
@@ -41,21 +38,10 @@ class Proxy_Server:
             with self.intercept_queue.lock:
                 if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
                     self.intercept_queue.put(PacketDict(packet))
-                    self.populate_GUI()
+                    self.intercept_queue.populate()
         raw_packet.drop()
 
-    def populate_GUI(self):
-        w = Worker(self.intercept_queue)
-        t = QThread()
-        w.moveToThread(t)
-        w.finished.connect(t.quit)
-        t.started.connect(w.populate)
-        self.thread_list.append(t)
-        t.start()
-
     def stop_server(self):
-        for t in self.thread_list:
-            t.wait()
         self.nfq.unbind()
         os.system("iptables -D OUTPUT -j NFQUEUE --queue-num 0")
         print("Unbinded")
