@@ -1,12 +1,13 @@
 from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
 from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Component import Packet_Area_Component
+from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Binary_Component import Packet_Area_Binary_Component
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, proxy_toggle, packet_area, parent=None):
+    def __init__(self, proxy_toggle, packet_area, packet_binary_area, packet_hex_area, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -58,6 +59,8 @@ class Live_Packet_View(QWidget):
         self.intercept_toggle.addItem("")
         self.intercept_toggle.addItem("")
         self.intercept_toggle.addItem("")
+
+        """Queue Stuff"""
         self.horizontalLayout_7.addWidget(self.intercept_toggle)
         self.queue_size_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.queue_size_label.setObjectName("queue_size_label")
@@ -66,6 +69,8 @@ class Live_Packet_View(QWidget):
         self.queue_size_input.setObjectName("queue_size_input")
         self.horizontalLayout_7.addWidget(self.queue_size_input)
         self.gridLayout_6.addWidget(self.horizontalFrame_6, 0, 0, 1, 3)
+
+        """Capture Area"""
         self.capture_filter_area = QtWidgets.QFrame(self.layoutWidget)
         self.capture_filter_area.setFrameShape(QtWidgets.QFrame.Box)
         self.capture_filter_area.setObjectName("capture_filter_area")
@@ -108,11 +113,14 @@ class Live_Packet_View(QWidget):
         self.horizontalFrame_2.setObjectName("horizontalFrame_2")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalFrame_2)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+
+        """PACKET AREA"""
         self.packet_area = QtWidgets.QFrame(self.horizontalFrame_2)
         self.packet_area.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.packet_area.setObjectName("packet_area")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.packet_area)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
+        
         self.packet_area_label = QtWidgets.QLabel(self.packet_area)
         font = QtGui.QFont()
         font.setUnderline(True)
@@ -126,26 +134,33 @@ class Live_Packet_View(QWidget):
         packet_area.install_widgets()
         self.packet_area_dissected = packet_area.list
         self.packet_area_dissected.setObjectName("packet_area_dissected")
-
         self.verticalScrollBar = QtWidgets.QScrollBar(self.packet_area_dissected)
         self.verticalScrollBar.setGeometry(QtCore.QRect(470, 0, 16, 71))
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar.setObjectName("verticalScrollBar")
         self.packet_area_tab.addTab(self.packet_area_dissected, "")
-        self.packet_area_binary = QtWidgets.QWidget()
+
+        #Adding Packet Area Binary
+        packet_binary_area.install_widgets()
+        self.packet_area_binary = packet_binary_area.list
         self.packet_area_binary.setObjectName("packet_area_binary")
         self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.packet_area_binary)
         self.verticalScrollBar_2.setGeometry(QtCore.QRect(470, 0, 16, 71))
         self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
         self.packet_area_tab.addTab(self.packet_area_binary, "")
-        self.packet_area_hex = QtWidgets.QWidget()
+
+        #Adding Packet Area Hex
+        packet_hex_area.install_widgets()
+        self.packet_area_hex = packet_hex_area.list
         self.packet_area_hex.setObjectName("packet_area_hex")
         self.verticalScrollBar_3 = QtWidgets.QScrollBar(self.packet_area_hex)
         self.verticalScrollBar_3.setGeometry(QtCore.QRect(470, 0, 16, 71))
         self.verticalScrollBar_3.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_3.setObjectName("verticalScrollBar_3")
         self.packet_area_tab.addTab(self.packet_area_hex, "")
+
+        #Add packet area tabs
         self.verticalLayout_4.addWidget(self.packet_area_tab)
         self.horizontalLayout_3.addWidget(self.packet_area)
         self.packet_area_clear = QtWidgets.QPushButton(self.horizontalFrame_2)
@@ -470,9 +485,12 @@ class Live_Packet_View(QWidget):
         self.capture_filter_apply.setText(_translate("MainWindow", "Apply"))
         self.capture_filter_clear.setText(_translate("MainWindow", "Clear"))
         self.packet_area_label.setText(_translate("MainWindow", "Packet Area"))
+
+        """PACKET AREA FORMAT"""
         self.packet_area_tab.setTabText(self.packet_area_tab.indexOf(self.packet_area_dissected), _translate("MainWindow", "Dissected"))
         self.packet_area_tab.setTabText(self.packet_area_tab.indexOf(self.packet_area_binary), _translate("MainWindow", "Binary"))
         self.packet_area_tab.setTabText(self.packet_area_tab.indexOf(self.packet_area_hex), _translate("MainWindow", "HEX"))
+        
         self.packet_area_clear.setText(_translate("MainWindow", "Clear"))
         self.field_area_label.setText(_translate("MainWindow", "Field Area"))
         self.checkBox_3.setText(_translate("MainWindow", "icmp.type"))
@@ -508,4 +526,4 @@ class Live_Packet_View(QWidget):
         self.fuzz_button.setText(_translate("MainWindow", "Fuzz"))
         self.stop_fuzz_button.setText(_translate("MainWindow", "Stop"))
         self.remove_from_fuzzer.setText(_translate("MainWindow", "-"))
-        self.packet_area_tab.setCurrentIndex(2)
+        self.packet_area_tab.setCurrentIndex(0)
