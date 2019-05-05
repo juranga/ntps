@@ -17,7 +17,7 @@ class Proxy_Server:
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
-        self.interceptFlag = False
+        self.interceptFlag = True
         self.hook_manager = hook_manager
         self.nfq = nfq
 
