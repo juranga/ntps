@@ -12,11 +12,13 @@ import os
 class Proxy_Server:
 
     def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), 
-                       intercept_queue=Intercept_Queue(100), hook_manager=Hook_Collection_Manager(),
+                       intercept_queue=Intercept_Queue(100), hex_intercept_queue=Intercept_Queue(100), binary_intercept_queue=Intercept_Queue(100),hook_manager=Hook_Collection_Manager(),
                        nfq=NetfilterQueue()):
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
+        self.hex_intercept_queue = hex_intercept_queue
+        #self.binary_intercept_queue = binary_intercept_queue
         self.interceptFlag = True
         self.hook_manager = hook_manager
         self.nfq = nfq
@@ -30,6 +32,7 @@ class Proxy_Server:
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         self.intercept_queue.install_packet(packet)
+        self.hex_intercept_queue.install_packet(packet)
         
         print('In handle new packet', flush=True)
         #TODO: Fix Capture Filter
@@ -39,8 +42,12 @@ class Proxy_Server:
             with self.intercept_queue.lock:
                 if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
                     self.intercept_queue.put(PacketDict(packet))
+                    self.hex_intercept_queue.put_convert(PacketDict(packet))
+                    #self.binary_intercept_queue.put_convert(PacketDict(packet))
                     print('Populating to GUI...', flush=True)
                     self.intercept_queue.populate()
+                    self.hex_intercept_queue.populate()
+                    #self.binary_intercept_queue.populate()
         raw_packet.drop()
 
     def stop_server(self):

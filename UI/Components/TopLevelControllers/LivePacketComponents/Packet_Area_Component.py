@@ -1,5 +1,5 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
-
+from UI.Components.TopLevelControllers.LivePacketComponents.Field_Area_Component import Field_Area_Component
 from PyQt5.QtWidgets import QTreeView
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
 

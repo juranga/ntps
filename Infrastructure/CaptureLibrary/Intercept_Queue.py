@@ -13,6 +13,7 @@ class Intercept_Queue:
     def __init__(self, size=100):
         self.size = size
         self.model = QStandardItemModel()
+        self.field_model = QStandardItemModel()
         self.packet_list = []
         self.lock = Lock()
 
@@ -26,6 +27,12 @@ class Intercept_Queue:
             self.model.itemFromIndex(self.model.indexFromItem(parent)).appendRow(QStandardItem(QIcon(circle),
                 ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
             ))
+            
+    def populate_fields(self):
+        for layer in self.packet_list[-1].layers:
+            self.field_model.appendRow(QStandardItem(QIcon(circle),",".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
+            ))
+            
         
     def install_packet(self, raw_packet):
         self.packet_list.append(Dissected_Packet(raw_packet))
@@ -38,8 +45,27 @@ class Intercept_Queue:
                 break
             else:
                 self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = value
+                
+    def put_convert(self, packet, idx = -1, icon=circle):
+
+        for key, value in packet.items():
+            if type(value) is dict:
+                self.packet_list[-1].layers.append(key)
+                self.put_convert(value, idx+1, arrow)
+                break
+            else:
+                if ((value != None) and (value.isdigit())):
+                    value = int(value)
+                    self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = hex(value)
+                else:
+                    self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = value
 
     def get(self):
         packet = self.packet_list[0]
         del self.packet_list[0]
         return packet
+
+
+            
+
+
