@@ -16,5 +16,6 @@ class Packet_Area_Component():
 
     def on_clicked(self, index):
         self.list.expand(index)
+        self.proxy_server.intercept_queue.populate_fields()
         
 

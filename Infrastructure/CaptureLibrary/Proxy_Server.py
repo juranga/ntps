@@ -47,6 +47,7 @@ class Proxy_Server:
                     print('Populating to GUI...', flush=True)
                     self.intercept_queue.populate()
                     self.hex_intercept_queue.populate()
+                    
                     #self.binary_intercept_queue.populate()
         raw_packet.drop()
 
