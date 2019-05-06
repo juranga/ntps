@@ -22,7 +22,7 @@ class Intercept_Queue:
     #Populates the main model with packets.
     def populate(self):
         parent = QStandardItem(QIcon(arrow), 
-                "Frame {}, {}".format(id_generator(size=3), ': '.join(self.packet_list[-1].layers)
+                "Frame {}: {}".format(id_generator(size=3), ': '.join(self.packet_list[-1].layers)
             ))
         self.packet_list_model.appendRow(parent)
 

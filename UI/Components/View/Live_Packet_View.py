@@ -1,4 +1,5 @@
 from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
+from UI.Components.TopLevelControllers.LivePacketComponents.Intercept_Toggle_Component import Intercept_Toggle_Component
 from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Component import Packet_Area_Component
 from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Binary_Component import Packet_Area_Binary_Component
 
@@ -7,7 +8,7 @@ from PyQt5.QtWidgets import QWidget
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, proxy_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, parent=None):
+    def __init__(self, proxy_toggle, intercept_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -35,32 +36,25 @@ class Live_Packet_View(QWidget):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
 
-        """ Adding the Proxy Toggle """
+        #Adding the Proxy Toggle
         proxy_toggle.install_widgets(self.horizontalFrame_6)
         self.proxy_toggle = proxy_toggle.combo_box
         sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle.setSizePolicy(sizePolicy)
         self.horizontalLayout_7.addWidget(self.proxy_toggle)
 
-        self.intercet_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
-        self.intercet_toggle_label.setObjectName("intercet_toggle_label")
-        self.horizontalLayout_7.addWidget(self.intercet_toggle_label)
-        self.intercept_toggle = QtWidgets.QComboBox(self.horizontalFrame_6)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        self.intercept_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
+        self.intercept_toggle_label.setObjectName("intercept_toggle_label")
+        self.horizontalLayout_7.addWidget(self.intercept_toggle_label)
+
+        #Adding the Tntercept Toggle
+        intercept_toggle.install_widgets(self.horizontalFrame_6, sizePolicy, font)
+        self.intercept_toggle = intercept_toggle.combo_box
         sizePolicy.setHeightForWidth(self.intercept_toggle.sizePolicy().hasHeightForWidth())
         self.intercept_toggle.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.intercept_toggle.setFont(font)
-        self.intercept_toggle.setMaxVisibleItems(2)
-        self.intercept_toggle.setObjectName("intercept_toggle")
-        self.intercept_toggle.addItem("")
-        self.intercept_toggle.addItem("")
-        self.intercept_toggle.addItem("")
+        self.horizontalLayout_7.addWidget(self.intercept_toggle)
 
-        """Queue Stuff"""
+        #Queue Stuff
         self.horizontalLayout_7.addWidget(self.intercept_toggle)
         self.queue_size_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.queue_size_label.setObjectName("queue_size_label")
@@ -70,7 +64,7 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout_7.addWidget(self.queue_size_input)
         self.gridLayout_6.addWidget(self.horizontalFrame_6, 0, 0, 1, 3)
 
-        """Capture Area"""
+        #Capture Area
         self.capture_filter_area = QtWidgets.QFrame(self.layoutWidget)
         self.capture_filter_area.setFrameShape(QtWidgets.QFrame.Box)
         self.capture_filter_area.setObjectName("capture_filter_area")
@@ -500,19 +494,17 @@ class Live_Packet_View(QWidget):
 
     def retranslateUI(self):
         _translate = QtCore.QCoreApplication.translate
+
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
-
-        """
-        self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled"))
-        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Disabled"))
-        """
-
-        self.intercet_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
-        self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.intercept_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
-        self.intercept_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
-        self.intercept_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
+        #self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
+        #self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled"))
+        #self.proxy_toggle.setItemText(1, _translate("MainWindow", "Disabled"))
+        
+        self.intercept_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
+        #self.intercept_toggle.setCurrentText(_translate("MainWindow", "Disabled"))
+        #self.intercept_toggle.setItemText(0, _translate("MainWindow", "Disabled"))
+        #self.intercept_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
+        
         self.queue_size_label.setText(_translate("MainWindow", "Queue Size"))
         self.queue_size_input.setPlaceholderText(_translate("MainWindow", "Queue Size"))
         self.label_27.setText(_translate("MainWindow", "Capture Filter"))

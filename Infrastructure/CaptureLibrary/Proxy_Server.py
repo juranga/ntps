@@ -19,7 +19,7 @@ class Proxy_Server:
         self.intercept_queue = intercept_queue
         self.hex_intercept_queue = hex_intercept_queue
         #self.binary_intercept_queue = binary_intercept_queue
-        self.interceptFlag = True
+        self.interceptFlag = False
         self.hook_manager = hook_manager
         self.nfq = nfq
 
@@ -34,13 +34,14 @@ class Proxy_Server:
         self.intercept_queue.install_packet(packet)
         self.hex_intercept_queue.install_packet(packet)
         
-        print('In handle new packet', flush=True)
+        print('Packet recieved:' + packet.summary(), flush=True)
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet):
             self.hook_manager.execute_hooks(packet)
             self.live_pcap.traffic.append(packet)
             with self.intercept_queue.lock:
                 if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
+                    print("Adding packet to queue...")
                     self.intercept_queue.put(PacketDict(packet))
                     self.hex_intercept_queue.put_convert(PacketDict(packet))
                     #self.binary_intercept_queue.put_convert(PacketDict(packet))
