@@ -10,7 +10,7 @@ class Field_Area_Component():
 
     def install_widgets(self, parent=None):
         self.list = QListView(parent)
-        self.list.setModel(self.proxy_server.intercept_queue.field_model)
+        self.list.setModel(self.proxy_server.intercept_queue.field_list_model)
         self.list.show()
 
 

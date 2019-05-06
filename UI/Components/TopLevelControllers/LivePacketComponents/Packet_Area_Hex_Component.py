@@ -10,7 +10,7 @@ class Packet_Area_Hex_Component():
 
     def install_widgets(self, parent=None):
         self.list = QTreeView(parent)
-        self.list.setModel(self.proxy_server.hex_intercept_queue.model)
+        self.list.setModel(self.proxy_server.hex_intercept_queue.packet_list_model)
         self.list.clicked.connect(self.on_clicked)
         self.list.show()
 

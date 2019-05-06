@@ -7,8 +7,8 @@ class Dissected_Packet:
         self.layers = []
         self.fields = defaultdict(dict)
 
-    def get_layers():
+    def get_layers(self):
         return self.layers
 
-    def get_fields():
+    def get_fields(self):
         return self.fields
