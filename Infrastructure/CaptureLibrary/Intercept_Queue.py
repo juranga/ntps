@@ -26,7 +26,7 @@ class Intercept_Queue:
         layer_dict = self.packet_list[-1].layer_dict
         
         parent = QStandardItem(QIcon(arrow), 
-                "Frame {}: {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
+                "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
                 ))
 
         parent.setEditable(False)
@@ -59,6 +59,7 @@ class Intercept_Queue:
         layers = self.packet_list[packet_idx].get_layers()
         layer = layers[layer_idx]
         fields = self.packet_list[packet_idx].fields[layer]
+        
         for k,v in fields.items():
             self.field_list_model.appendRow(QStandardItem("".join("{}:{}".format(k,v))
             ))
