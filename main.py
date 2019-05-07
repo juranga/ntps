@@ -12,10 +12,15 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 
 class Ui_MainWindow(object):
+
+    def closeMain(self):
+        self.proxy_server.stop_server()
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1035, 715)
-        
+        self.proxy_server = Proxy_Server()
+
         # Main + Option View
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -27,7 +32,7 @@ class Ui_MainWindow(object):
         self.stacked_window.setObjectName("stacked_window")
 
         # Live Packet View
-        self.live_packet_controller = Live_Packet_Controller()
+        self.live_packet_controller = Live_Packet_Controller(proxy_server=self.proxy_server)
         self.stacked_window.addWidget(self.live_packet_controller.view)
 
         # Hook View
@@ -83,10 +88,14 @@ class Ui_MainWindow(object):
         # Header Retranslate
         self.system_name.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600; color:#ff6e07;\">Network Traffic Proxy System</span></p></body></html>"))
 
-if __name__ == "__main__":
+def appExec():
     app = QtWidgets.QApplication(sys.argv)
     main = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(main)
     main.show()
-    sys.exit(app.exec_())
+    app.exec_()
+    ui.closeMain()
+
+if __name__ == "__main__":
+    sys.exit(appExec())
