@@ -39,10 +39,13 @@ def drop_pcap_packet(bus, dest):
 def drop_hook_packet(bus, dest):
     return
 
+""" Proxy Packet Transportation """ 
 
-""" Miscellaneous Packet Transportation """ 
 def add_to_intercept(bus, packet):
     bus.put(packet)
+
+def add_to_live(bus, packet):
+    bus.append(packet)
    
 """ Packet Scheduling """
 forward_schedule = {

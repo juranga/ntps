@@ -11,12 +11,11 @@ class Proxy_Toggle_Component():
 
     def install_widgets(self, parent):
         self.combo_box = QtWidgets.QComboBox(parent)
-        self.combo_box.addItems(["Enabled/Disabled", "Enabled", "Disabled"])
-        self.combo_box.setCurrentText("Enabled/Disabled")
+        self.combo_box.addItems(["Disabled", "Enabled"])
+        self.combo_box.setCurrentText("Disabled")
         self.combo_box.currentIndexChanged.connect(self.selection_change)
-        self.combo_box.setMaxVisibleItems(3)
+        self.combo_box.setMaxVisibleItems(2)
 
-    # TODO: Needs more testing.
     def selection_change(self):
         if self.combo_box.currentText() == "Enabled":
             self.thread = Thread(target=self.proxy_server.init_server)

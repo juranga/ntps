@@ -1,10 +1,7 @@
 from scapy.all import * 
 
 def run(packet):
-    try:
-        if packet.haslayer(TCP):
-            return "Drop"
-    except:
-        raise "Error"
+    if packet.haslayer(TCP):
+        return "Drop"
         
     return "Modification"

@@ -20,7 +20,7 @@ class Capturing(list):
         del self._stringio# free up some memory
         sys.stdout = self._stdout
 
-class PacketDict(dict):
+class Dissector(dict):
     
     def __init__(self, pkt):
         self.packet = pkt

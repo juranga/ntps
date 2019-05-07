@@ -1,4 +1,5 @@
 from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
+from UI.Components.TopLevelControllers.LivePacketComponents.Intercept_Toggle_Component import Intercept_Toggle_Component
 from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Component import Packet_Area_Component
 from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Binary_Component import Packet_Area_Binary_Component
 
@@ -7,7 +8,7 @@ from PyQt5.QtWidgets import QWidget
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, proxy_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, parent=None):
+    def __init__(self, proxy_toggle, intercept_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -26,6 +27,7 @@ class Live_Packet_View(QWidget):
         self.horizontalFrame_6.setObjectName("horizontalFrame_6")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.horizontalFrame_6)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        
         self.proxy_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.proxy_toggle_label.setObjectName("proxy_toggle_label")
         self.horizontalLayout_7.addWidget(self.proxy_toggle_label)
@@ -35,32 +37,26 @@ class Live_Packet_View(QWidget):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
 
-        """ Adding the Proxy Toggle """
+        #Adding the Proxy Toggle
         proxy_toggle.install_widgets(self.horizontalFrame_6)
         self.proxy_toggle = proxy_toggle.combo_box
         sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle.setSizePolicy(sizePolicy)
         self.horizontalLayout_7.addWidget(self.proxy_toggle)
 
-        self.intercet_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
-        self.intercet_toggle_label.setObjectName("intercet_toggle_label")
-        self.horizontalLayout_7.addWidget(self.intercet_toggle_label)
-        self.intercept_toggle = QtWidgets.QComboBox(self.horizontalFrame_6)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        #Adding the Intercept Toggle
+        self.intercept_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
+        self.intercept_toggle_label.setObjectName("intercept_toggle_label")
+        self.horizontalLayout_7.addWidget(self.intercept_toggle_label)
+  
+
+        intercept_toggle.install_widgets(self.horizontalFrame_6, sizePolicy, font)
+        self.intercept_toggle = intercept_toggle.combo_box
         sizePolicy.setHeightForWidth(self.intercept_toggle.sizePolicy().hasHeightForWidth())
         self.intercept_toggle.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.intercept_toggle.setFont(font)
-        self.intercept_toggle.setMaxVisibleItems(2)
-        self.intercept_toggle.setObjectName("intercept_toggle")
-        self.intercept_toggle.addItem("")
-        self.intercept_toggle.addItem("")
-        self.intercept_toggle.addItem("")
+        self.horizontalLayout_7.addWidget(self.intercept_toggle)
 
-        """Queue Stuff"""
+        #Queue Stuff
         self.horizontalLayout_7.addWidget(self.intercept_toggle)
         self.queue_size_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.queue_size_label.setObjectName("queue_size_label")
@@ -70,7 +66,7 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout_7.addWidget(self.queue_size_input)
         self.gridLayout_6.addWidget(self.horizontalFrame_6, 0, 0, 1, 3)
 
-        """Capture Area"""
+        #Capture Area
         self.capture_filter_area = QtWidgets.QFrame(self.layoutWidget)
         self.capture_filter_area.setFrameShape(QtWidgets.QFrame.Box)
         self.capture_filter_area.setObjectName("capture_filter_area")
@@ -114,13 +110,12 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalFrame_2)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
 
-        """PACKET AREA"""
+        #PACKET AREA
         self.packet_area = QtWidgets.QFrame(self.horizontalFrame_2)
         self.packet_area.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.packet_area.setObjectName("packet_area")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.packet_area)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        
         self.packet_area_label = QtWidgets.QLabel(self.packet_area)
         font = QtGui.QFont()
         font.setUnderline(True)
@@ -173,7 +168,7 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout_3.addWidget(self.packet_area_clear, 0, QtCore.Qt.AlignRight|QtCore.Qt.AlignBottom)
         self.gridLayout_6.addWidget(self.horizontalFrame_2, 2, 0, 1, 3)
 
-        """FIELD AREA"""
+        #FIELD AREA
         self.field_area = QtWidgets.QFrame(self.layoutWidget)
         self.field_area.setFrameShape(QtWidgets.QFrame.Box)
         self.field_area.setObjectName("field_area")
@@ -198,6 +193,7 @@ class Live_Packet_View(QWidget):
         self.field_layout = QtWidgets.QHBoxLayout()
         self.field_layout.setObjectName("field_layout")
 
+        # Adding field area
         field_area.install_widgets()
         self.field_list = field_area.list
         self.field_list.setObjectName("field_list")
@@ -205,48 +201,6 @@ class Live_Packet_View(QWidget):
         self.verticalScrollBar_2.setGeometry(QtCore.QRect(-1, -1, 50, 50))
         self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
-        
-        #self.gridLayout_5 = QtWidgets.QGridLayout()
-        #self.gridLayout_5.setContentsMargins(-1, -1, -1, 80)
-        #self.gridLayout_5.setObjectName("gridLayout_5")
-
-        #checkbox
-        #self.checkBox_3 = QtWidgets.QCheckBox(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.checkBox_3.sizePolicy().hasHeightForWidth())
-        #self.checkBox_3.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.checkBox_3.setFont(font)
-        #self.checkBox_3.setObjectName("checkBox_3")
-        #self.gridLayout_5.addWidget(self.checkBox_3, 2, 0, 1, 1)
-        
-        
-        #self.display_format_label = QtWidgets.QLabel(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.display_format_label.sizePolicy().hasHeightForWidth())
-        #self.display_format_label.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.display_format_label.setFont(font)
-        #self.display_format_label.setObjectName("display_format_label")
-        #self.gridLayout_5.addWidget(self.display_format_label, 0, 3, 1, 1)
-        
-        #self.mask_label = QtWidgets.QLabel(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.mask_label.sizePolicy().hasHeightForWidth())
-        #self.mask_label.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.mask_label.setFont(font)
-        #self.mask_label.setObjectName("mask_label")
-        #self.gridLayout_5.addWidget(self.mask_label, 0, 2, 1, 1)
         
         self.field_name_label = QtWidgets.QLabel(self.field_area)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -258,123 +212,8 @@ class Live_Packet_View(QWidget):
         font.setPointSize(10)
         self.field_name_label.setFont(font)
         self.field_name_label.setObjectName("field_name_label")
-        #self.gridLayout_5.addWidget(self.field_name_label, 0, 0, 1, 1)
-        
-        #self.value_label = QtWidgets.QLabel(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.value_label.sizePolicy().hasHeightForWidth())
-        #self.value_label.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.value_label.setFont(font)
-        #self.value_label.setObjectName("value_label")
-        #self.gridLayout_5.addWidget(self.value_label, 0, 1, 1, 1)
-        
-        #self.label_34 = QtWidgets.QLabel(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.label_34.sizePolicy().hasHeightForWidth())
-        #self.label_34.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.label_34.setFont(font)
-        #self.label_34.setObjectName("label_34")
-        #self.gridLayout_5.addWidget(self.label_34, 2, 1, 1, 1)
-        
-        #self.label_35 = QtWidgets.QLabel(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.label_35.sizePolicy().hasHeightForWidth())
-        #self.label_35.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.label_35.setFont(font)
-        #self.label_35.setObjectName("label_35")
-        #self.gridLayout_5.addWidget(self.label_35, 2, 2, 1, 1)
-
-        #drop down box
-        #self.comboBox_3 = QtWidgets.QComboBox(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.comboBox_3.sizePolicy().hasHeightForWidth())
-        #self.comboBox_3.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.comboBox_3.setFont(font)
-        #self.comboBox_3.setMaxVisibleItems(2)
-        #self.comboBox_3.setObjectName("comboBox_3")
-        #self.comboBox_3.addItem("")
-        #self.comboBox_3.addItem("")
-        #self.comboBox_3.addItem("")
-        #self.comboBox_3.addItem("")
-        #self.gridLayout_5.addWidget(self.comboBox_3, 2, 3, 1, 1)
-
-        #checkbox
-        #self.checkBox_4 = QtWidgets.QCheckBox(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.checkBox_4.sizePolicy().hasHeightForWidth())
-        #self.checkBox_4.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.checkBox_4.setFont(font)
-        #self.checkBox_4.setObjectName("checkBox_4")
-        #self.gridLayout_5.addWidget(self.checkBox_4, 3, 0, 1, 1)
-
-        #self.label_36 = QtWidgets.QLabel(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.label_36.sizePolicy().hasHeightForWidth())
-        #self.label_36.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.label_36.setFont(font)
-        #self.label_36.setObjectName("label_36")
-        #self.gridLayout_5.addWidget(self.label_36, 3, 1, 1, 1)
-        #self.label_37 = QtWidgets.QLabel(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.label_37.sizePolicy().hasHeightForWidth())
-        #self.label_37.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.label_37.setFont(font)
-        #self.label_37.setObjectName("label_37")
-        #self.gridLayout_5.addWidget(self.label_37, 3, 2, 1, 1)
-
-        #combo box
-        #self.comboBox_6 = QtWidgets.QComboBox(self.field_area)
-        #sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        #sizePolicy.setHorizontalStretch(0)
-        #sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.comboBox_6.sizePolicy().hasHeightForWidth())
-        #self.comboBox_6.setSizePolicy(sizePolicy)
-        #font = QtGui.QFont()
-        #font.setPointSize(10)
-        #self.comboBox_6.setFont(font)
-        #self.comboBox_6.setMaxVisibleItems(2)
-        #self.comboBox_6.setObjectName("comboBox_6")
-        #self.comboBox_6.addItem("")
-        #self.comboBox_6.addItem("")
-        #self.comboBox_6.addItem("")
-        #self.comboBox_6.addItem("")
-        #self.gridLayout_5.addWidget(self.comboBox_6, 3, 3, 1, 1)
-
-        #self.field_layout.addWidget(self.gridLayout_5)
         self.field_layout.addWidget(self.field_list)
-        
-        #self.verticalScrollBar_5 = QtWidgets.QScrollBar(self.field_area)
-        #self.verticalScrollBar_5.setOrientation(QtCore.Qt.Vertical)
-        #self.verticalScrollBar_5.setObjectName("verticalScrollBar_5")
-        #self.field_layout.addWidget(self.verticalScrollBar_5)
+     
         self.verticalLayout_6.addLayout(self.field_layout)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(-1, 0, -1, -1)
@@ -502,17 +341,16 @@ class Live_Packet_View(QWidget):
         _translate = QtCore.QCoreApplication.translate
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
 
-        """
-        self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled"))
-        self.proxy_toggle.setItemText(1, _translate("MainWindow", "Disabled"))
-        """
+        #self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
+        #self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled"))
+        #self.proxy_toggle.setItemText(1, _translate("MainWindow", "Disabled"))
 
-        self.intercet_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
-        self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        self.intercept_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
-        self.intercept_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
-        self.intercept_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
+        self.intercept_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
+        #self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
+        #self.intercept_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
+        #self.intercept_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
+        #self.intercept_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
+        
         self.queue_size_label.setText(_translate("MainWindow", "Queue Size"))
         self.queue_size_input.setPlaceholderText(_translate("MainWindow", "Queue Size"))
         self.label_27.setText(_translate("MainWindow", "Capture Filter"))
