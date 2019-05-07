@@ -1,5 +1,5 @@
 from Infrastructure.Common.Generators import id_generator
-from Infrastructure.PacketLibrary.Packet import Dissected_Packet
+from Infrastructure.PacketLibrary.Packet import Packet
 
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
 from PyQt5.QtCore import QThread
@@ -16,30 +16,49 @@ class Intercept_Queue:
         self.packet_list = []
         self.lock = Lock()
 
-    def populate(self):
+    def populate_gui(self):
+        print('Populating to GUI...', flush=True)
         parent = QStandardItem(QIcon(arrow), 
                 "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
             ))
+        parent.setEditable(False)
         self.model.appendRow(parent)
 
         for layer in self.packet_list[-1].layers:
-            self.model.itemFromIndex(self.model.indexFromItem(parent)).appendRow(QStandardItem(QIcon(circle),
-                ", ".join("{}:{}".format(k,v) for k,v in self.packet_list[-1].fields[layer].items())
-            ))
+            if "src" in self.packet_list[-1].fields[layer] and "dst" in self.packet_list[-1].fields[layer]:
+                src = self.packet_list[-1].fields[layer]["src"]
+                dst = self.packet_list[-1].fields[layer]["dst"]
+                child = QStandardItem(QIcon(circle),
+                    "{}, Src:{}, Dst:{}".format(layer, )
+                    ))
+            else:
+                child = QStandardItem(QIcon(circle),
+                    "{}".format(self.packet_list[-1].layer_dict[layer]
+                    ))
+            child.setEditable(False)
+            self.model.itemFromIndex(self.model.indexFromItem(parent)).appendRow(child)
         
-    def install_packet(self, raw_packet):
-        self.packet_list.append(Dissected_Packet(raw_packet))
+    def put(self, raw_packet):
+        with self.lock:
+            if self.size > len(self.packet_list):
+                self.packet_list.append(Dissected_Packet(raw_packet))
+                self.dissect_put(Dissector(raw_packet))
+                self.populate_gui()
 
-    def put(self, packet, idx = -1, icon=arrow):
+    def dissect_put(self, packet, idx = -1, icon=arrow):
+        packet_layers = self.packet_list[-1].layers
+        layer_dict = self.packet_list[-1].layer_dict
+        packet_fields = self.packet_list[-1].fields
         for key, value in packet.items():
             if type(value) is dict:
-                self.packet_list[-1].layers.append(key)
+                packet_layers.append(layer_dict[key])
                 self.put(value, idx+1, circle)
                 break
             else:
-                self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = value
+                packet_fields[packet_layers[idx]][layer_dict[key]] = value
 
     def get(self):
         packet = self.packet_list[0]
         del self.packet_list[0]
+        self.model.removeRow(0)
         return packet

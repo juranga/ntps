@@ -1,5 +1,5 @@
 from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
-from Infrastructure.PacketLibrary.Packet_Bus import forward_packet, drop_packet, add_to_intercept
+from Infrastructure.PacketLibrary.Packet_Bus import forward_packet, drop_packet, add_to_intercept, add_to_live
 
 class Hook_Collection_Manager:
 
@@ -7,7 +7,7 @@ class Hook_Collection_Manager:
         self.hook_collection = []
         self.n_hook_collections = 0
 
-    def execute_hooks(self, packet):
+    def execute_hooks(self, packet, intercept_queue=None, live_traffic_list=None):
         order = ""
         for i in range(0, self.n_hook_collections):
             if not self.hook_collection[i].enabled:
@@ -20,6 +20,9 @@ class Hook_Collection_Manager:
                 elif order == "Drop":
                     drop_packet("hook", packet)
                     return
+        if not intercept_queue == None:
+            add_to_intercept(intercept_queue, packet)
+        add_to_live(live_traffic_list, packet)
 
     def add_hook_collection(self, hook_collection):
         if hook_collection.sequence_number >= self.n_hook_collections or hook_collection.sequence_number < 0:

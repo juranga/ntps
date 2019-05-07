@@ -16,7 +16,6 @@ class Proxy_Toggle_Component():
         self.combo_box.currentIndexChanged.connect(self.selection_change)
         self.combo_box.setMaxVisibleItems(3)
 
-    # TODO: Needs more testing.
     def selection_change(self):
         if self.combo_box.currentText() == "Enabled":
             self.thread = Thread(target=self.proxy_server.init_server)

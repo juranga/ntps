@@ -1,7 +1,6 @@
 from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
 from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
 from Infrastructure.PacketLibrary.PCAP import PCAP
-from Infrastructure.PacketLibrary.Packet_Dict import PacketDict
 from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
 
 from queue import Queue
@@ -29,18 +28,13 @@ class Proxy_Server:
 
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
-        self.intercept_queue.install_packet(packet)
-        
-        print('In handle new packet', flush=True)
+        print('Captured packet...', flush=True)
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet):
-            self.hook_manager.execute_hooks(packet)
-            self.live_pcap.traffic.append(packet)
-            with self.intercept_queue.lock:
-                if self.interceptFlag and self.intercept_queue.size >= len(self.intercept_queue.packet_list):
-                    self.intercept_queue.put(PacketDict(packet))
-                    print('Populating to GUI...', flush=True)
-                    self.intercept_queue.populate()
+            self.hook_manager.execute_hooks(packet, 
+                    intercept_queue=self.intercept_queue if self.interceptFlag else None,
+                    live_traffic_list=self.live_pcap.traffic
+                    )
         raw_packet.drop()
 
     def stop_server(self):
@@ -51,12 +45,10 @@ class Proxy_Server:
     # TODO: Thread function
     def init_server(self):
         iptablesr = "iptables -A OUTPUT -j NFQUEUE --queue-num 0"
-        
         os.system(iptablesr)
         self.nfq.bind(0, self.handle_new_packet)
-        
         try:
             print('Listening for packets...')
             self.nfq.run(block=True)
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, SystemExit, SystemError):
             self.stop_server()
