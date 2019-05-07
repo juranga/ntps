@@ -7,7 +7,6 @@ class Intercept_Toggle_Component():
     def __init__(self, proxy_server= Proxy_Server()):
 
         self.proxy_server = proxy_server
-        self.thread = None
 
     def install_widgets(self, parent, sizePolicy, font):
         self.combo_box = QtWidgets.QComboBox(parent)
@@ -19,12 +18,8 @@ class Intercept_Toggle_Component():
     def selection_change(self, idx):
         if self.combo_box.currentText() == "Enabled":
             print("Interception enabled.")
-            self.thread = Thread(target=self.proxy_server.start_intercept)
-            self.thread.daemon= True
-            self.thread.start()
+            self.proxy_server.start_intercept()
         else:
             print("Interception disabled.")
-            if not self.thread == None:
-                self.thread.join(5)
-                self.proxy_server.stop_intercept
-            self.thread = None
+            self.proxy_server.stop_intercept()
+

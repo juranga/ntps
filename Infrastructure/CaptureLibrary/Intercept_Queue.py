@@ -56,8 +56,7 @@ class Intercept_Queue:
      # Populates the field list model with a given packet
     def populate_fields(self, packet_idx, layer_idx):
         self.field_list_model.removeRows(0,self.field_list_model.rowCount())
-        layers = self.packet_list[packet_idx].get_layers()
-        layer = layers[layer_idx]
+        layer = self.packet_list[packet_idx].get_layer(layer_idx)
         fields = self.packet_list[packet_idx].fields[layer]
         
         for k,v in fields.items():
