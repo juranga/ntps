@@ -16,5 +16,8 @@ class Dissected_Packet:
     def get_layers(self):
         return self.layers
 
+    def get_fields(self):
+        return self.fields
+    
     def get_layer(self, layer_idx):
         return self.layers[layer_idx]

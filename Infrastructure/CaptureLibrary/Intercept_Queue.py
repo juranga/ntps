@@ -7,25 +7,30 @@ from PyQt5.QtCore import QThread
 from threading import Lock
 from multiprocessing import Value
 
+## An object representing an intercept queue in the network traffic proxy system.
+
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
 circle = "/root/ntps/UI/Resources/CircularButton.png"
 class Intercept_Queue:
 
     def __init__(self, size=100):
         self.size = size
-        self.model = QStandardItemModel()
+        self.packet_list_model = QStandardItemModel()
+        self.field_list_model = QStandardItemModel()
         self.packet_list = []
         self.lock = Lock()
 
+    #Populates the main model with packets.
     def populate_gui(self):
         print('Populating to GUI...', flush=True)
         layer_dict = self.packet_list[-1].layer_dict
-
+        
         parent = QStandardItem(QIcon(arrow), 
                 "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
-            ))
+                ))
+
         parent.setEditable(False)
-        self.model.appendRow(parent)
+        self.packet_list_model.appendRow(parent)
 
         for layer in self.packet_list[-1].layers:
             display_layer = layer
@@ -46,8 +51,19 @@ class Intercept_Queue:
                 child = QStandardItem(QIcon(circle),
                     "{}".format(display_layer))
             child.setEditable(False)
-            self.model.itemFromIndex(self.model.indexFromItem(parent)).appendRow(child)
+            self.packet_list_model.itemFromIndex(self.packet_list_model.indexFromItem(parent)).appendRow(child)
+
+     # Populates the field list model with a given packet
+    def populate_fields(self, packet_idx, layer_idx):
+        self.field_list_model.removeRows(0,self.field_list_model.rowCount())
+        layers = self.packet_list[packet_idx].get_layers()
+        layer = layers[layer_idx]
+        fields = self.packet_list[packet_idx].fields[layer]
         
+        for k,v in fields.items():
+            self.field_list_model.appendRow(QStandardItem("".join("{}:{}".format(k,v))
+            ))
+            
     def put(self, raw_packet):
         with self.lock:
             if self.size > len(self.packet_list):
@@ -59,6 +75,7 @@ class Intercept_Queue:
         packet_layers = self.packet_list[-1].layers
         packet_fields = self.packet_list[-1].fields
         for key, value in packet.items():
+            
             if type(value) is dict:
                 packet_layers.append(key)
                 self.dissect_put(value, idx+1, circle)
@@ -66,8 +83,14 @@ class Intercept_Queue:
             else:
                 packet_fields[packet_layers[idx]][key] = value
 
+    # Get a packet from the list of packets.                
     def get(self):
         packet = self.packet_list[0]
         del self.packet_list[0]
-        self.model.removeRow(0)
+        self.packet_list_model.removeRow(0)
         return packet
+
+
+            
+
+

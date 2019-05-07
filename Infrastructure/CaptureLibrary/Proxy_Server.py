@@ -11,12 +11,12 @@ import os
 class Proxy_Server:
 
     def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), 
-                       intercept_queue=Intercept_Queue(100), hook_manager=Hook_Collection_Manager(),
+                       intercept_queue=Intercept_Queue(100),hook_manager=Hook_Collection_Manager(),
                        nfq=NetfilterQueue()):
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
-        self.interceptFlag = True
+        self.interceptFlag = False
         self.hook_manager = hook_manager
         self.nfq = nfq
 
@@ -28,6 +28,7 @@ class Proxy_Server:
 
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
+        
         print('Captured packet...', flush=True)
         #TODO: Fix Capture Filter
         if self.capture_filter.filter(packet):

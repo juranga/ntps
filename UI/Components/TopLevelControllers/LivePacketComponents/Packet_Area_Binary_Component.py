@@ -1,9 +1,9 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
-from UI.Components.TopLevelControllers.LivePacketComponents.Field_Area_Component import Field_Area_Component
+
 from PyQt5.QtWidgets import QTreeView
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QIcon
 
-class Packet_Area_Component():
+class Packet_Area_Binary_Component():
 
     def __init__(self, proxy_server= Proxy_Server()):
         self.proxy_server = proxy_server
@@ -16,7 +16,3 @@ class Packet_Area_Component():
 
     def on_clicked(self, index):
         self.list.expand(index)
-        self.proxy_server.intercept_queue.populate_fields(index.row(), index.column())
-            
-        
-
