@@ -1,10 +1,12 @@
+from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
+from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Component import Packet_Area_Component
+
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget
-from UI.Components.TopLevelControllers.LivePacketComponents.Proxy_Toggle_Component import Proxy_Toggle_Component
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, proxy_toggle, parent=None):
+    def __init__(self, proxy_toggle, packet_area, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -33,7 +35,7 @@ class Live_Packet_View(QWidget):
         sizePolicy.setVerticalStretch(0)
 
         """ Adding the Proxy Toggle """
-        proxy_toggle.install_widgets(self.horizontalFrame_6, sizePolicy, font)
+        proxy_toggle.install_widgets(self.horizontalFrame_6)
         self.proxy_toggle = proxy_toggle.combo_box
         sizePolicy.setHeightForWidth(self.proxy_toggle.sizePolicy().hasHeightForWidth())
         self.proxy_toggle.setSizePolicy(sizePolicy)
@@ -120,10 +122,11 @@ class Live_Packet_View(QWidget):
         self.packet_area_tab = QtWidgets.QTabWidget(self.packet_area)
         self.packet_area_tab.setObjectName("packet_area_tab")
 
-        self.packet_area_dissected = QtWidgets.QWidget()
+        # Adding Packet Area
+        packet_area.install_widgets()
+        self.packet_area_dissected = packet_area.list
         self.packet_area_dissected.setObjectName("packet_area_dissected")
-        
-        
+
         self.verticalScrollBar = QtWidgets.QScrollBar(self.packet_area_dissected)
         self.verticalScrollBar.setGeometry(QtCore.QRect(470, 0, 16, 71))
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
