@@ -58,5 +58,5 @@ class Proxy_Server:
         try:
             print('Listening for packets...')
             self.nfq.run(block=True)
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, SystemExit):
             self.stop_server()
