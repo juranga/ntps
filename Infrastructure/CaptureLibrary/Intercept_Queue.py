@@ -20,7 +20,6 @@ class Intercept_Queue:
         self.packet_list = []
         self.lock = Lock()
 
-
     #Populates the main model with packets.
     def populate_gui(self):
         print('Populating to GUI...', flush=True)
@@ -28,7 +27,7 @@ class Intercept_Queue:
         
         parent = QStandardItem(QIcon(arrow), 
                 "Frame {}: {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
-            ))
+                ))
 
         parent.setEditable(False)
         self.packet_list_model.appendRow(parent)
@@ -82,21 +81,6 @@ class Intercept_Queue:
                 break
             else:
                 packet_fields[packet_layers[idx]][key] = value
-
-    # Same as put, but in hex: EXPERIMENTAL            
-    def put_convert(self, packet, idx = -1, icon=circle):
-
-        for key, value in packet.items():
-            if type(value) is dict:
-                self.packet_list[-1].layers.append(key)
-                self.put_convert(value, idx+1, arrow)
-                break
-            else:
-                if ((value != None) and (value.isdigit())):
-                    value = int(value)
-                    self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = hex(value)
-                else:
-                    self.packet_list[-1].fields[self.packet_list[-1].layers[idx]][key] = value
 
     # Get a packet from the list of packets.                
     def get(self):

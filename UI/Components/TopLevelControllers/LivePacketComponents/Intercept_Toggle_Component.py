@@ -3,6 +3,7 @@ from PyQt5 import QtGui, QtCore, QtWidgets
 from threading import Thread
 
 class Intercept_Toggle_Component():
+    
     def __init__(self, proxy_server= Proxy_Server()):
 
         self.proxy_server = proxy_server

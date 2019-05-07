@@ -48,7 +48,7 @@ class Live_Packet_View(QWidget):
         self.intercept_toggle_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.intercept_toggle_label.setObjectName("intercept_toggle_label")
         self.horizontalLayout_7.addWidget(self.intercept_toggle_label)
-  
+
 
         intercept_toggle.install_widgets(self.horizontalFrame_6, sizePolicy, font)
         self.intercept_toggle = intercept_toggle.combo_box
@@ -339,6 +339,7 @@ class Live_Packet_View(QWidget):
 
     def retranslateUI(self):
         _translate = QtCore.QCoreApplication.translate
+
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
 
         #self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
@@ -350,7 +351,7 @@ class Live_Packet_View(QWidget):
         #self.intercept_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
         #self.intercept_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
         #self.intercept_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
-        
+
         self.queue_size_label.setText(_translate("MainWindow", "Queue Size"))
         self.queue_size_input.setPlaceholderText(_translate("MainWindow", "Queue Size"))
         self.label_27.setText(_translate("MainWindow", "Capture Filter"))
