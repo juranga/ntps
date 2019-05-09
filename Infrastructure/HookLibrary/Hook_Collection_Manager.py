@@ -13,7 +13,7 @@ class Hook_Collection_Manager:
             if not self.hook_collection[i].enabled:
                 continue
             for j in range(0, self.hook_collection[i].n_hooks):
-                order = self.hook_collection[i].hook[j].execute_hook(packet)
+                order = self.hook_collection[i].hook_list[j].execute_hook(packet)
                 if order == "Forward":
                     forward_packet("hook", packet)
                     return
