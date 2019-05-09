@@ -30,7 +30,7 @@ class Hook_Collection_Manager:
             self.hook_collection.append(hook_collection)
         else:
             self.hook_collection.append(Hook_Collection())
-            for i in reversed(hook_collection.sequence_number, self.n_hook_collections):
+            for i in range(hook_collection.sequence_number, self.n_hook_collections, -1):
                 self.hook_collection[i+1] = self.hook_collection[i]
                 self.hook_collection[i+1].sequence_number += 1
             self.hook_collection[hook_collection.sequence_number] = hook_collection

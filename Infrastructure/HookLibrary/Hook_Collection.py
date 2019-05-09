@@ -1,7 +1,7 @@
 from Infrastructure.HookLibrary.Hook import Hook
 from Infrastructure.Common.Generators import id_generator
 
-class Hook_Collection():
+class Hook_Collection:
 
     def __init__(self, display_name=id_generator(), enabled=True, sequence_number=0):
         self.hook_list = []
@@ -36,7 +36,7 @@ class Hook_Collection():
             self.hook_list.append(hook)
         else:
             self.hook_list.append(object)
-            for i in reversed(hook.sequence_number, self.n_hooks):
+            for i in range(hook.sequence_number, self.n_hooks, -1):
                 self.hook_list[i+1] = self.hook_list[i]
                 self.hook_list[i+1].sequence_number += 1
             self.hook_list[hook.sequence_number] = hook
