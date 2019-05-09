@@ -5,11 +5,9 @@ def run(packet):
         if packet.haslayer(TCP):
             del packet.chksum
             del packet.getlayer(TCP).chksum
-            packet.getlayer(TCP).src = 55555
+            packet[TCP].sport = 55555
     except:
         raise
-    
-    packet.show2(dump=True)
-    return "Modification"
+    #packet.show2(dump=True)
 
         
