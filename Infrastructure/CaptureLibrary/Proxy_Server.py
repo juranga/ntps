@@ -31,11 +31,11 @@ class Proxy_Server:
         
         print('Captured packet...', flush=True)
         #TODO: Fix Capture Filter
-        if self.capture_filter.filter(packet):
-            self.hook_manager.execute_hooks(packet, 
-                    intercept_queue=self.intercept_queue if self.intercept_flag else None,
-                    live_traffic_list=self.live_pcap.traffic
-                    )
+        #if self.capture_filter.filter(packet):
+        self.hook_manager.execute_hooks(packet, 
+                intercept_queue=self.intercept_queue if self.intercept_flag else None,
+                live_traffic_list=self.live_pcap.traffic
+                )
         raw_packet.drop()
 
     def stop_server(self):
