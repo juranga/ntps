@@ -19,11 +19,12 @@ class Proxy_Toggle_Component():
     def selection_change(self):
         if self.combo_box.currentText() == "Enabled":
             self.thread = Thread(target=self.proxy_server.init_server)
-            self.thread.daemon = True
+            self.thread.daemon= True
             self.thread.start()
         else:
             if not self.thread == None:
                 self.thread.join(5)
                 self.proxy_server.stop_server()
             self.thread = None
+            
 
