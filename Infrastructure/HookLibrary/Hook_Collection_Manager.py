@@ -40,6 +40,6 @@ class Hook_Collection_Manager:
         if hook_collection.sequence_number > self.n_hook_collections or hook_collection.sequence_number < 0:
             return
         del self.hook_collection[hook_collection.sequence_number]
+        self.n_hook_collections -= 1
         for i in range(hook_collection.sequence_number, self.n_hook_collections):
             self.hook_collection[i].sequence_number -= 1
-        self.n_hook_collections -= 1

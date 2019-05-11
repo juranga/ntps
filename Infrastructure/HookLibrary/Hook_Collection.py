@@ -26,9 +26,9 @@ class Hook_Collection:
         if hook.sequence_number > self.n_hooks or hook.sequence_number < 0:
             return
         del self.hook_list[hook.sequence_number]
+        self.n_hooks -= 1
         for i in range(hook.sequence_number, self.n_hooks):
             self.hook_list[i].sequence_number = i
-        self.n_hooks -= 1
 
     def add_hook(self, hook):
         if hook.sequence_number >= self.n_hooks or hook.sequence_number < 0 :
