@@ -232,7 +232,8 @@ class Live_Packet_View(QWidget):
         self.save_modification_button.setFont(font)
         self.save_modification_button.setObjectName("save_modification_button")
         self.horizontalLayout.addWidget(self.save_modification_button, 0, QtCore.Qt.AlignBottom)
-        
+
+        # FORWARD BUTTON
         self.forward_button = QtWidgets.QPushButton(self.field_area)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -245,6 +246,7 @@ class Live_Packet_View(QWidget):
         self.forward_button.setObjectName("forward_button")
         self.horizontalLayout.addWidget(self.forward_button, 0, QtCore.Qt.AlignBottom)
         
+        # DROP BUTTON
         self.drop_button = QtWidgets.QPushButton(self.field_area)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
