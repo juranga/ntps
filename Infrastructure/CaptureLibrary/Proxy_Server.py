@@ -32,6 +32,9 @@ class Proxy_Server:
         print('Captured packet...', flush=True)
         #TODO: Fix Capture Filter
         #if self.capture_filter.filter(packet):
+        from Infrastructure.HookLibrary.Hook import Hook
+        hook = Hook("/root/ntps/Infrastructure/HookLibrary/Hooks/change_dns_port.py")
+        hook.execute_hook(packet)
         self.hook_manager.execute_hooks(packet, 
                 intercept_queue=self.intercept_queue if self.intercept_flag else None,
                 live_traffic_list=self.live_pcap.traffic

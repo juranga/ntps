@@ -64,7 +64,7 @@ class Hook_View(QWidget):
         self.tableWidget_2.setColumnCount(3)
         item = QtWidgets.QTableWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../../../../tmp/mozilla_unknown0/CircularButton.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("/root/ntps/UI/Resources/CircularButton.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item.setIcon(icon)
         self.tableWidget_2.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -200,7 +200,7 @@ class Hook_View(QWidget):
 
     def populateHookTable(self):
         currDir = os.getcwd()
-        os.chdir('Infrastructure/HookLibrary/Hooks') #Change directory to find Hook Files
+        os.chdir('/root/ntps/Infrastructure/HookLibrary/Hooks') #Change directory to find Hook Files
         from PyQt5.QtWidgets import QTableWidgetItem
         self.tableWidget_2.setItem(0,0, QTableWidgetItem("Hook"))
         self.tableWidget_2.setItem(0,1, QTableWidgetItem("Description"))
