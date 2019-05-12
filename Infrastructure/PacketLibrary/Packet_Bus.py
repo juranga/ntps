@@ -10,7 +10,7 @@ def forward_packet(source, bus, dest=0):
 
 def forward_intercept_packet(bus, dest):
     for i in range(0, dest):
-        send(bus.get().raw_form)
+        send(bus.get().convert_to_raw())
 
 def forward_pcap_packet(bus, dest):
     # TODO: Return Error
