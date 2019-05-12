@@ -1,20 +1,23 @@
 from Infrastructure.PacketLibrary.Dissector import Dissector
 
 from collections import defaultdict
-
+from scapy.all import *
 """
 As it currently stands, the Ether layer has to be dissected in a different way than every other layer.
 This is because the Ether class in scapy does not have a "haslayer" function, and thus must be handled differently.
 
 """
 
+arrow = "/root/ntps/UI/Resources/BlueArrow.png"
+circle = "/root/ntps/UI/Resources/CircularButton.png"
+
 class Dissected_Packet:
 
     def __init__(self, raw_packet):
         self.ether_layer = Ether(raw_packet.get_payload())
-        self.raw_form = IP(ether_layer).copy()
+        self.raw_form = IP(self.ether_layer).copy()
         self.layer_dict = {
-            "ETH": "Ethernet II"
+            "ETH": "Ethernet II",
             "IP": "Internet Control Message Protocol",
             "TCP": "Transmission Control Protocol",
             "UDP": "User Datagram Protocol",
@@ -37,15 +40,15 @@ class Dissected_Packet:
         self.dissect_IP(Dissector(self.raw_form))
 
     def dissect_ether(self):
-        fields["Ether"]["dst"] = ether_layer.dst
-        fields["Ether"]["src"] = ether_layer.src
-        fields["Ether"]["type"] = ether_layer.type
+        self.fields["Ether"]["dst"] = self.ether_layer.dst
+        self.fields["Ether"]["src"] = self.ether_layer.src
+        self.fields["Ether"]["type"] = self.ether_layer.type
 
-    def dissect_IP(self, packet, idx = -1, icon=arrow):
+    def dissect_IP(self, packet, idx = 0, icon=arrow):
         for key, value in packet.items():
             if type(value) is dict:
                 self.layers.append(key)
-                self.dissect_packet(value, idx+1, circle)
+                self.dissect_IP(value, idx+1, circle)
                 break
             else:
                 self.fields[self.layers[idx]][key] = value
@@ -56,8 +59,8 @@ class Dissected_Packet:
         del self.raw_form.getlayer([self.layers[2]]).chksum # this deletes the TCP or UDP chksum
         for layer_idx in range(0, len(self.layers)):
             layer = self.layers[layer_idx]
-            raw_layer = self.ether_layer if layer == "Ether" else self.raw_form.getlayer(layer_idx): 
-            for field in self.raw_form.getlayer(layer_idx).fields_desc:
+            raw_layer = self.ether_layer if layer == "Ether" else self.raw_form.getlayer(layer_idx) 
+            for field in raw_layer.fields_desc:
                 if field.name in self.fields[layer]:
                     setattr(raw_layer, field.name, self.fields[layer][field.name])
 

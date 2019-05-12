@@ -37,12 +37,12 @@ class Intercept_Queue:
                 src = self.packet_list[-1].fields[layer]["src"]
                 dst = self.packet_list[-1].fields[layer]["dst"]
                 child = QStandardItem(QIcon(circle),
-                    "{}, Src:{}, Dst:{}".format(display_layer, src, dst))
+                    "{}, Src: {}, Dst: {}".format(display_layer, src, dst))
             elif "sport" in self.packet_list[-1].fields[layer] and "dport" in self.packet_list[-1].fields[layer]:
                 src = self.packet_list[-1].fields[layer]["sport"]
                 dst = self.packet_list[-1].fields[layer]["dport"]
                 child = QStandardItem(QIcon(circle),
-                    "{}, Src Port:{}, Dst Port:{}".format(display_layer, src, dst))
+                    "{}, Src Port: {}, Dst Port: {}".format(display_layer, src, dst))
             else:
                 child = QStandardItem(QIcon(circle),
                     "{}".format(display_layer))
