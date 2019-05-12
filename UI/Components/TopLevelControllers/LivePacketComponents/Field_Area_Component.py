@@ -1,7 +1,6 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QListView
-from threading import Thread
 
 class Field_Area_Component():
 

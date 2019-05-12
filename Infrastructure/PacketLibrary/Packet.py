@@ -21,3 +21,10 @@ class Dissected_Packet:
     
     def get_layer(self, layer_idx):
         return self.layers[layer_idx]
+
+    def save_modifications(self):
+        for layer_idx in range(0, len(self.layers)):
+            layer = self.layers[layer_idx]
+            for field in self.raw_form.getlayer(layer_idx).fields_desc:
+                if field.name in self.fields[layer]:
+                    setattr(self.raw_form.getlayer(layer_idx), field.name, self.fields[layer][field.name])

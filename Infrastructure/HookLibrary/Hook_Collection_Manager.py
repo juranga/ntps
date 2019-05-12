@@ -13,7 +13,7 @@ class Hook_Collection_Manager:
             if not self.hook_collection[i].enabled:
                 continue
             for j in range(0, self.hook_collection[i].n_hooks):
-                order = self.hook_collection[i].hook[j].execute_hook(packet)
+                order = self.hook_collection[i].hook_list[j].execute_hook(packet)
                 if order == "Forward":
                     forward_packet("hook", packet)
                     return
@@ -30,7 +30,7 @@ class Hook_Collection_Manager:
             self.hook_collection.append(hook_collection)
         else:
             self.hook_collection.append(Hook_Collection())
-            for i in reversed(hook_collection.sequence_number, self.n_hook_collections):
+            for i in range(hook_collection.sequence_number, self.n_hook_collections, -1):
                 self.hook_collection[i+1] = self.hook_collection[i]
                 self.hook_collection[i+1].sequence_number += 1
             self.hook_collection[hook_collection.sequence_number] = hook_collection
@@ -40,6 +40,6 @@ class Hook_Collection_Manager:
         if hook_collection.sequence_number > self.n_hook_collections or hook_collection.sequence_number < 0:
             return
         del self.hook_collection[hook_collection.sequence_number]
+        self.n_hook_collections -= 1
         for i in range(hook_collection.sequence_number, self.n_hook_collections):
             self.hook_collection[i].sequence_number -= 1
-        self.n_hook_collections -= 1
