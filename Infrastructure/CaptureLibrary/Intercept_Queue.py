@@ -1,9 +1,3 @@
-<<<<<<< Updated upstream
-import queue
-from queue import * 
-
-class Intercept_Queue(Queue):
-=======
 from Infrastructure.Common.Generators import id_generator
 from Infrastructure.PacketLibrary.Packet import Dissected_Packet
 
@@ -15,19 +9,10 @@ from threading import Lock
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
 circle = "/root/ntps/UI/Resources/CircularButton.png"
 class Intercept_Queue:
->>>>>>> Stashed changes
 
     def __init__(self, size=100):
         self.queue = Queue(size)
         self.size = size
-<<<<<<< Updated upstream
-
-    def change_queue_size(self, size):
-        temp_queue = Queue(size)
-        for i in range(0, self.size):
-            temp_queue.put(self.queue.get())
-        self.queue = temp_queue
-=======
         self.packet_list_model = QStandardItemModel()
         self.field_list_model = QStandardItemModel()
         self.packet_list = []
@@ -89,15 +74,3 @@ class Intercept_Queue:
             del self.packet_list[0]
             self.packet_list_model.removeRow(0)
             return packet
-
-
-            
->>>>>>> Stashed changes
-
-    def get_size(self):
-        return self.size
-
-    def clear_queue(self):
-        for i in range(0, self.size):
-            self.queue.get()
-        

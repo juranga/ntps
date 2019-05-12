@@ -27,16 +27,6 @@ class Proxy_Server:
         self.interceptFlag = False
 
     def handle_new_packet(self, raw_packet):
-<<<<<<< Updated upstream
-        packet = IP(raw_packet.get_payload()).copy()
-        self.live_pcap.traffic.append(packet)
-        print(packet.summary())
-
-        #TODO: Fix Capture Filter
-        if self.capture_filter.filter(packet) and self.interceptFlag:
-            self.hook_manager.execute_hooks(packet, self.intercept_queue)
-
-=======
         packet = Dissected_Packet(raw_packet)
         
         print('Captured packet...', flush=True)
@@ -46,7 +36,6 @@ class Proxy_Server:
                 intercept_queue=self.intercept_queue if self.intercept_flag else None,
                 live_traffic_list=self.live_pcap.traffic
                 )
->>>>>>> Stashed changes
         raw_packet.drop()
 
     def stop_server(self):
@@ -58,11 +47,8 @@ class Proxy_Server:
     # TODO: Thread function
     def init_server(self):
         iptablesr = "iptables -I OUTPUT -j NFQUEUE --queue-num 0"
-        #iptablesr = "iptables -I INPUT -j NFQUEUE --queue-num 0"
-        
         os.system(iptablesr)
         self.nfq.bind(0, self.handle_new_packet)
-        
         try:
             print('Listening for packets...')
             self.nfq.run(block=False)

@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 from UI.Components.TopLevelControllers.LivePacketComponents.Field_Area_Component import Field_Area_Component
 from PyQt5.QtWidgets import QTreeView
@@ -21,4 +19,3 @@ class Packet_Area_Component():
         item = index.model().itemFromIndex(index)
         if item.parent() != None:
             self.proxy_server.intercept_queue.populate_field_area(item.parent().row(), index.row())
->>>>>>> Stashed changes
