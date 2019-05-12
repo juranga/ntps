@@ -13,13 +13,16 @@ class Hook_Collection_Manager:
             if not self.hook_collection[i].enabled:
                 continue
             for j in range(0, self.hook_collection[i].n_hooks):
-                order = self.hook_collection[i].hook_list[j].execute_hook(packet)
+                order = self.hook_collection[i].hook_list[j].execute_hook(packet.raw_form) # Give Packet's Raw form for Hooks
                 if order == "Forward":
                     forward_packet("hook", packet)
                     return
                 elif order == "Drop":
                     drop_packet("hook", packet)
                     return
+        # Dissect the packet and add the raw packet changes
+        # We dissect the packet after because we don't want to implement the chksum or length recalculation functions.
+        packet.dissect_packet() 
         if not intercept_queue == None:
             add_to_intercept(intercept_queue, packet)
         add_to_live(live_traffic_list, packet)

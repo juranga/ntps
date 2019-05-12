@@ -1,6 +1,7 @@
 from Infrastructure.CaptureLibrary.Filters.Capture_Filter import Capture_Filter
 from Infrastructure.CaptureLibrary.Intercept_Queue import Intercept_Queue
 from Infrastructure.PacketLibrary.PCAP import PCAP
+from Infrastructure.PacketLibrary.Packet import Dissected_Packet
 from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
 
 from queue import Queue
@@ -27,11 +28,11 @@ class Proxy_Server:
         self.intercept_flag = False
 
     def handle_new_packet(self, raw_packet):
-        packet = IP(raw_packet.get_payload()).copy()
+        packet = Dissected_Packet(raw_packet)
         
         print('Captured packet...', flush=True)
-        #TODO: Fix Capture Filter
-        #if self.capture_filter.filter(packet):
+        # TODO: Fix Capture Filter
+        # if self.capture_filter.filter(packet):
         self.hook_manager.execute_hooks(packet, 
                 intercept_queue=self.intercept_queue if self.intercept_flag else None,
                 live_traffic_list=self.live_pcap.traffic
@@ -44,7 +45,7 @@ class Proxy_Server:
         print("Unbinded")
 
     def init_server(self):
-        iptablesr = "iptables -A OUTPUT -j NFQUEUE --queue-num 0"
+        iptablesr = "iptables -I OUTPUT -j NFQUEUE --queue-num 0"
         os.system(iptablesr)
         self.nfq.bind(0, self.handle_new_packet)
         try:
