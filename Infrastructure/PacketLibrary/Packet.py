@@ -68,7 +68,7 @@ class Dissected_Packet:
         self.raw_form.show2(dump=True)
         self.fields["IP"]["chksum"] = self.raw_form.chksum
         self.fields["IP"]["len"] = self.raw_form.len
-        self.fields[self.layers[2]].chksum = self.raw_form.getlayer(self.layers[2]).chksum
+        self.fields[self.layers[2]]["chksum"] = self.raw_form.getlayer(self.layers[2]).chksum
 
     def convert_to_raw(self):
         return self.ether_layer / self.raw_form
