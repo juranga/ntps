@@ -27,6 +27,7 @@ class Proxy_Server:
         self.interceptFlag = False
 
     def handle_new_packet(self, raw_packet):
+<<<<<<< Updated upstream
         packet = IP(raw_packet.get_payload()).copy()
         self.live_pcap.traffic.append(packet)
         print(packet.summary())
@@ -35,6 +36,17 @@ class Proxy_Server:
         if self.capture_filter.filter(packet) and self.interceptFlag:
             self.hook_manager.execute_hooks(packet, self.intercept_queue)
 
+=======
+        packet = Dissected_Packet(raw_packet)
+        
+        print('Captured packet...', flush=True)
+        # TODO: Fix Capture Filter
+        # if self.capture_filter.filter(packet):
+        self.hook_manager.execute_hooks(packet, 
+                intercept_queue=self.intercept_queue if self.intercept_flag else None,
+                live_traffic_list=self.live_pcap.traffic
+                )
+>>>>>>> Stashed changes
         raw_packet.drop()
 
     def stop_server(self):

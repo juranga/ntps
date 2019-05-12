@@ -1,6 +1,7 @@
 from scapy.all import * 
 
 def run(packet):
+<<<<<<< Updated upstream
     try:
         if packet.haslayer(DNS):
             del packet.chksum
@@ -9,5 +10,13 @@ def run(packet):
     except:
         raise
     
+=======
+    if packet.haslayer(DNS):
+        del packet.chksum
+        del packet.len
+        del packet.getlayer(UDP).chksum
+        packet.getlayer(UDP).sport = 44444
+
+>>>>>>> Stashed changes
     packet.show2(dump=True)
     return "Modification"
