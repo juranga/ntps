@@ -28,7 +28,7 @@ class Intercept_Queue:
         layer_dict = self.packet_list[-1].layer_dict
         
         parent = QStandardItem(QIcon(arrow), 
-                "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
+                "Frame {}: {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
                 ))
         parent.setEditable(False)
         self.packet_list_model.appendRow(parent)
@@ -55,7 +55,8 @@ class Intercept_Queue:
             self.packet_list_model.itemFromIndex(self.packet_list_model.indexFromItem(parent)).appendRow(child)
 
      # Populates the field list model with fields from the selected layer.
-    def populate_fields(self, packet_idx, layer_idx):        
+    def populate_fields(self, packet_idx, layer_idx):
+        
         self.field_list_model.removeRows(0,self.field_list_model.rowCount())
         layer = self.packet_list[packet_idx].get_layer(layer_idx)
         fields = self.packet_list[packet_idx].fields[layer]
