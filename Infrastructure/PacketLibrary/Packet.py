@@ -56,7 +56,7 @@ class Dissected_Packet:
     def save_modifications(self):
         del self.raw_form.chksum
         del self.raw_form.len
-        del self.raw_form.getlayer([self.layers[2]]).chksum # this deletes the TCP or UDP chksum
+        del self.raw_form.getlayer(2).chksum #this deletes the TCP or UDP chksum
         for layer_idx in range(0, len(self.layers)):
             layer = self.layers[layer_idx]
             raw_layer = self.ether_layer if layer == "Ether" else self.raw_form.getlayer(layer_idx) 
@@ -68,7 +68,7 @@ class Dissected_Packet:
         self.raw_form.show2(dump=True)
         self.fields["IP"]["chksum"] = self.raw_form.chksum
         self.fields["IP"]["len"] = self.raw_form.len
-        self.fields[self.layers[2]]["chksum"] = self.raw_form.getlayer(self.layers[2]).chksum
+        self.fields[self.layers[2]]["chksum"] = self.raw_form.getlayer(2).chksum
 
     def convert_to_raw(self):
         return self.ether_layer / self.raw_form
