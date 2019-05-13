@@ -23,6 +23,10 @@ class Dissected_Packet:
             "UDP": "User Datagram Protocol",
             "DNS": "Domain Name System"
         }
+        self.proto = {
+            "udp": 17,
+            "tcp": 6
+        }
         self.layers = ["Ether"]
         self.fields = defaultdict(dict)
 
@@ -54,21 +58,46 @@ class Dissected_Packet:
                 self.fields[self.layers[idx]][key] = value
 
     def save_modifications(self):
-        del self.raw_form.chksum
-        del self.raw_form.len
-        del self.raw_form.getlayer([self.layers[2]]).chksum # this deletes the TCP or UDP chksum
         for layer_idx in range(0, len(self.layers)):
             layer = self.layers[layer_idx]
-            raw_layer = self.ether_layer if layer == "Ether" else self.raw_form.getlayer(layer_idx) 
+            if layer == "Ether":
+                raw_layer = self.ether_layer
+            else:
+                raw_layer = self.raw_form.getlayer(layer_idx-1)
             for field in raw_layer.fields_desc:
                 if field.name in self.fields[layer]:
-                    setattr(raw_layer, field.name, self.fields[layer][field.name])
+                    field_type = type(getattr(raw_layer, field.name))
+                    try:
+                        # If  Protocol, then attribute must be converted to a scapy req
+                        if field.name == "proto":
+                            setattr(raw_layer, field.name, self.proto[self.fields[layer][field.name]])
+                            continue
+                        # Skip if field type is None or a Flag. TODO: Uncertain how to Handle Flags
+                        if field_type == type(None) or field_type == scapy.fields.FlagValue: 
+                            continue
+                        # Convert to string to check if hexadecimal or decimal notation
+                        elif field_type == int: 
+                            setattr(raw_layer, field.name, int(str(self.fields[layer][field.name]), 0))
+                        # Convert string to bytes with utf encoding
+                        elif field_type == bytes:
+                            setattr(raw_layer, field.name, bytes(self.fields[layer][field.name], "utf-8"))
+                        else:
+                            setattr(raw_layer, field.name, field_type(self.fields[layer][field.name]))
+                    except ValueError:
+                        # DEBUG:
+                        #print("Field value at {} requires a typing that is currently not supported in this system.".format(field.name))
+                        continue
 
         # Recalculate Changes to Length & Chksum
+        del self.raw_form.chksum
+        del self.raw_form.len
+        del self.raw_form.getlayer(1).chksum
+        if self.layers[2] == "TCP":
+            del self.raw_form.getlayer(TCP).len
         self.raw_form.show2(dump=True)
-        self.fields["IP"]["chksum"] = self.raw_form.chksum
-        self.fields["IP"]["len"] = self.raw_form.len
-        self.fields[self.layers[2]]["chksum"] = self.raw_form.getlayer(self.layers[2]).chksum
+        # Have to re-dissect packet after recalculation
+        del self.layers[1::] 
+        self.dissect_IP(Dissector(self.raw_form))
 
     def convert_to_raw(self):
         return self.ether_layer / self.raw_form
