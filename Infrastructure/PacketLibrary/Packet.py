@@ -92,8 +92,6 @@ class Dissected_Packet:
         del self.raw_form.chksum
         del self.raw_form.len
         del self.raw_form.getlayer(1).chksum
-        if self.layers[2] == "TCP":
-            del self.raw_form.getlayer(TCP).len
         self.raw_form.show2(dump=True)
         # Have to re-dissect packet after recalculation
         del self.layers[1::] 

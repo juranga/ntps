@@ -5,7 +5,6 @@ def run(packet):
         del packet.chksum
         del packet.len
         del packet.getlayer(TCP).chksum
-        del packet.getlayer(TCP).len
         packet.getlayer(TCP).sport = 55555
     
     packet.show2(dump=True)

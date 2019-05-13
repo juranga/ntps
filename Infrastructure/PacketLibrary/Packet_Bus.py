@@ -26,7 +26,6 @@ def drop_packet(source, bus, dest=0):
 
 def drop_intercept_packet(bus, dest):
     for i in range(0, dest+1):
-        print("Dropping", i)
         bus.get()
 
 def drop_pcap_packet(bus, dest):
