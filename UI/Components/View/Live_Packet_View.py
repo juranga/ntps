@@ -3,12 +3,13 @@ from UI.Components.TopLevelControllers.LivePacketComponents.Intercept_Toggle_Com
 from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Component import Packet_Area_Component
 from UI.Components.TopLevelControllers.LivePacketComponents.Packet_Area_Binary_Component import Packet_Area_Binary_Component
 
+
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, proxy_toggle, intercept_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, parent=None):
+    def __init__(self, proxy_toggle, intercept_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, forward_button, save_button, drop_button, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -193,7 +194,7 @@ class Live_Packet_View(QWidget):
         self.field_layout = QtWidgets.QHBoxLayout()
         self.field_layout.setObjectName("field_layout")
 
-        # Adding field area
+        # ADDING FIELD LIST
         field_area.install_widgets()
         self.field_list = field_area.list
         self.field_list.setObjectName("field_list")
@@ -220,8 +221,10 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
-        
-        self.save_modification_button = QtWidgets.QPushButton(self.field_area)
+
+        # SAVE BUTTON
+        save_button.install_widgets()
+        self.save_modification_button = save_button.button
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -234,7 +237,8 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout.addWidget(self.save_modification_button, 0, QtCore.Qt.AlignBottom)
 
         # FORWARD BUTTON
-        self.forward_button = QtWidgets.QPushButton(self.field_area)
+        forward_button.install_widgets()
+        self.forward_button = forward_button.button
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -247,7 +251,8 @@ class Live_Packet_View(QWidget):
         self.horizontalLayout.addWidget(self.forward_button, 0, QtCore.Qt.AlignBottom)
         
         # DROP BUTTON
-        self.drop_button = QtWidgets.QPushButton(self.field_area)
+        drop_button.install_widgets()
+        self.drop_button = drop_button.button
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -344,15 +349,7 @@ class Live_Packet_View(QWidget):
 
         self.proxy_toggle_label.setText(_translate("MainWindow", "Proxy Behavior"))
 
-        #self.proxy_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        #self.proxy_toggle.setItemText(0, _translate("MainWindow", "Enabled"))
-        #self.proxy_toggle.setItemText(1, _translate("MainWindow", "Disabled"))
-
         self.intercept_toggle_label.setText(_translate("MainWindow", "Intercept Behavior"))
-        #self.intercept_toggle.setCurrentText(_translate("MainWindow", "Enabled/Disabled"))
-        #self.intercept_toggle.setItemText(0, _translate("MainWindow", "Enabled/Disabled"))
-        #self.intercept_toggle.setItemText(1, _translate("MainWindow", "Enabled"))
-        #self.intercept_toggle.setItemText(2, _translate("MainWindow", "Disabled"))
 
         self.queue_size_label.setText(_translate("MainWindow", "Queue Size"))
         self.queue_size_input.setPlaceholderText(_translate("MainWindow", "Queue Size"))
