@@ -16,11 +16,13 @@ class Live_Packet_Controller():
     def __init__(self, proxy_server = Proxy_Server()):
         self.proxy_toggle = Proxy_Toggle_Component(proxy_server)
         self.intercept_toggle = Intercept_Toggle_Component(proxy_server)
-        self.packet_area = Packet_Area_Component(proxy_server)
         self.packet_binary_area = Packet_Area_Binary_Component(proxy_server)
         self.packet_hex_area = Packet_Area_Hex_Component(proxy_server)
         self.field_area = Field_Area_Component(proxy_server)
+        self.packet_area = Packet_Area_Component(proxy_server, self.field_area)
         self.forward_button = Forward_Button()
-        self.save_button = Save_Button()
+        self.save_button = Save_Button(proxy_server, self.field_area)
         self.drop_button = Drop_Button()
-        self.view =  Live_Packet_View(self.proxy_toggle, self.intercept_toggle, self.packet_area, self.packet_binary_area, self.packet_hex_area, self.field_area, self.forward_button, self.save_button, self.drop_button)
+        self.view =  Live_Packet_View(self.proxy_toggle, self.intercept_toggle, self.packet_area, self.packet_binary_area,
+                                      self.packet_hex_area, self.field_area, self.forward_button, self.save_button,
+                                      self.drop_button)
