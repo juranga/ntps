@@ -23,7 +23,7 @@ class Intercept_Queue:
         layer_dict = self.packet_list[-1].layer_dict
         
         parent = QStandardItem(QIcon(arrow), 
-                "Frame {}, {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
+                "Frame {}: {}".format(id_generator(size=3), ', '.join(self.packet_list[-1].layers)
                 ))
         parent.setEditable(False)
         self.packet_list_model.appendRow(parent)
