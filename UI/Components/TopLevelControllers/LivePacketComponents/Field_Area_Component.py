@@ -39,7 +39,7 @@ class Field_Area_Component():
         for k,v in fieldList.items():
             if (k == newField[0]):
                 fieldList[k] = newField[1]
-                self.edited_packet_list[self.packet_idx].fields = fieldList
+                self.edited_packet_list[self.packet_idx].fields[layer] = fieldList
                 break
         
         
