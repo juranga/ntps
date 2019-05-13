@@ -22,5 +22,5 @@ class Save_Button():
         print("Saving changes to packet...")
         self.packet_idx = self.field_area.packet_idx
         self.proxy_server.intercept_queue.packet_list[self.packet_idx] = self.field_area.edited_packet_list[self.packet_idx]
-        #self.proxy_server.intercept_queue.packet_list[self.packet_idx].save_modifications()
+        self.proxy_server.intercept_queue.packet_list[self.packet_idx].save_modifications()
         
