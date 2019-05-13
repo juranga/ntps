@@ -20,4 +20,5 @@ class Drop_Button():
 
     def on_clicked(self):
         print("Dropping packet...")
+        print(self.field_area.packet_idx)
         drop_packet("intercept", self.proxy_server.intercept_queue, self.field_area.packet_idx)

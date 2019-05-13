@@ -17,7 +17,7 @@ class Dissected_Packet:
         self.ether_layer = Ether(raw_packet.get_payload())
         self.raw_form = IP(self.ether_layer).copy()
         self.layer_dict = {
-            "ETH": "Ethernet II",
+            "ETHER": "Ethernet II",
             "IP": "Internet Control Message Protocol",
             "TCP": "Transmission Control Protocol",
             "UDP": "User Datagram Protocol",

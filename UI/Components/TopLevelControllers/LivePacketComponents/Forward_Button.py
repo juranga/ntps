@@ -18,6 +18,7 @@ class Forward_Button():
         
 
     def on_clicked(self):
+        print(self.field_area.packet_idx)
         print("Forwarding packet...")
         forward_packet("intercept", self.proxy_server.intercept_queue,
                        self.field_area.packet_idx)
