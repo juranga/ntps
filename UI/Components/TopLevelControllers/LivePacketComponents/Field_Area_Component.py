@@ -1,4 +1,6 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
+from Infrastructure.PacketLibrary.Packet import Dissected_Packet
+import copy
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QListView
 
@@ -22,21 +24,23 @@ class Field_Area_Component():
         self.layer_idx = lidx
 
     def on_edit(self, item):
+        
         if ":" not in item.text():
             print("ERROR: malformed field. Changes not saved.")
-            print("Please make sure field is in the form 'fieldname:value'.")
+            print("Please make sure field is in the form '<fieldName>:<value>'.")
             return
+        
         newField = item.text().split(":")
-        self.edited_packet_list = self.proxy_server.intercept_queue.packet_list
+        self.edited_packet_list = copy.deepcopy(self.proxy_server.intercept_queue.packet_list)
+        
         layer = self.edited_packet_list[self.packet_idx].get_layer(self.layer_idx)
-        fields = self.edited_packet_list[self.packet_idx].fields[layer]
-        for k,v in fields.items():
+        fieldList = self.edited_packet_list[self.packet_idx].fields[layer]
+        
+        for k,v in fieldList.items():
             if (k == newField[0]):
-                print("New value {}:{}".format(newField[0],newField[1]))
-                print("Replacing: {}:{}".format(k,v))
-    
-    def on_save():
-        return
+                fieldList[k] = newField[1]
+                self.edited_packet_list[self.packet_idx].fields = fieldList
+                break
         
         
 

@@ -21,7 +21,7 @@ class Live_Packet_Controller():
         self.field_area = Field_Area_Component(proxy_server)
         self.packet_area = Packet_Area_Component(proxy_server, self.field_area)
         self.forward_button = Forward_Button()
-        self.save_button = Save_Button(proxy_server)
+        self.save_button = Save_Button(proxy_server, self.field_area)
         self.drop_button = Drop_Button()
         self.view =  Live_Packet_View(self.proxy_toggle, self.intercept_toggle, self.packet_area, self.packet_binary_area,
                                       self.packet_hex_area, self.field_area, self.forward_button, self.save_button,

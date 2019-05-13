@@ -1,4 +1,5 @@
 from UI.Components.TopLevelControllers.LivePacketComponents.Field_Area_Component import Field_Area_Component
+from UI.Components.TopLevelControllers.LivePacketComponents.Save_Button import Save_Button
 
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 from PyQt5.QtWidgets import QTreeView
@@ -20,6 +21,6 @@ class Packet_Area_Component():
         self.list.expand(index)
         item = index.model().itemFromIndex(index)
         if item.parent() != None:
-            self.field_area.set_selected_packet(item.parent().row(), index.row())
             self.proxy_server.intercept_queue.populate_field_area(item.parent().row(), index.row())
+            self.field_area.set_selected_packet(item.parent().row(), index.row())
 
