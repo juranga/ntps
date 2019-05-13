@@ -1,5 +1,6 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget
+import os
 
 class Hook_View(QWidget):
 
@@ -63,7 +64,7 @@ class Hook_View(QWidget):
         self.tableWidget_2.setColumnCount(3)
         item = QtWidgets.QTableWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../../../../tmp/mozilla_unknown0/CircularButton.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("/root/ntps/UI/Resources/CircularButton.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item.setIcon(icon)
         self.tableWidget_2.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -164,8 +165,49 @@ class Hook_View(QWidget):
         __sortingEnabled = self.tableWidget_2.isSortingEnabled()
         self.tableWidget_2.setSortingEnabled(False)
         self.tableWidget_2.setSortingEnabled(__sortingEnabled)
+        self.tableWidget_2.cellClicked.connect(self.cellClick)
+        #self.tableWidget_2.cellClicked.connect(self.itemClick)
+        #self.tableWidget_2.itemClicked.connect(lambda:self.handle_item_clicked())
         self.pushButton_29.setText(_translate("MainWindow", "Delete"))
         self.pushButton_30.setText(_translate("MainWindow", "+Hook"))
         self.pushButton_31.setText(_translate("MainWindow", "Edit"))
+
+        self.pushButton_29.clicked.connect(lambda:self.deleteHookClicked())
+        self.pushButton_30.clicked.connect(lambda:self.addHookClicked())
+        self.pushButton_31.clicked.connect(lambda:self.editHookClicked())
+        self.populateHookTable()
+
         self.Search_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Search</span></p></body></html>"))
         self.lineEdit_16.setText(_translate("MainWindow", "Name of Hook"))
+
+    def deleteHookClicked(self):
+        print ("Delete Hook Clicked")    
+    def addHookClicked(self):
+        print ("Adding Hook Clicked")
+    def editHookClicked(self):
+        print ("Edit Hook Clicked")
+    def itemClick(self, item):
+        print (str(item))
+
+    def cellClick(self,row,col):
+        print ("Click on " + str(row) + " " + str(col))
+        item = self.tableWidget_2.itemAt(row,col)
+        itemID = item.text()
+        #print (itemID)
+
+    def handle_item_clicked(self):
+        print(self)
+
+    def populateHookTable(self):
+        currDir = os.getcwd()
+        os.chdir('/root/ntps/Infrastructure/HookLibrary/Hooks') #Change directory to find Hook Files
+        from PyQt5.QtWidgets import QTableWidgetItem
+        self.tableWidget_2.setItem(0,0, QTableWidgetItem("Hook"))
+        self.tableWidget_2.setItem(0,1, QTableWidgetItem("Description"))
+        self.tableWidget_2.setItem(0,2, QTableWidgetItem("Association to Hook Collection"))  
+        fileIndex = 1
+        hooklist = os.listdir()
+        for file in hooklist:
+            self.tableWidget_2.setItem(fileIndex,0, QTableWidgetItem(file)) #Populating every table cell
+            fileIndex+=1
+        os.chdir(currDir) #Returns to primary directory
