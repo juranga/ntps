@@ -9,7 +9,7 @@ def forward_packet(source, bus, dest=0):
     forward_schedule[source](bus, dest)
 
 def forward_intercept_packet(bus, dest):
-    for i in range(0, dest):
+    for i in range(0, dest+1):
         send(bus.get().convert_to_raw())
 
 def forward_pcap_packet(bus, dest):
@@ -25,7 +25,7 @@ def drop_packet(source, bus, dest=0):
     drop_schedule[source](bus, dest)
 
 def drop_intercept_packet(bus, dest):
-    for i in range(0, dest):
+    for i in range(0, dest+1):
         bus.get()
 
 def drop_pcap_packet(bus, dest):
