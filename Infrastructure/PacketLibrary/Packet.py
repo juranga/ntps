@@ -27,6 +27,16 @@ class Dissected_Packet:
             "udp": 17,
             "tcp": 6
         }
+        self.tcp_flags = {
+            "F": "FIN",
+            "S": "SYN",
+            "R": "RST",
+            "P": "PSH",
+            "A": "ACK",
+            "U": "URG",
+            "E": "ECE",
+            "C": "CWR"
+        }
         self.layers = ["Ether"]
         self.fields = defaultdict(dict)
 
@@ -66,14 +76,22 @@ class Dissected_Packet:
                 raw_layer = self.raw_form.getlayer(layer_idx-1)
             for field in raw_layer.fields_desc:
                 if field.name in self.fields[layer]:
+                    if field.name == None:
+                        continue
                     field_type = type(getattr(raw_layer, field.name))
                     try:
                         # If  Protocol, then attribute must be converted to a scapy req
                         if field.name == "proto":
                             setattr(raw_layer, field.name, self.proto[self.fields[layer][field.name]])
                             continue
+                        # Skip if Options for now: Uncertain how to manual edit
+                        if field.name == "options":
+                            continue
                         # Skip if field type is None or a Flag. TODO: Uncertain how to Handle Flags
-                        if field_type == type(None) or field_type == scapy.fields.FlagValue: 
+                        if field_type == type(None): 
+                            continue
+                        # Skip if flag value for now: Uncertain how to manual edit
+                        elif field_type == scapy.fields.FlagValue:
                             continue
                         # Convert to string to check if hexadecimal or decimal notation
                         elif field_type == int: 
@@ -84,7 +102,7 @@ class Dissected_Packet:
                         else:
                             setattr(raw_layer, field.name, field_type(self.fields[layer][field.name]))
                     except ValueError:
-                        # DEBUG:
+                        #DEBUG:
                         #print("Field value at {} requires a typing that is currently not supported in this system.".format(field.name))
                         continue
 
