@@ -84,13 +84,13 @@ class Dissected_Packet:
                         if field.name == "proto":
                             setattr(raw_layer, field.name, self.proto[self.fields[layer][field.name]])
                             continue
-                        # Skip if Options for now: Uncertain how to manual edit
+                        # Skip if Options for now: Uncertain how to manually edit options field
                         if field.name == "options":
                             continue
-                        # Skip if field type is None or a Flag. TODO: Uncertain how to Handle Flags
+                        # Skip if field type is None 
                         if field_type == type(None): 
                             continue
-                        # Skip if flag value for now: Uncertain how to manual edit
+                        # Skip if flag value for now: Uncertain how to manually edit Flags field
                         elif field_type == scapy.fields.FlagValue:
                             continue
                         # Convert to string to check if hexadecimal or decimal notation
