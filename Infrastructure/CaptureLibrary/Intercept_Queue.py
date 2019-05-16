@@ -50,12 +50,8 @@ class Intercept_Queue:
             self.packet_list_model.itemFromIndex(self.packet_list_model.indexFromItem(parent)).appendRow(child)
 
      # Populates the field list model with fields from the selected layer.
-<<<<<<< HEAD
     def populate_field_area(self, packet_idx, layer_idx):
         
-=======
-    def populate_fields(self, packet_idx, layer_idx):        
->>>>>>> 0a03c38bf7576e965b526ecbfd32c6b2182de244
         self.field_list_model.removeRows(0,self.field_list_model.rowCount())
         layer = self.packet_list[packet_idx].get_layer(layer_idx)
         fields = self.packet_list[packet_idx].fields[layer]
@@ -66,25 +62,8 @@ class Intercept_Queue:
     def put(self, packet):
         with self.lock:
             if self.size > len(self.packet_list):
-<<<<<<< HEAD
                 self.packet_list.append(packet)
                 self.populate_packet_area()
-=======
-                self.packet_list.append(Dissected_Packet(raw_packet))
-                self.dissect_put(Dissector(raw_packet))
-                self.populate_gui()
-
-    def dissect_put(self, packet, idx = -1, icon=arrow):
-        packet_layers = self.packet_list[-1].layers
-        packet_fields = self.packet_list[-1].fields
-        for key, value in packet.items():
-            if type(value) is dict:
-                packet_layers.append(key)
-                self.dissect_put(value, idx+1, circle)
-                break
-            else:
-                packet_fields[packet_layers[idx]][key] = value
->>>>>>> 0a03c38bf7576e965b526ecbfd32c6b2182de244
 
     # Get a packet from the list of packets.                
     def get(self):
@@ -93,11 +72,3 @@ class Intercept_Queue:
             del self.packet_list[0]
             self.packet_list_model.removeRow(0)
             return packet
-<<<<<<< HEAD
-=======
-
-
-            
-
-
->>>>>>> 0a03c38bf7576e965b526ecbfd32c6b2182de244
