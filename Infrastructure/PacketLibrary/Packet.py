@@ -14,8 +14,8 @@ circle = "/root/ntps/UI/Resources/CircularButton.png"
 class Dissected_Packet:
 
     def __init__(self, raw_packet):
-        self.ether_layer = Ether(raw_packet.get_payload())
-        self.raw_form = IP(self.ether_layer).copy()
+        self.ether_layer = Ether(raw_packet.get_payload()).copy()
+        self.raw_form = IP(raw_packet.get_payload()).copy()
         self.layer_dict = {
             "ETHER": "Ethernet II",
             "IP": "Internet Control Message Protocol",
@@ -74,6 +74,8 @@ class Dissected_Packet:
                 raw_layer = self.ether_layer
             else:
                 raw_layer = self.raw_form.getlayer(layer_idx-1)
+            if raw_layer == None:
+                continue
             for field in raw_layer.fields_desc:
                 if field.name in self.fields[layer]:
                     if field.name == None:
@@ -116,4 +118,7 @@ class Dissected_Packet:
         self.dissect_IP(Dissector(self.raw_form))
 
     def convert_to_raw(self):
-        return self.ether_layer / self.raw_form
+        #x = self.ether_layer / self.raw_form
+        #x.show2(dump=True)
+        print(self.raw_form.show2())
+        return self.raw_form
