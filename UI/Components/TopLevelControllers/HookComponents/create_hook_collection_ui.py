@@ -7,14 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-<<<<<<< HEAD
-
-class Ui_Dialog(object):
-=======
 from PyQt5.QtWidgets import QFileDialog, QDialog
 
 class Ui_Dialog(QDialog):
->>>>>>> 0a03c38bf7576e965b526ecbfd32c6b2182de244
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(476, 321)

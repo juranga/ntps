@@ -216,21 +216,6 @@ class Hook_View(QWidget):
     def handle_item_clicked(self):
         print(self)
 
-<<<<<<< HEAD
-    def populateHookTable(self):
-        currDir = os.getcwd()
-        os.chdir('/root/ntps/Infrastructure/HookLibrary/Hooks') #Change directory to find Hook Files
-        from PyQt5.QtWidgets import QTableWidgetItem
-        self.tableWidget_2.setItem(0,0, QTableWidgetItem("Hook"))
-        self.tableWidget_2.setItem(0,1, QTableWidgetItem("Description"))
-        self.tableWidget_2.setItem(0,2, QTableWidgetItem("Association to Hook Collection"))  
-        fileIndex = 1
-        hooklist = os.listdir()
-        for file in hooklist:
-            self.tableWidget_2.setItem(fileIndex,0, QTableWidgetItem(file)) #Populating every table cell
-            fileIndex+=1
-        os.chdir(currDir) #Returns to primary directory
-=======
     #def populateHookTable(self):
         #currDir = os.getcwd()
         #os.chdir('Infrastructure/HookLibrary/Hooks') #Change directory to find Hook Files
@@ -244,4 +229,3 @@ class Hook_View(QWidget):
             #self.tableWidget_2.setItem(fileIndex,0, QTableWidgetItem(file)) #Populating every table cell
             #fileIndex+=1
         #os.chdir(currDir) #Returns to primary directory
->>>>>>> 0a03c38bf7576e965b526ecbfd32c6b2182de244
