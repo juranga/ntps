@@ -9,10 +9,10 @@
 from Infrastructure.HookLibrary.Hook import Hook
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QDialog
 
 class Ui_CEHook(QDialog):
-    def setupUi(self, CEHook, hook_collection):
-        self.test_collection = hook_collection 
+    def setupUi(self, CEHook):
         CEHook.setObjectName("CEHook")
         CEHook.resize(400, 219)
         self.hNInput = QtWidgets.QLineEdit(CEHook)
