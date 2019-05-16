@@ -16,26 +16,26 @@ class Proxy_Server:
         self.capture_filter = capture_filter
         self.live_pcap = live_pcap
         self.intercept_queue = intercept_queue
-        self.interceptFlag = False
+        self.intercept_flag = False
         self.hook_manager = hook_manager
         self.nfq = nfq
 
     def start_intercept(self):
-        self.interceptFlag = True
+        self.intercept_flag = True
 
     def stop_intercept(self):
-        self.interceptFlag = False
+        self.intercept_flag = False
 
     def handle_new_packet(self, raw_packet):
         packet = IP(raw_packet.get_payload()).copy()
         
         print('Captured packet...', flush=True)
         #TODO: Fix Capture Filter
-        if self.capture_filter.filter(packet):
-            self.hook_manager.execute_hooks(packet, 
-                    intercept_queue=self.intercept_queue if self.interceptFlag else None,
-                    live_traffic_list=self.live_pcap.traffic
-                    )
+        #if self.capture_filter.filter(packet):
+        self.hook_manager.execute_hooks(packet, 
+                intercept_queue=self.intercept_queue if self.intercept_flag else None,
+                live_traffic_list=self.live_pcap.traffic
+                )
         raw_packet.drop()
 
     def stop_server(self):
@@ -43,7 +43,6 @@ class Proxy_Server:
         os.system("iptables -D OUTPUT -j NFQUEUE --queue-num 0")
         print("Unbinded")
 
-    # TODO: Thread function
     def init_server(self):
         iptablesr = "iptables -A OUTPUT -j NFQUEUE --queue-num 0"
         os.system(iptablesr)
