@@ -1,6 +1,8 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
+from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
 
 from UI.Components.TopLevelControllers.Live_Packet_Controller import Live_Packet_Controller
+from UI.Components.TopLevelControllers.Hook_Controller import Hook_Controller
 
 from UI.Components.View.Live_Packet_View import Live_Packet_View
 from UI.Components.View.Hook_Collection_View import Hook_Collection_View
@@ -19,7 +21,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1035, 715)
-        self.proxy_server = Proxy_Server()
+
+        self.hook_collection_manager = Hook_Collection_Manager()
+        self.proxy_server = Proxy_Server(hook_manager=self.hook_collection_manager)
 
         # Main + Option View
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -36,9 +40,12 @@ class Ui_MainWindow(object):
         self.stacked_window.addWidget(self.live_packet_controller.view)
 
         # Hook View
-        self.hook_view = Hook_View()
-        self.stacked_window.addWidget(self.hook_view)
-        
+        #self.hook_view = Hook_View()
+        #self.stacked_window.addWidget(self.hook_view)
+        #self.hook_collection = Hook_Collection()
+        self.hook_controller = Hook_Controller(self.hook_collection_manager)
+        self.stacked_window.addWidget(self.hook_controller.view)
+         
         # Hook Collection Widget
         self.hook_collection_view = Hook_Collection_View()
         self.stacked_window.addWidget(self.hook_collection_view)

@@ -4,7 +4,7 @@ import os
 
 class Hook_View(QWidget):
 
-    def __init__(self, parent=None):
+    def __init__(self, hook_manager, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("hook_page")
         self.frame_7 = QtWidgets.QFrame(self)
@@ -184,6 +184,17 @@ class Hook_View(QWidget):
         print ("Delete Hook Clicked")    
     def addHookClicked(self):
         print ("Adding Hook Clicked")
+        Edit_Hook_Controller.startEditHook(self)
+        #self.main.Main.showOverlay()
+        #self.edit_hooks_dialog()
+
+    def edit_hooks_dialog(self): #This Method opens the Overlay
+        dialog = QtWidgets.QDialog()
+        dialog.ui= create_edit_hooks.Ui_CEHook()
+        dialog.ui.setupUi(dialog, self.hook_manager.hook_collection)
+        dialog.show()
+        sys.exit(dialog.exec())
+
     def editHookClicked(self):
         print ("Edit Hook Clicked")
     def itemClick(self, item):

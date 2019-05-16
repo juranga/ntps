@@ -6,10 +6,13 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+from Infrastructure.HookLibrary.Hook import Hook
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_CEHook(object):
-    def setupUi(self, CEHook):
+class Ui_CEHook(QDialog):
+    def setupUi(self, CEHook, hook_collection):
+        self.test_collection = hook_collection 
         CEHook.setObjectName("CEHook")
         CEHook.resize(400, 219)
         self.hNInput = QtWidgets.QLineEdit(CEHook)
@@ -48,6 +51,36 @@ class Ui_CEHook(object):
 
         self.retranslateUi(CEHook)
         QtCore.QMetaObject.connectSlotsByName(CEHook)
+        self.saveButton.clicked.connect(lambda:self.saveClicked())
+        self.cancelButton.clicked.connect(lambda:self.cancelClicked())
+        self.saveButton.clicked.connect(CEHook.accept)
+        self.cancelButton.clicked.connect(CEHook.reject)
+        self.browseButton.clicked.connect(lambda:self.browseClicked())
+    
+    def openFileNameDialogs(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(None,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
+        if fileName:
+            print(fileName)
+            self.hPInput.setText(fileName)
+            self.test_collection.add_Hook(Hook(fileName))
+            
+    def saveClicked(self):
+        print("Save Clicked:")
+        print("Name:",self.hNInput.text())
+        print("Description:",self.hDInput.toPlainText())
+        print("Path:",self.hPInput.text())
+        self.roiGroups = dict(Name = str(self.hNInput.text()),Description = str(self.hDInput.toPlainText()),Path = str(self.hPInput.text()))
+        print(self.roiGroups)
+        #self.accept
+
+    def cancelClicked(self):
+        print ("Cancel Clicked")
+        
+    def browseClicked(self):
+        print ("Browse Clicked")
+        (self.openFileNameDialogs())
 
     def retranslateUi(self, CEHook):
         _translate = QtCore.QCoreApplication.translate
