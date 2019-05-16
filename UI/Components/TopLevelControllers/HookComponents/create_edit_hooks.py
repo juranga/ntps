@@ -6,8 +6,6 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from Infrastructure.HookLibrary.Hook import Hook
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QDialog
 
@@ -48,7 +46,8 @@ class Ui_CEHook(QDialog):
         self.hPLabel = QtWidgets.QLabel(self.widget)
         self.hPLabel.setObjectName("hPLabel")
         self.verticalLayout.addWidget(self.hPLabel)
-
+        
+        #self.roiGroups = {}
         self.retranslateUi(CEHook)
         QtCore.QMetaObject.connectSlotsByName(CEHook)
         self.saveButton.clicked.connect(lambda:self.saveClicked())
@@ -64,7 +63,6 @@ class Ui_CEHook(QDialog):
         if fileName:
             print(fileName)
             self.hPInput.setText(fileName)
-            self.test_collection.add_Hook(Hook(fileName))
             
     def saveClicked(self):
         print("Save Clicked:")

@@ -28,7 +28,7 @@ class Hook_Collection_Manager:
         add_to_live(live_traffic_list, packet)
 
     def add_hook_collection(self, hook_collection):
-        if hook_collection.sequence_number >= self.n_hook_collections or hook_collection.sequence_number < 0:
+        if int(hook_collection.sequence_number) >= self.n_hook_collections or hook_collection.sequence_number < 0:
             hook_collection.sequence_number = self.n_hook_collections
             self.hook_collection.append(hook_collection)
         else:
@@ -40,7 +40,7 @@ class Hook_Collection_Manager:
         self.n_hook_collections += 1
 
     def remove_hook_collection(self, hook_collection):
-        if hook_collection.sequence_number > self.n_hook_collections or hook_collection.sequence_number < 0:
+        if int(hook_collection.sequence_number) > self.n_hook_collections or hook_collection.sequence_number < 0:
             return
         del self.hook_collection[hook_collection.sequence_number]
         self.n_hook_collections -= 1

@@ -1,5 +1,8 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget
+import os
+import sys
+from UI.Components.TopLevelControllers.Add_Hook_Collection_Controller import Add_Hook_Collection_Controller
 
 class Hook_Collection_View(QWidget):
 
@@ -112,6 +115,7 @@ class Hook_Collection_View(QWidget):
         self.hook_collection_table.verticalHeader().setMinimumSectionSize(25)
         self.hook_collection_table.verticalHeader().setSortIndicatorShown(True)
         self.hook_collection_table.verticalHeader().setStretchLastSection(False)
+        self.hook_collection_table.setRowCount(0)
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.hook_collection_mframe)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 30, 821, 39))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
@@ -131,7 +135,11 @@ class Hook_Collection_View(QWidget):
         self.edit_button = QtWidgets.QPushButton(self.gridLayoutWidget_2)
         self.edit_button.setStyleSheet("font: 8pt \"MS Reference Sans Serif\";\n"
 "background-color: rgb(232, 232, 232)")
-        self.edit_button.setObjectName("edit_button")
+        self.edit_button.clicked.connect(lambda:self.deleteHookCollectionClicked())
+        self.add_new_collection_button.clicked.connect(lambda:self.addHookCollectionClicked())
+        self.delete_button.clicked.connect(lambda:self.editHookCollectionClicked())
+
+        self.edit_button.clicked.connect(lambda:self.editHookClicked())
         self.gridLayout_2.addWidget(self.edit_button, 0, 1, 1, 1)
         self.hook_collection_search = QtWidgets.QLabel(self.gridLayoutWidget_2)
         self.hook_collection_search.setStyleSheet("font: 8pt \"MS Reference Sans Serif\";")
@@ -173,3 +181,27 @@ class Hook_Collection_View(QWidget):
         self.hook_collection_search.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Search</span></p></body></html>"))
         self.hook_collection_search_input.setText(_translate("MainWindow", "Name of Hook Collection"))
         self.hook_collection_title.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Hook Collection View</span></p></body></html>"))
+
+    def deleteHookCollectionClicked(self):
+        print ("Delete Hook Clicked")    
+
+    def addHookCollectionClicked(self):
+        print ("Adding Hook Clicked")
+        Add_Hook_Collection_Controller.startAddHookCollection(self)
+        #self.main.Main.showOverlay()
+        #self.edit_hooks_dialog()
+
+    def editHookCollectionClicked(self):
+        print ("Edit Hook Clicked")
+
+    def itemClick(self, item):
+        print (str(item))
+
+    def cellClick(self,row,col):
+        print ("Click on " + str(row) + " " + str(col))
+        item = self.tableWidget_2.itemAt(row,col)
+        itemID = item.text()
+        #print (itemID)
+
+    def handle_item_clicked(self):
+        print(self)
