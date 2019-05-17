@@ -22,5 +22,5 @@ class Packet_Area_Component():
         item = index.model().itemFromIndex(index)
         if item.parent() != None:
             self.proxy_server.intercept_queue.populate_field_area(item.parent().row(), index.row())
-            self.field_area.set_selected_packet(item.parent().row(), index.row())
+            self.field_area.set_selected_packet(item.parent().row(), index.row()) # Populate the field area when you click a layer!
 

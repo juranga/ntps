@@ -1,6 +1,7 @@
 from Infrastructure.HookLibrary.Hook import Hook as hook
 from Infrastructure.Common.Generators import id_generator
 
+# An object representing a list of hooks; each hook collection contains one to many hooks, each of which s executed in a specified sequence when enabled.
 class Hook_Collection:
 
     def __init__(self, display_name=id_generator(), enabled=True, sequence_number=0):

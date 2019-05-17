@@ -1,6 +1,7 @@
 from Infrastructure.PacketLibrary.Packet_Dict import PacketDict
 from Infrastructure.PacketLibrary.Packet import Dissected_Packet
 
+# An object that can convert a given value to hexidecimal, dissected, and binary format. Incomplete!
 class DisplayFormat:
 
     valid_formats = {"dissected", "binary", "hex"}

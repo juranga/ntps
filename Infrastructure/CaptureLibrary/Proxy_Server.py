@@ -9,6 +9,7 @@ from netfilterqueue import NetfilterQueue
 from scapy.all import *
 import os
 
+# This class is an object representing the proxy server in the system; from here, the proxy and intercept behavior are toggled, and incoming packets are handled. 
 class Proxy_Server:
 
     def __init__(self, capture_filter=Capture_Filter(), live_pcap=PCAP(), 
@@ -20,13 +21,16 @@ class Proxy_Server:
         self.intercept_flag = False
         self.hook_manager = hook_manager
         self.nfq = nfq
-
+        
+    # Turn on packet interception behavior by setting the flag.
     def start_intercept(self):
         self.intercept_flag = True
 
+    # Turn off interception behavior by setting the flag to false.
     def stop_intercept(self):
         self.intercept_flag = False
 
+    # This method is called every time the proxy captures a packet.
     def handle_new_packet(self, raw_packet):
         packet = Dissected_Packet(raw_packet)
         
@@ -39,11 +43,13 @@ class Proxy_Server:
                 )
         raw_packet.drop()
 
+    # Stop the proxy; the system will stop capturing packets.
     def stop_server(self):
         self.nfq.unbind()
         os.system("iptables -D OUTPUT -j NFQUEUE --queue-num 0")
         print("Unbinded")
 
+    # Start the proxy (nfq); the system will start capturing packets.
     def init_server(self):
         iptablesr = "iptables -I OUTPUT -j NFQUEUE --queue-num 0"
         os.system(iptablesr)

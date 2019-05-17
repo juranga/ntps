@@ -4,6 +4,7 @@ import sys
 import os
 import importlib.util
 
+# An object representing a hook in the system. When a hook is loaded from the file system, the path, name, and a sequence number is stored; the script itself can then be installed and executed. Hooks can be enabled and disabled from the interface.
 class Hook():
 
     def __init__(self, path, display_name= id_generator(), enabled=True, sequence_number=0):

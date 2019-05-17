@@ -1,12 +1,14 @@
 from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
 from Infrastructure.PacketLibrary.Packet_Bus import forward_packet, drop_packet, add_to_intercept, add_to_live
 
+# A class representing a hook collection manager. This object is, essentially, a list of hook collections; it keeps track of all hook collections loaded into the system and executes them in their designated sequence.
 class Hook_Collection_Manager:
 
     def __init__(self):
         self.hook_collection = []
         self.n_hook_collections = 0
 
+    # Execute every hook in every hook collection in the system.
     def execute_hooks(self, packet, intercept_queue=None, live_traffic_list=None):
         order = ""
         print("Hook_Collection, ",self.hook_collection)
@@ -31,6 +33,7 @@ class Hook_Collection_Manager:
             add_to_intercept(intercept_queue, packet)
         add_to_live(live_traffic_list, packet)
 
+    # Add a hook collection to the list of hook collections.
     def add_hook_collection(self, hook_collection):
         if int(hook_collection.sequence_number) >= self.n_hook_collections or int(hook_collection.sequence_number) < 0:
             hook_collection.sequence_number = self.n_hook_collections
@@ -43,6 +46,7 @@ class Hook_Collection_Manager:
             self.hook_collection[hook_collection.sequence_number] = hook_collection
         self.n_hook_collections += 1
 
+    # Remove a hook collection from the list of hook collections.
     def remove_hook_collection(self, hook_collection):
         if int(hook_collection.sequence_number) > self.n_hook_collections or hook_collection.sequence_number < 0:
             return

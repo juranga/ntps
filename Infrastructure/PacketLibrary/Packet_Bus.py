@@ -1,6 +1,6 @@
 from scapy.all import send
 
-# Bus refers to the intercept queue, an array of live packets, or a singular packet
+# Bus refers to the intercept queue, an array of live packets, or a singular packet.
 # source = keyword for "intercept",  "pcap", or "hook"
 # dest = the index of the packet within the queue or list
 

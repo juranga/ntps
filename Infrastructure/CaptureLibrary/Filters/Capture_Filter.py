@@ -1,5 +1,6 @@
 from scapy.all import sniff
 
+# The class for the capture filter; untested, and likely non-functional.
 class Capture_Filter: 
 
     def __init__(self, cfilter="bpf", input_filter=""):

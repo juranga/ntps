@@ -8,6 +8,7 @@ from scapy.all import *
 from io import StringIO
 import sys
 
+# The dissector is respondible for dissecting packets into fields that can be read and used in our system in the form of an object; see "Packet.py".
 class Capturing(list):
     
     def __enter__(self):

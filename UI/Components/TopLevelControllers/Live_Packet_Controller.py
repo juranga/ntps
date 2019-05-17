@@ -12,6 +12,7 @@ from UI.Components.TopLevelControllers.LivePacketComponents.Queue_Size_Component
 from UI.Components.View.Live_Packet_View import Live_Packet_View
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 
+# Controller for the live packet view.
 class Live_Packet_Controller():
 
     def __init__(self, proxy_server = Proxy_Server()):

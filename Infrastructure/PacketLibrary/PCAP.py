@@ -2,6 +2,7 @@ from Infrastructure.Common.Generators import id_generator
 
 from scapy.all import *
 
+# A class for saving the capture to a PCAP file. Implementation incomplete!
 class PCAP:
 
     def __init__(self, name=id_generator(), path="./"):

@@ -11,6 +11,7 @@ This is because the Ether class in scapy does not have a "haslayer" function, an
 arrow = "/root/ntps/UI/Resources/BlueArrow.png"
 circle = "/root/ntps/UI/Resources/CircularButton.png"
 
+# An object storing information on a packet in our system; it stores the layers and the fields (and their values) within them.
 class Dissected_Packet:
 
     def __init__(self, raw_packet):
@@ -48,7 +49,7 @@ class Dissected_Packet:
     
     def get_layer(self, layer_idx):
         return self.layers[layer_idx]
-
+   
     def dissect_packet(self):
         self.dissect_ether()
         self.dissect_IP(Dissector(self.raw_form))
@@ -66,7 +67,8 @@ class Dissected_Packet:
                 break
             else:
                 self.fields[self.layers[idx]][key] = value
-
+                
+    # Save modifications to the packet. This gives the raw packet the new values and updates the checksum.
     def save_modifications(self):
         for layer_idx in range(0, len(self.layers)):
             layer = self.layers[layer_idx]

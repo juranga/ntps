@@ -16,6 +16,7 @@ from UI.Components.View.Option_View import Option_View
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 
+# Main methods; UI set up and execution. You start the system using this script!
 class Ui_MainWindow(object):
 
     def closeMain(self):

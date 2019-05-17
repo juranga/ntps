@@ -16,6 +16,7 @@ class Intercept_Queue:
         self.packet_list = []
         self.lock = Lock()
 
+    # Populates the gui with packet information.
     def populate_packet_area(self):
         print('Populating to GUI...', flush=True)
 
@@ -49,7 +50,7 @@ class Intercept_Queue:
             child.setEditable(False)
             self.packet_list_model.itemFromIndex(self.packet_list_model.indexFromItem(parent)).appendRow(child)
 
-     # Populates the field list model with fields from the selected layer.
+     # Populates the field area with fields from the selected layer.
     def populate_field_area(self, packet_idx, layer_idx):
         
         self.field_list_model.removeRows(0,self.field_list_model.rowCount())
@@ -59,6 +60,7 @@ class Intercept_Queue:
             self.field_list_model.appendRow(QStandardItem("".join("{}:{}".format(k,v))
             ))
             
+    # Insert a packet into the list of packets.  
     def put(self, packet):
         with self.lock:
             if self.size > len(self.packet_list):
