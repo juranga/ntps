@@ -9,11 +9,15 @@ class Hook_Collection_Manager:
 
     def execute_hooks(self, packet, intercept_queue=None, live_traffic_list=None):
         order = ""
+        print("Hook_Collection, ",self.hook_collection)
+        print(self.n_hook_collections)
         for i in range(0, self.n_hook_collections):
             if not self.hook_collection[i].enabled:
                 continue
             for j in range(0, self.hook_collection[i].n_hooks):
-                order = self.hook_collection[i].hook_list[j].execute_hook(packet.raw_form) # Give Packet's Raw form for Hooks
+                hook = self.hook_collection[i].hook_list[j]
+                order = hook.execute_hook(packet.raw_form)
+                #order = self.hook_collection[i].hook_list[j].execute_hook(packet.raw_form) # Give Packet's Raw form for Hooks
                 if order == "Forward":
                     forward_packet("hook", packet)
                     return
@@ -28,19 +32,19 @@ class Hook_Collection_Manager:
         add_to_live(live_traffic_list, packet)
 
     def add_hook_collection(self, hook_collection):
-        if hook_collection.sequence_number >= self.n_hook_collections or hook_collection.sequence_number < 0:
+        if int(hook_collection.sequence_number) >= self.n_hook_collections or int(hook_collection.sequence_number) < 0:
             hook_collection.sequence_number = self.n_hook_collections
             self.hook_collection.append(hook_collection)
         else:
             self.hook_collection.append(Hook_Collection())
-            for i in range(hook_collection.sequence_number, self.n_hook_collections, -1):
-                self.hook_collection[i+1] = self.hook_collection[i]
-                self.hook_collection[i+1].sequence_number += 1
+            for i in range(self.n_hook_collections, hook_collection.sequence_number, -1):
+                self.hook_collection[i] = self.hook_collection[i-1]
+                self.hook_collection[i].sequence_number += 1
             self.hook_collection[hook_collection.sequence_number] = hook_collection
         self.n_hook_collections += 1
 
     def remove_hook_collection(self, hook_collection):
-        if hook_collection.sequence_number > self.n_hook_collections or hook_collection.sequence_number < 0:
+        if int(hook_collection.sequence_number) > self.n_hook_collections or hook_collection.sequence_number < 0:
             return
         del self.hook_collection[hook_collection.sequence_number]
         self.n_hook_collections -= 1

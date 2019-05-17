@@ -7,8 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QDialog
 
-class Ui_CEHook(object):
+class Ui_CEHook(QDialog):
     def setupUi(self, CEHook):
         CEHook.setObjectName("CEHook")
         CEHook.resize(400, 219)
@@ -45,9 +46,39 @@ class Ui_CEHook(object):
         self.hPLabel = QtWidgets.QLabel(self.widget)
         self.hPLabel.setObjectName("hPLabel")
         self.verticalLayout.addWidget(self.hPLabel)
-
+        
+        #self.roiGroups = {}
         self.retranslateUi(CEHook)
         QtCore.QMetaObject.connectSlotsByName(CEHook)
+        self.saveButton.clicked.connect(lambda:self.saveClicked())
+        self.cancelButton.clicked.connect(lambda:self.cancelClicked())
+        self.saveButton.clicked.connect(CEHook.accept)
+        self.cancelButton.clicked.connect(CEHook.reject)
+        self.browseButton.clicked.connect(lambda:self.browseClicked())
+    
+    def openFileNameDialogs(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(None,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
+        if fileName:
+            print(fileName)
+            self.hPInput.setText(fileName)
+            
+    def saveClicked(self):
+        print("Save Clicked:")
+        print("Name:",self.hNInput.text())
+        print("Description:",self.hDInput.toPlainText())
+        print("Path:",self.hPInput.text())
+        self.roiGroups = dict(Name = str(self.hNInput.text()),Description = str(self.hDInput.toPlainText()),Path = str(self.hPInput.text()))
+        print(self.roiGroups)
+        #self.accept
+
+    def cancelClicked(self):
+        print ("Cancel Clicked")
+        
+    def browseClicked(self):
+        print ("Browse Clicked")
+        (self.openFileNameDialogs())
 
     def retranslateUi(self, CEHook):
         _translate = QtCore.QCoreApplication.translate

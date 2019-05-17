@@ -1,12 +1,17 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
+from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
 
 from UI.Components.TopLevelControllers.Live_Packet_Controller import Live_Packet_Controller
+from UI.Components.TopLevelControllers.Hook_Controller import Hook_Controller
+from UI.Components.TopLevelControllers.Hook_Collection_Controller import Hook_Collection_Controller
 
 from UI.Components.View.Live_Packet_View import Live_Packet_View
 from UI.Components.View.Hook_Collection_View import Hook_Collection_View
+from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
 from UI.Components.View.Hook_View import Hook_View
 from UI.Components.View.PCAP_View import PCAP_View
 from UI.Components.View.Option_View import Option_View
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
@@ -19,7 +24,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1035, 715)
-        self.proxy_server = Proxy_Server()
+
+        self.hook_manager = Hook_Collection_Manager()
+        self.proxy_server = Proxy_Server(hook_manager=self.hook_manager)
 
         # Main + Option View
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -36,12 +43,17 @@ class Ui_MainWindow(object):
         self.stacked_window.addWidget(self.live_packet_controller.view)
 
         # Hook View
-        self.hook_view = Hook_View()
-        self.stacked_window.addWidget(self.hook_view)
-        
+        #self.hook_view = Hook_View()
+        #self.stacked_window.addWidget(self.hook_view)
+        #self.hook_collection = Hook_Collection()
+        self.hook_controller = Hook_Controller(self.hook_manager)
+        self.stacked_window.addWidget(self.hook_controller.view)
+         
         # Hook Collection Widget
-        self.hook_collection_view = Hook_Collection_View()
-        self.stacked_window.addWidget(self.hook_collection_view)
+        #self.hook_collection_view = Hook_Collection_View()
+        #self.stacked_window.addWidget(self.hook_collection_view)
+        self.hook_collection_controller = Hook_Collection_Controller()
+        self.stacked_window.addWidget(self.hook_collection_controller.view)
 
         # PCAP Page
         self.pcap_view = PCAP_View()
@@ -80,13 +92,18 @@ class Ui_MainWindow(object):
 
         # View Retranslates
         self.live_packet_controller.view.retranslateUI()
-        self.hook_collection_view.retranslateUI()
-        self.hook_view.retranslateUI()
+        #self.hook_collection_view.retranslateUI()
+        #self.hook_view.retranslateUI()
+        self.hook_collection_controller.view.retranslateUI()
+        self.hook_controller.view.retranslateUI()
         self.pcap_view.retranslateUI()
         self.option_view.retranslateUI()
         
         # Header Retranslate
         self.system_name.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600; color:#ff6e07;\">Network Traffic Proxy System</span></p></body></html>"))
+
+    
+    
 
 def appExec():
     app = QtWidgets.QApplication(sys.argv)

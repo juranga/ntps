@@ -1,11 +1,14 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget
+from UI.Components.TopLevelControllers.Edit_Hook_Controller import Edit_Hook_Controller
+#from UI.Components.TopLevelControllers.HookComponents import create_edit_hooks
 import os
-
+import sys
 class Hook_View(QWidget):
 
-    def __init__(self, parent=None):
+    def __init__(self, hook_manager, parent=None):
         QWidget.__init__(self, parent=parent)
+        self.hook_manager = hook_manager
         self.setObjectName("hook_page")
         self.frame_7 = QtWidgets.QFrame(self)
         self.frame_7.setGeometry(QtCore.QRect(0, 0, 871, 641))
@@ -175,17 +178,34 @@ class Hook_View(QWidget):
         self.pushButton_29.clicked.connect(lambda:self.deleteHookClicked())
         self.pushButton_30.clicked.connect(lambda:self.addHookClicked())
         self.pushButton_31.clicked.connect(lambda:self.editHookClicked())
-        self.populateHookTable()
-
+        self.tableWidget_2.setRowCount(0)
+        #self.populateHookTable()
+        #self.edit_hook_controller = Edit_Hook_Controller()
+        #self.stacked_window.addWidget(self.edit_hook_controller.view)
+        from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
+        self.hook_manager.add_hook_collection(Hook_Collection())
         self.Search_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Search</span></p></body></html>"))
         self.lineEdit_16.setText(_translate("MainWindow", "Name of Hook"))
 
     def deleteHookClicked(self):
         print ("Delete Hook Clicked")    
+
     def addHookClicked(self):
         print ("Adding Hook Clicked")
+        Edit_Hook_Controller.startEditHook(self, self.hook_manager.hook_collection[0])
+        #self.main.Main.showOverlay()
+        #self.edit_hooks_dialog()
+
+    def edit_hooks_dialog(self): #This Method opens the Overlay
+        dialog = QtWidgets.QDialog()
+        dialog.ui= create_edit_hooks.Ui_CEHook()
+        dialog.ui.setupUi(dialog)
+        dialog.show()
+        sys.exit(dialog.exec())
+
     def editHookClicked(self):
         print ("Edit Hook Clicked")
+
     def itemClick(self, item):
         print (str(item))
 
@@ -198,16 +218,16 @@ class Hook_View(QWidget):
     def handle_item_clicked(self):
         print(self)
 
-    def populateHookTable(self):
-        currDir = os.getcwd()
-        os.chdir('/root/ntps/Infrastructure/HookLibrary/Hooks') #Change directory to find Hook Files
-        from PyQt5.QtWidgets import QTableWidgetItem
-        self.tableWidget_2.setItem(0,0, QTableWidgetItem("Hook"))
-        self.tableWidget_2.setItem(0,1, QTableWidgetItem("Description"))
-        self.tableWidget_2.setItem(0,2, QTableWidgetItem("Association to Hook Collection"))  
-        fileIndex = 1
-        hooklist = os.listdir()
-        for file in hooklist:
-            self.tableWidget_2.setItem(fileIndex,0, QTableWidgetItem(file)) #Populating every table cell
-            fileIndex+=1
-        os.chdir(currDir) #Returns to primary directory
+    #def populateHookTable(self):
+        #currDir = os.getcwd()
+        #os.chdir('Infrastructure/HookLibrary/Hooks') #Change directory to find Hook Files
+        #from PyQt5.QtWidgets import QTableWidgetItem
+        #self.tableWidget_2.setItem(0,0, QTableWidgetItem("Hook"))
+        #self.tableWidget_2.setItem(0,1, QTableWidgetItem("Description"))
+        #self.tableWidget_2.setItem(0,2, QTableWidgetItem("Association to Hook Collection"))  
+        #fileIndex = 1
+        #hooklist = os.listdir()
+        #for file in hooklist:
+            #self.tableWidget_2.setItem(fileIndex,0, QTableWidgetItem(file)) #Populating every table cell
+            #fileIndex+=1
+        #os.chdir(currDir) #Returns to primary directory

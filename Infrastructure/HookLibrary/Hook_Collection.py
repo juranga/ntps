@@ -1,4 +1,4 @@
-from Infrastructure.HookLibrary.Hook import Hook
+from Infrastructure.HookLibrary.Hook import Hook as hook
 from Infrastructure.Common.Generators import id_generator
 
 class Hook_Collection:
@@ -23,7 +23,7 @@ class Hook_Collection:
         return self.sequence_number
 
     def delete_hook(self, hook):
-        if hook.sequence_number > self.n_hooks or hook.sequence_number < 0:
+        if hook.get_sequence_number > self.n_hooks or hook.get_sequence_number < 0:
             return
         del self.hook_list[hook.sequence_number]
         self.n_hooks -= 1
@@ -31,13 +31,13 @@ class Hook_Collection:
             self.hook_list[i].sequence_number = i
 
     def add_hook(self, hook):
-        if hook.sequence_number >= self.n_hooks or hook.sequence_number < 0 :
+        if hook.get_sequence_number() >= self.n_hooks or hook.get_sequence_number() < 0 :
             hook.sequence_number = self.n_hooks
             self.hook_list.append(hook)
         else:
             self.hook_list.append(object)
-            for i in range(hook.sequence_number, self.n_hooks, -1):
-                self.hook_list[i+1] = self.hook_list[i]
-                self.hook_list[i+1].sequence_number += 1
+            for i in range(self.n_hooks, hook.sequence_number, -1):
+                self.hook_list[i] = self.hook_list[i-1]
+                self.hook_list[i].sequence_number += 1
             self.hook_list[hook.sequence_number] = hook
         self.n_hooks += 1

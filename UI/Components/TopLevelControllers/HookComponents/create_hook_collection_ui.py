@@ -7,8 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QDialog
 
-class Ui_Dialog(object):
+class Ui_Dialog(QDialog):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(476, 321)
@@ -235,6 +236,25 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+        self.saveButton.clicked.connect(lambda:self.saveClicked())
+        self.cancelButton.clicked.connect(lambda:self.cancelClicked())
+        self.saveButton.clicked.connect(Dialog.accept)
+        self.cancelButton.clicked.connect(Dialog.reject)
+
+    def saveClicked(self):
+        print("Save Clicked:")
+        #print("Hook Collection Name:",self.lineEdit_3.text())
+        #print("HC Description:",self.lineEdit_2.text())
+        #print("Status",str(self.comboBox_2.currentText()))
+        #print("Execution Sequence",self.lineEdit.text())
+        #print(self)
+        self.roiGroups = dict(HCName = str(self.lineEdit_3.text()),HCDescription = str(self.lineEdit_2.text()),HCStatus = str(self.comboBox_2.currentText()),HCExecutionSequence = str(self.lineEdit.text()))
+        print(self.roiGroups)
+        #self.accept
+
+    def cancelClicked(self):
+        print ("Cancel Clicked")
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate

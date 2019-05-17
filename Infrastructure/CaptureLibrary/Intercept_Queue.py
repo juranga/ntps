@@ -55,7 +55,6 @@ class Intercept_Queue:
         self.field_list_model.removeRows(0,self.field_list_model.rowCount())
         layer = self.packet_list[packet_idx].get_layer(layer_idx)
         fields = self.packet_list[packet_idx].fields[layer]
-        
         for k,v in fields.items():
             self.field_list_model.appendRow(QStandardItem("".join("{}:{}".format(k,v))
             ))
