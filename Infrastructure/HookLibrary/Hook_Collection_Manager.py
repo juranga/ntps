@@ -18,8 +18,7 @@ class Hook_Collection_Manager:
                 continue
             for j in range(0, self.hook_collection[i].n_hooks):
                 hook = self.hook_collection[i].hook_list[j]
-                order = hook.execute_hook(packet.raw_form)
-                #order = self.hook_collection[i].hook_list[j].execute_hook(packet.raw_form) # Give Packet's Raw form for Hooks
+                order = hook.execute_hook(packet.raw_form) # Give Packet's Raw form for Hooks, which is the Scapy
                 if order == "Forward":
                     forward_packet("hook", packet)
                     return

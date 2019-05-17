@@ -29,6 +29,7 @@ class Hook():
     def get_sequence_number(self):
         return self.sequence_number
 
+    # Installs Hook as a Module within our system
     def install_hook(self):
         spec = importlib.util.spec_from_file_location(self.file_name, self.path)
         self.hook = importlib.util.module_from_spec(spec)

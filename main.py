@@ -44,15 +44,10 @@ class Ui_MainWindow(object):
         self.stacked_window.addWidget(self.live_packet_controller.view)
 
         # Hook View
-        #self.hook_view = Hook_View()
-        #self.stacked_window.addWidget(self.hook_view)
-        #self.hook_collection = Hook_Collection()
         self.hook_controller = Hook_Controller(self.hook_manager)
         self.stacked_window.addWidget(self.hook_controller.view)
          
         # Hook Collection Widget
-        #self.hook_collection_view = Hook_Collection_View()
-        #self.stacked_window.addWidget(self.hook_collection_view)
         self.hook_collection_controller = Hook_Collection_Controller()
         self.stacked_window.addWidget(self.hook_collection_controller.view)
 
@@ -93,8 +88,6 @@ class Ui_MainWindow(object):
 
         # View Retranslates
         self.live_packet_controller.view.retranslateUI()
-        #self.hook_collection_view.retranslateUI()
-        #self.hook_view.retranslateUI()
         self.hook_collection_controller.view.retranslateUI()
         self.hook_controller.view.retranslateUI()
         self.pcap_view.retranslateUI()
@@ -104,8 +97,6 @@ class Ui_MainWindow(object):
         self.system_name.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600; color:#ff6e07;\">Network Traffic Proxy System</span></p></body></html>"))
 
     
-    
-
 def appExec():
     app = QtWidgets.QApplication(sys.argv)
     main = QtWidgets.QMainWindow()
