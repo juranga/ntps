@@ -8,6 +8,7 @@ class Hook_View(QWidget):
 
     def __init__(self, hook_manager, parent=None):
         QWidget.__init__(self, parent=parent)
+        self.hook_manager = hook_manager
         self.setObjectName("hook_page")
         self.frame_7 = QtWidgets.QFrame(self)
         self.frame_7.setGeometry(QtCore.QRect(0, 0, 871, 641))
@@ -181,7 +182,8 @@ class Hook_View(QWidget):
         #self.populateHookTable()
         #self.edit_hook_controller = Edit_Hook_Controller()
         #self.stacked_window.addWidget(self.edit_hook_controller.view)
-
+        from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
+        self.hook_manager.add_hook_collection(Hook_Collection())
         self.Search_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Search</span></p></body></html>"))
         self.lineEdit_16.setText(_translate("MainWindow", "Name of Hook"))
 
@@ -190,7 +192,7 @@ class Hook_View(QWidget):
 
     def addHookClicked(self):
         print ("Adding Hook Clicked")
-        Edit_Hook_Controller.startEditHook(self)
+        Edit_Hook_Controller.startEditHook(self, self.hook_manager.hook_collection[0])
         #self.main.Main.showOverlay()
         #self.edit_hooks_dialog()
 

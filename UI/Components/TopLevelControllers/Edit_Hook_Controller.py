@@ -13,7 +13,7 @@ from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
 #from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 
 class Edit_Hook_Controller(QDialog):
-    def startEditHook(self):
+    def startEditHook(self, hook_collection):
         #super().__init__()
         Dialog = QtWidgets.QDialog()
         ui = Ui_CEHook()
@@ -22,18 +22,20 @@ class Edit_Hook_Controller(QDialog):
         if Dialog.exec_():
             print("roigroups accepted from save:")
             print(ui.roiGroups) #['Name'],['Description'],['Path']
-            self.Hook = Hook(ui.roiGroups['Path'],ui.roiGroups['Name'])
+            hook = Hook(ui.roiGroups['Path'],ui.roiGroups['Name'])
             if(self.tableWidget_2.rowCount() == 0):
-                hook_collection = Hook_Collection()
+                #hook_collection = Hook_Collection()
                 print("Hook Collection Created: ",hook_collection.get_name())
-            print ("HOOK OBJECT CREATED WITH PATH: ",self.Hook.get_path()," & SEQUENCE #: ",self.Hook.get_sequence_number())
-            hook_collection.add_hook(Hook)
+            print ("HOOK OBJECT CREATED WITH PATH: ",hook.get_path()," & SEQUENCE #: ",hook.get_sequence_number())
+            hook_collection.add_hook(hook)
             self.tableWidget_2.insertRow(self.tableWidget_2.rowCount())
-            self.tableWidget_2.setItem(self.tableWidget_2.rowCount()-1,0,QTableWidgetItem(self.Hook.display_name))
+            self.tableWidget_2.setItem(self.tableWidget_2.rowCount()-1,0,QTableWidgetItem(hook.display_name))
             self.tableWidget_2.setItem(self.tableWidget_2.rowCount()-1,1,QTableWidgetItem(ui.roiGroups['Description']))
-            self.tableWidget_2.setItem(self.tableWidget_2.rowCount()-1,2,QTableWidgetItem(str(self.Hook.get_sequence_number())))
-            for x in hook_collection.hook_list:
-                print("HOOK IN COLLECTION: ", x.get_path)
+            self.tableWidget_2.setItem(self.tableWidget_2.rowCount()-1,2,QTableWidgetItem(str(hook.get_sequence_number())))
+            #for x in hook_collection.hook_list:
+            
+            #print("HOOK IN COLLECTION: ", x.get_path)
+            
 
 
     if __name__ == '__main__':

@@ -25,8 +25,8 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1035, 715)
 
-        self.hook_collection_manager = Hook_Collection_Manager()
-        self.proxy_server = Proxy_Server(hook_manager=self.hook_collection_manager)
+        self.hook_manager = Hook_Collection_Manager()
+        self.proxy_server = Proxy_Server(hook_manager=self.hook_manager)
 
         # Main + Option View
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         #self.hook_view = Hook_View()
         #self.stacked_window.addWidget(self.hook_view)
         #self.hook_collection = Hook_Collection()
-        self.hook_controller = Hook_Controller()
+        self.hook_controller = Hook_Controller(self.hook_manager)
         self.stacked_window.addWidget(self.hook_controller.view)
          
         # Hook Collection Widget
