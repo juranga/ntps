@@ -11,8 +11,6 @@ class Hook_Collection_Manager:
     # Execute every hook in every hook collection in the system.
     def execute_hooks(self, packet, intercept_queue=None, live_traffic_list=None):
         order = ""
-        print("Hook_Collection, ",self.hook_collection)
-        print(self.n_hook_collections)
         for i in range(0, self.n_hook_collections):
             if not self.hook_collection[i].enabled:
                 continue
