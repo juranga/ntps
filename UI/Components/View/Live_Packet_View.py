@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QWidget
 
 class Live_Packet_View(QWidget):
 
-    def __init__(self, proxy_toggle, intercept_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, forward_button, save_button, drop_button, parent=None):
+    def __init__(self, proxy_toggle, intercept_toggle, packet_area, packet_binary_area, packet_hex_area, field_area, forward_button, save_button, drop_button, queue_size, parent=None):
         QWidget.__init__(self, parent=parent)
         self.setObjectName("live_packet_page")
         self.live_packet_frame = QtWidgets.QFrame(self)
@@ -62,7 +62,9 @@ class Live_Packet_View(QWidget):
         self.queue_size_label = QtWidgets.QLabel(self.horizontalFrame_6)
         self.queue_size_label.setObjectName("queue_size_label")
         self.horizontalLayout_7.addWidget(self.queue_size_label)
-        self.queue_size_input = QtWidgets.QLineEdit(self.horizontalFrame_6)
+
+        queue_size.install_widgets(self.horizontalFrame_6)
+        self.queue_size_input = queue_size.line
         self.queue_size_input.setObjectName("queue_size_input")
         self.horizontalLayout_7.addWidget(self.queue_size_input)
         self.gridLayout_6.addWidget(self.horizontalFrame_6, 0, 0, 1, 3)
