@@ -118,5 +118,4 @@ class Dissected_Packet:
         self.dissect_IP(Dissector(self.raw_form))
 
     def convert_to_raw(self):
-        #x = self.ether_layer / self.raw_form
         return self.raw_form
