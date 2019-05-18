@@ -1,5 +1,6 @@
 from Infrastructure.CaptureLibrary.Proxy_Server import Proxy_Server
 from Infrastructure.HookLibrary.Hook_Collection_Manager import Hook_Collection_Manager
+from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
 
 from UI.Components.TopLevelControllers.Live_Packet_Controller import Live_Packet_Controller
 from UI.Components.TopLevelControllers.Hook_Controller import Hook_Controller
@@ -7,7 +8,6 @@ from UI.Components.TopLevelControllers.Hook_Collection_Controller import Hook_Co
 
 from UI.Components.View.Live_Packet_View import Live_Packet_View
 from UI.Components.View.Hook_Collection_View import Hook_Collection_View
-from Infrastructure.HookLibrary.Hook_Collection import Hook_Collection
 from UI.Components.View.Hook_View import Hook_View
 from UI.Components.View.PCAP_View import PCAP_View
 from UI.Components.View.Option_View import Option_View
